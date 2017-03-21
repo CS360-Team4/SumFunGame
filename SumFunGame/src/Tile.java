@@ -1,7 +1,9 @@
 import java.awt.Color;
+import java.awt.Dimension;
 import java.util.Random;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -10,7 +12,7 @@ import javax.swing.JTextPane;
 import javax.swing.border.Border;
 import javax.swing.text.StyledDocument;
 
-public class Tile extends JPanel{
+public class Tile extends JButton{
 	
 	Random rand = new Random();
 
@@ -37,9 +39,9 @@ public class Tile extends JPanel{
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
 		setBorder(border);
 		String text = String.valueOf(number);
-		JLabel numberText = new JLabel(text);
-		add(numberText);
+		setText(text);
 		setVisible(true);
+		setPreferredSize(new Dimension(20,20));
 	}
 
 	
