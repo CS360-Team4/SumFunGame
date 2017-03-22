@@ -12,8 +12,8 @@ import javax.swing.JTextPane;
 import javax.swing.border.Border;
 import javax.swing.text.StyledDocument;
 
-public class Tile extends JButton{
-	
+public class Tile extends JButton {
+
 	Random rand = new Random();
 
 	private Tile north;
@@ -26,11 +26,11 @@ public class Tile extends JButton{
 	private Tile southwest;
 	private int number;
 	private boolean isBlank;
-	
-	
-	//Constructor takes a boolean as a parameter that specifies if it is a blank tile
-	public Tile(boolean isBlank){
-		
+
+	// Constructor takes a boolean as a parameter that specifies if it is a
+	// blank tile
+	public Tile(boolean isBlank) {
+
 		this.isBlank = isBlank;
 		north = null;
 		east = null;
@@ -40,27 +40,26 @@ public class Tile extends JButton{
 		northwest = null;
 		southeast = null;
 		southwest = null;
-		
-		//if blank panel do nothing
-		if(isBlank){
-			
-		}
-		else{
+
+		// if blank panel do nothing
+		if (isBlank) {
+
+		} else {
 			number = rand.nextInt(9);
 			setText(Integer.toString(number));
-			
+
 		}
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
 		setBorder(border);
 		setVisible(true);
-		setPreferredSize(new Dimension(10,10));
-		
+		setPreferredSize(new Dimension(10, 10));
+
 	}
-	
-	public void setNumber(int number)
-	{
+
+	public void setNumber(int number) {
 		this.number = number;
 	}
+
 	public Tile getNorth() {
 		return north;
 	}
