@@ -29,7 +29,7 @@ public class GameBoard extends JFrame {
 		gridPanel = new JPanel();
 		gridPanel.setLayout(new GridLayout(9, 9));
 		gridPanel.setVisible(true);
-		gridPanel.setBackground(Color.GREEN);
+		gridPanel.setBackground(Color.WHITE);
 
 		// create tiles and add to board
 		tiles = new Tile[9][9];
@@ -52,7 +52,7 @@ public class GameBoard extends JFrame {
 		queuePanel = new JPanel();
 		queuePanel.setLayout(new GridLayout(5, 1));
 		queuePanel.setVisible(true);
-		queuePanel.setBackground(Color.CYAN);
+		queuePanel.setBackground(Color.WHITE);
 
 		// will need to add to stack/array in future
 		for (int i = 0; i < 5; i++) {
