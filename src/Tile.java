@@ -25,11 +25,13 @@ public class Tile extends JButton{
 	private Tile southeast;
 	private Tile southwest;
 	private int number;
+	private boolean isBlank;
 	
 	
 	//Constructor takes a boolean as a parameter that specifies if it is a blank tile
 	public Tile(boolean isBlank){
 		
+		this.isBlank = isBlank;
 		north = null;
 		east = null;
 		south = null;
@@ -39,6 +41,7 @@ public class Tile extends JButton{
 		southeast = null;
 		southwest = null;
 		
+		//if blank panel do nothing
 		if(isBlank){
 			
 		}
