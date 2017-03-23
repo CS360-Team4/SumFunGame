@@ -47,7 +47,6 @@ public class Tile extends JButton {
 		} else {
 			number = rand.nextInt(9);
 			setText(Integer.toString(number));
-
 		}
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
 		setBorder(border);
@@ -55,7 +54,17 @@ public class Tile extends JButton {
 		setPreferredSize(new Dimension(10, 10));
 
 	}
+	
+	//returns the sum of neighbors mod 10
+	public int getSumMod(){
+		
+		return (north.getNumber() + east.getNumber() + south.getNumber() + west.getNumber() +
+			   northeast.getNumber() + northwest.getNumber() + southeast.getNumber() + southwest.getNumber()) % 10;
+	}
 
+	public int getNumber(){
+		return number;
+	}
 	public void setNumber(int number) {
 		this.number = number;
 	}

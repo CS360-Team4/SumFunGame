@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 public class GameBoard extends JFrame {
 
 	private Tile[][] tiles;
+	private TileQueue queue;
 	private JPanel mainPanel;
 	private JPanel gridPanel;
 	private JPanel queuePanel;
@@ -47,6 +48,9 @@ public class GameBoard extends JFrame {
 				gridPanel.add(tiles[i][j]);
 			}
 		}
+		
+		//set tile links
+		linkTiles();
 
 		// create queuePanel and initialize queue tiles
 		queuePanel = new JPanel();
@@ -55,9 +59,14 @@ public class GameBoard extends JFrame {
 		queuePanel.setBackground(Color.WHITE);
 
 		// will need to add to stack/array in future
+		/*
 		for (int i = 0; i < 5; i++) {
 			queuePanel.add(new Tile(false));
 		}
+		*/
+		
+		queue = new TileQueue();
+		setQueue();
 
 		// create generalpanels and add queuepanel to main queue panel
 		queueBorderPanel = new JPanel();
@@ -98,23 +107,96 @@ public class GameBoard extends JFrame {
 
 	}
 
+	private void setQueue(){
+		queuePanel = new JPanel(new GridLayout(5,1));
+		Tile[] temp = queue.getQueue();
+		
+		for(int i = 0; i < temp.length; i++ ){
+			queuePanel.add(temp[i]);
+		}
+		queuePanel.setBackground(Color.WHITE);
+		queuePanel.setVisible(true);
+		
+	}
 	// set all the nsew links for the tiles
-	public void linkTiles() {
-		/*
-		 * TODO curr.setNorth(tiles[i-1][j]); curr.setSouth(tiles[i+1][j]);
-		 * curr.setEast(tiles[i][j+1]); curr.setWest(tiles[i][j-1]);
-		 * curr.setNortheast(tiles[i-1][j+1]);
-		 * curr.setNorthwest(tiles[i-1][j-1]);
-		 * curr.setSoutheast(tiles[i+1][j+1]);
-		 * curr.setSouthwest(tiles[i+1][j-1]);
-		 */
+	private void linkTiles() {
+
 		Tile curr;
+
+		// i == row, j == column
 		for (int i = 0; i < tiles.length; i++) {
 			for (int j = 0; j < tiles[i].length; j++) {
 				curr = tiles[i][j];
-				// case: top left corner
+
+				// First row first column
 				if (i == 0 && j == 0) {
 					curr.setSouth(tiles[i + 1][j]);
+					curr.setEast(tiles[i][j + 1]);
+					curr.setSoutheast(tiles[i + 1][j + 1]);
+
+				}
+				// first row not first or last column
+				else if (i == 0 && j != tiles[i].length - 1) {
+					curr.setSouth(tiles[i + 1][j]);
+					curr.setEast(tiles[i][j + 1]);
+					curr.setWest(tiles[i][j - 1]);
+					curr.setSoutheast(tiles[i + 1][j + 1]);
+					curr.setSouthwest(tiles[i + 1][j - 1]);
+				}
+				// first row last column
+				else if (i == 0 && j == tiles[i].length - 1) {
+					curr.setWest(tiles[i][j - 1]);
+					curr.setSouthwest(tiles[i + 1][j - 1]);
+					curr.setSouth(tiles[i + 1][j]);
+				}
+				// first column any row besides 1st and last
+				else if (j == 0 && (i != 0 && i != tiles.length - 1)) {
+					curr.setNorth(tiles[i - 1][j]);
+					curr.setNortheast(tiles[i - 1][j + 1]);
+					curr.setEast(tiles[i][j + 1]);
+					curr.setSoutheast(tiles[i + 1][j + 1]);
+					curr.setSouth(tiles[i + 1][j]);
+				}
+				// first column last row
+				else if (i == tiles.length - 1 && j == 0) {
+					curr.setNorth(tiles[i - 1][j]);
+					curr.setNortheast(tiles[i - 1][j + 1]);
+					curr.setEast(tiles[i][j + 1]);
+				}
+				// any column except first and last on last row
+				else if (i == tiles.length - 1 && (j != tiles[i].length - 1 && j != 0)) {
+					curr.setWest(tiles[i][j - 1]);
+					curr.setNorthwest(tiles[i - 1][j - 1]);
+					curr.setNorth(tiles[i - 1][j]);
+					curr.setNortheast(tiles[i - 1][j + 1]);
+					curr.setEast(tiles[i][j + 1]);
+
+				}
+				// last row last column
+				else if (i == tiles.length - 1 && j == tiles[i].length - 1) {
+					curr.setWest(tiles[i][j - 1]);
+					curr.setNorthwest(tiles[i - 1][j - 1]);
+					curr.setNorth(tiles[i - 1][j]);
+				}
+				// last column any row except 1st or last
+				else if ((i != 0 && i != tiles.length - 1) && j == tiles[i].length - 1) {
+					curr.setNorth(tiles[i - 1][j]);
+					curr.setNorthwest(tiles[i - 1][j - 1]);
+					curr.setWest(tiles[i][j - 1]);
+					curr.setSouthwest(tiles[i + 1][j - 1]);
+					curr.setSouth(tiles[i + 1][j]);
+				}
+				// otherwise its a non-border tile
+				else {
+
+					curr.setNorth(tiles[i - 1][j]);
+					curr.setSouth(tiles[i + 1][j]);
+					curr.setEast(tiles[i][j + 1]);
+					curr.setWest(tiles[i][j - 1]);
+					curr.setNortheast(tiles[i - 1][j + 1]);
+					curr.setNorthwest(tiles[i - 1][j - 1]);
+					curr.setSoutheast(tiles[i + 1][j + 1]);
+					curr.setSouthwest(tiles[i + 1][j - 1]);
 
 				}
 			}
