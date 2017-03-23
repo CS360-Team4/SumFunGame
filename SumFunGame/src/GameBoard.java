@@ -53,11 +53,6 @@ public class GameBoard extends JFrame {
 		linkTiles();
 
 		// create queuePanel and initialize queue tiles
-		queuePanel = new JPanel();
-		queuePanel.setLayout(new GridLayout(5, 1));
-		queuePanel.setVisible(true);
-		queuePanel.setBackground(Color.WHITE);
-		
 		queue = new TileQueue();
 		setQueue();
 

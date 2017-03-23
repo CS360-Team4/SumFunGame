@@ -45,7 +45,7 @@ public class Tile extends JButton {
 		if (isBlank) {
 
 		} else {
-			number = rand.nextInt(9);
+			number = rand.nextInt(9) + 1;
 			setText(Integer.toString(number));
 		}
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
