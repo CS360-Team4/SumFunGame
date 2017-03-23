@@ -57,13 +57,6 @@ public class GameBoard extends JFrame {
 		queuePanel.setLayout(new GridLayout(5, 1));
 		queuePanel.setVisible(true);
 		queuePanel.setBackground(Color.WHITE);
-
-		// will need to add to stack/array in future
-		/*
-		for (int i = 0; i < 5; i++) {
-			queuePanel.add(new Tile(false));
-		}
-		*/
 		
 		queue = new TileQueue();
 		setQueue();
@@ -107,6 +100,7 @@ public class GameBoard extends JFrame {
 
 	}
 
+	//Sets the output of the queuePanel to corresponding tiles in queue
 	private void setQueue(){
 		queuePanel = new JPanel(new GridLayout(5,1));
 		Tile[] temp = queue.getQueue();
@@ -118,6 +112,7 @@ public class GameBoard extends JFrame {
 		queuePanel.setVisible(true);
 		
 	}
+	
 	// set all the nsew links for the tiles
 	private void linkTiles() {
 
