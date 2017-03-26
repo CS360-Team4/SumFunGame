@@ -105,7 +105,11 @@ public class GameBoard extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			Tile temp = (Tile) e.getSource();
-			temp.setText(queue.pop());
+			if(temp.getNumber() == 0)
+			{
+				temp.setText(queue.pop());
+			}
+			
 		
 		}
 		
