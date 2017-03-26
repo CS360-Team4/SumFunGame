@@ -2,6 +2,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -40,12 +42,14 @@ public class GameBoard extends JFrame {
 				// if tiles is on outer edge set it as blank tile
 				if (i == 0 || j == 0 || i == tiles.length - 1 || j == tiles[i].length - 1) {
 
-					tiles[i][j] = new Tile(true);
+					tiles[i][j] = new Tile();
+					tiles[i][j].setBlank();
 				} else {
-					tiles[i][j] = new Tile(false);
+					tiles[i][j] = new Tile();
 				}
 
 				gridPanel.add(tiles[i][j]);
+				tiles[i][j].addActionListener(new SwapListener());
 			}
 		}
 		
@@ -94,6 +98,18 @@ public class GameBoard extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
+	
+	private class SwapListener implements ActionListener
+	{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Tile temp = (Tile) e.getSource();
+			temp.setText(queue.pop());
+		
+		}
+		
+	}
 
 	//Sets the output of the queuePanel to corresponding tiles in queue
 	private void setQueue(){
@@ -101,10 +117,12 @@ public class GameBoard extends JFrame {
 		Tile[] temp = queue.getQueue();
 		
 		for(int i = 0; i < temp.length; i++ ){
+	
 			queuePanel.add(temp[i]);
 		}
 		queuePanel.setBackground(Color.WHITE);
 		queuePanel.setVisible(true);
+
 		
 	}
 	

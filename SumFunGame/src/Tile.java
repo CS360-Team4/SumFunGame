@@ -29,7 +29,7 @@ public class Tile extends JButton {
 
 	// Constructor takes a boolean as a parameter that specifies if it is a
 	// blank tile
-	public Tile(boolean isBlank) {
+	public Tile() {
 
 		this.isBlank = isBlank;
 		north = null;
@@ -40,14 +40,10 @@ public class Tile extends JButton {
 		northwest = null;
 		southeast = null;
 		southwest = null;
-
-		// if blank panel do nothing
-		if (isBlank) {
-
-		} else {
-			number = rand.nextInt(9) + 1;
-			setText(Integer.toString(number));
-		}
+		number = rand.nextInt(9) + 1;
+		setText(Integer.toString(number));
+		setSize(20,20);
+		
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
 		setBorder(border);
 		setVisible(true);
@@ -61,12 +57,27 @@ public class Tile extends JButton {
 		return (north.getNumber() + east.getNumber() + south.getNumber() + west.getNumber() +
 			   northeast.getNumber() + northwest.getNumber() + southeast.getNumber() + southwest.getNumber()) % 10;
 	}
+	
+	public void setText(int in)
+	{
+		
+		this.number = in;
+		setText(Integer.toString(in));
+	}
+	
+	public void setBlank(){
+		this.number = 0;
+		setText("");
+		revalidate();
+		repaint();
+	}
 
 	public int getNumber(){
 		return number;
 	}
 	public void setNumber(int number) {
 		this.number = number;
+		setText(Integer.toString(number));
 	}
 
 	public Tile getNorth() {

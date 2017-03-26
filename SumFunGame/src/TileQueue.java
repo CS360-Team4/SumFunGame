@@ -9,22 +9,30 @@ public class TileQueue {
 		// initialize queue and tiles
 		queue = new Tile[SIZE];
 		for (int i = 0; i < SIZE; i++) {
-			queue[i] = new Tile(false);
+			queue[i] = new Tile();
+			System.out.print(queue[i].getNumber() + " ");
+
 		}
 	}
 
-	public Tile pop() {
+	public int pop() {
 
 		// grab next tile from queue
-		Tile temp = queue[0];
+
+		int temp = queue[0].getNumber();
+		System.out.println("IN POP FUNCTION " + temp);
+		
 
 		// move remaining tiles in queue forward
 		for (int i = 0; i < SIZE - 1; i++) {
-			queue[i] = queue[i + 1];
+			queue[i].setNumber(queue[i + 1].getNumber());
 		}
 
+		//System.out.println("POP");
 		// new tile at end of queue
-		queue[SIZE - 1] = new Tile(false);
+		queue[SIZE - 1].setNumber(new Tile().getNumber());
+
+
 		return temp;
 	}
 
