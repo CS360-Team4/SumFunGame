@@ -99,37 +99,40 @@ public class GameBoard extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
-	
-	private class SwapListener implements ActionListener
-	{
+
+	private class SwapListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
+
 			Tile temp = (Tile) e.getSource();
-			
-			//if blank tile is clicked put queue tile onto board
-			if(temp.getNumber() == 0)
-			{
+
+			// if blank tile is clicked put queue tile onto board
+			if (temp.getNumber() == 0) {
 				temp.setText(queue.pop());
-				
+
 				ArrayList<Tile> neighbors = temp.getNeighbors();
-				
-				//if the sum mod 10 of neighbors is 0 set tiles to false and make invisible
-				if(temp.getSumMod() == 0){
-					for(Tile tile : neighbors){
-						tile.setVisible(false);
-						temp.setVisible(false);
-						temp = null;
-						tile = null;
+
+				// if the sum mod 10 of neighbors is equal to tile clicked, set tiles to false and make invisible
+				System.out.println(temp.getSumMod());
+				if (temp.getSumMod() == temp.getNumber()) {
+					for (Tile tile : neighbors) {
+						System.out.println(temp.getSumMod());
+						
+						//dont remove blank tiles
+						if (tile.getNumber() != 0) {
+							tile.setVisible(false);
+							tile = null;
+						}
 					}
+					temp.setVisible(false);
+					temp = null;
+					linkTiles();
 				}
-			
-			
-		
+
+			}
+
 		}
-		
-	}
 	}
 
 	//Sets the output of the queuePanel to corresponding tiles in queue

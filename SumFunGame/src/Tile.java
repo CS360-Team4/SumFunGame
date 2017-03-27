@@ -56,12 +56,16 @@ public class Tile extends JButton {
 	//returns the sum of neighbors mod 10
 	public int getSumMod(){
 		
-		ArrayList<Tile> temp = new ArrayList<Tile>();
+		ArrayList<Tile> temp = getNeighbors();
 		
 		int val = 0;
 		
 		for(Tile tile : temp){
-			val += tile.getNumber();
+			
+			//only add val to sum if the Tile has not been removed
+			if(tile.isVisible()){
+				val += tile.getNumber();
+			}
 		}
 		
 		return val % 10;
