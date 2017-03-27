@@ -112,24 +112,24 @@ public class GameBoard extends JFrame {
 			if(temp.getNumber() == 0)
 			{
 				temp.setText(queue.pop());
-			}
-			
-			
-			ArrayList<Tile> neighbors = temp.getNeighbors();
-			
-			//if the sum mod 10 of neighbors is 0 set tiles to false and make invisible
-			if(temp.getSumMod() == 0){
-				for(Tile tile : neighbors){
-					tile.setVisible(false);
-					temp.setVisible(false);
-					temp = null;
-					tile = null;
+				
+				ArrayList<Tile> neighbors = temp.getNeighbors();
+				
+				//if the sum mod 10 of neighbors is 0 set tiles to false and make invisible
+				if(temp.getSumMod() == 0){
+					for(Tile tile : neighbors){
+						tile.setVisible(false);
+						temp.setVisible(false);
+						temp = null;
+						tile = null;
+					}
 				}
-			}
+			
 			
 		
 		}
 		
+	}
 	}
 
 	//Sets the output of the queuePanel to corresponding tiles in queue
