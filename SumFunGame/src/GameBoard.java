@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -104,10 +105,26 @@ public class GameBoard extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 			Tile temp = (Tile) e.getSource();
+			
+			//if blank tile is clicked put queue tile onto board
 			if(temp.getNumber() == 0)
 			{
 				temp.setText(queue.pop());
+			}
+			
+			
+			ArrayList<Tile> neighbors = temp.getNeighbors();
+			
+			//if the sum mod 10 of neighbors is 0 set tiles to false and make invisible
+			if(temp.getSumMod() == 0){
+				for(Tile tile : neighbors){
+					tile.setVisible(false);
+					temp.setVisible(false);
+					temp = null;
+					tile = null;
+				}
 			}
 			
 		

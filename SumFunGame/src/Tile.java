@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Dimension;
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.BorderFactory;
@@ -25,6 +26,7 @@ public class Tile extends JButton {
 	private Tile southeast;
 	private Tile southwest;
 	private int number;
+	private ArrayList<Tile> neighbors;
 	private boolean isBlank;
 
 	// Constructor takes a boolean as a parameter that specifies if it is a
@@ -54,8 +56,48 @@ public class Tile extends JButton {
 	//returns the sum of neighbors mod 10
 	public int getSumMod(){
 		
-		return (north.getNumber() + east.getNumber() + south.getNumber() + west.getNumber() +
-			   northeast.getNumber() + northwest.getNumber() + southeast.getNumber() + southwest.getNumber()) % 10;
+		ArrayList<Tile> temp = new ArrayList<Tile>();
+		
+		int val = 0;
+		
+		for(Tile tile : temp){
+			val += tile.getNumber();
+		}
+		
+		return val % 10;
+	}
+	
+	
+	//returns arrayList of all non-null neighbors
+	public ArrayList<Tile> getNeighbors(){
+		ArrayList<Tile> temp = new ArrayList<Tile>();
+		
+		if(north != null){
+			temp.add(north);
+		}
+		if(south != null){
+			temp.add(south);
+		}
+		if(east != null){
+			temp.add(east);
+		}
+		if(west != null){
+			temp.add(west);
+		}
+		if(northeast != null){
+			temp.add(northeast);
+		}
+		if(northwest != null){
+			temp.add(northwest);
+		}
+		if(southeast != null){
+			temp.add(southeast);
+		}
+		if(southwest != null){
+			temp.add(southwest);
+		}
+		
+		return temp;
 	}
 	
 	public void setText(int in)
