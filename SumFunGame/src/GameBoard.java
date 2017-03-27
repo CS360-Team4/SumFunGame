@@ -49,6 +49,7 @@ public class GameBoard extends JFrame {
 					tiles[i][j] = new Tile();
 				}
 
+				//add tiles to panel and add actionlisteners
 				gridPanel.add(tiles[i][j]);
 				tiles[i][j].addActionListener(new SwapListener());
 			}
@@ -100,6 +101,9 @@ public class GameBoard extends JFrame {
 
 	}
 
+	//swaplistener is attached to all tiles in the 9x9 grid(not queue tiles)
+	//when called it evaluates the tile clicked and the neigjboring tiles and determines
+	//if it was a valid move, if so then it pops from queue and removes nieghbors as needed
 	private class SwapListener implements ActionListener {
 
 		@Override

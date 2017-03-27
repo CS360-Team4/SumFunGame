@@ -2,16 +2,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Random;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import javax.swing.border.Border;
-import javax.swing.text.StyledDocument;
+
 
 public class Tile extends JButton {
 
@@ -32,8 +26,6 @@ public class Tile extends JButton {
 	// Constructor takes a boolean as a parameter that specifies if it is a
 	// blank tile
 	public Tile() {
-
-		this.isBlank = isBlank;
 		north = null;
 		east = null;
 		south = null;
@@ -45,7 +37,6 @@ public class Tile extends JButton {
 		number = rand.nextInt(9);
 		setText(Integer.toString(number));
 		setSize(20,20);
-		
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
 		setBorder(border);
 		setVisible(true);
@@ -54,20 +45,19 @@ public class Tile extends JButton {
 	}
 	
 	//returns the sum of neighbors mod 10
-	public int getSumMod(){
-		
+	public int getSumMod() {
+
 		ArrayList<Tile> temp = getNeighbors();
-		
+
 		int val = 0;
-		
-		for(Tile tile : temp){
-			
-			//only add val to sum if the Tile has not been removed
-			if(tile.isVisible()){
+
+		//for each tile in  neighborlist, add val to total only if it is visible and not blank
+		for (Tile tile : temp) {
+			if (tile.isVisible() && !tile.isBlank) {
 				val += tile.getNumber();
 			}
 		}
-		
+
 		return val % 10;
 	}
 	
@@ -75,7 +65,7 @@ public class Tile extends JButton {
 		return isBlank;
 	}
 	
-	//returns arrayList of all non-null neighbors
+	//returns arrayList of all non-null, non-blank neighbors
 	public ArrayList<Tile> getNeighbors(){
 		ArrayList<Tile> temp = new ArrayList<Tile>();
 		
@@ -114,6 +104,7 @@ public class Tile extends JButton {
 		setText(Integer.toString(in));
 	}
 	
+	//setBlank() is used to initialize the outer edges of the tiles to blank tiles
 	public void setBlank(){
 		this.number = 0;
 		isBlank = true;
@@ -122,16 +113,20 @@ public class Tile extends JButton {
 		repaint();
 	}
 	
+	//setblank with the parameter is used to mark i a tile is blank, mainly used to mark tiles as notblank that started blank
 	public void setBlank(boolean b){
 		isBlank = b;
 	}
 
+	
+	//setters/getters only below
 	public int getNumber(){
 		return number;
 	}
+	
 	public void setNumber(int number) {
 		this.number = number;
-		setText(Integer.toString(number));
+		setText(Integer.toString(number)); //sets output of tile to number
 	}
 
 	public Tile getNorth() {
