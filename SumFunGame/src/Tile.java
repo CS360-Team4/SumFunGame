@@ -42,7 +42,7 @@ public class Tile extends JButton {
 		northwest = null;
 		southeast = null;
 		southwest = null;
-		number = rand.nextInt(9) + 1;
+		number = rand.nextInt(9);
 		setText(Integer.toString(number));
 		setSize(20,20);
 		
@@ -71,33 +71,36 @@ public class Tile extends JButton {
 		return val % 10;
 	}
 	
+	public boolean isBlank(){
+		return isBlank;
+	}
 	
 	//returns arrayList of all non-null neighbors
 	public ArrayList<Tile> getNeighbors(){
 		ArrayList<Tile> temp = new ArrayList<Tile>();
 		
-		if(north != null){
+		if(north != null && !north.isBlank()){
 			temp.add(north);
 		}
-		if(south != null){
+		if(south != null && !south.isBlank()){
 			temp.add(south);
 		}
-		if(east != null){
+		if(east != null && !east.isBlank()){
 			temp.add(east);
 		}
-		if(west != null){
+		if(west != null && !west.isBlank()){
 			temp.add(west);
 		}
-		if(northeast != null){
+		if(northeast != null && !northeast.isBlank()){
 			temp.add(northeast);
 		}
-		if(northwest != null){
+		if(northwest != null && !northwest.isBlank()){
 			temp.add(northwest);
 		}
-		if(southeast != null){
+		if(southeast != null && !southeast.isBlank()){
 			temp.add(southeast);
 		}
-		if(southwest != null){
+		if(southwest != null && !southwest.isBlank()){
 			temp.add(southwest);
 		}
 		
@@ -113,9 +116,14 @@ public class Tile extends JButton {
 	
 	public void setBlank(){
 		this.number = 0;
+		isBlank = true;
 		setText("");
 		revalidate();
 		repaint();
+	}
+	
+	public void setBlank(boolean b){
+		isBlank = b;
 	}
 
 	public int getNumber(){

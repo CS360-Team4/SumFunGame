@@ -110,6 +110,7 @@ public class GameBoard extends JFrame {
 			// if blank tile is clicked put queue tile onto board
 			if (temp.getNumber() == 0) {
 				temp.setText(queue.pop());
+				temp.setBlank(false);
 
 				ArrayList<Tile> neighbors = temp.getNeighbors();
 
@@ -120,8 +121,9 @@ public class GameBoard extends JFrame {
 						System.out.println(temp.getSumMod());
 						
 						//dont remove blank tiles
-						if (tile.getNumber() != 0) {
+						if (!tile.isBlank()) {
 							tile.setVisible(false);
+							tile.setBlank(true);
 							tile = null;
 						}
 					}
