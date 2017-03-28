@@ -125,26 +125,24 @@ public class GameBoard extends JFrame {
 			Tile temp = (Tile) e.getSource();
 
 			// if blank tile is clicked put queue tile onto board
-			if (temp.getNumber() == 0) {
+			if (temp.getNumber() == 0 && temp.isBlank()) {
 				temp.setText(queue.pop());
 				temp.setBlank(false);
 
 				ArrayList<Tile> neighbors = temp.getNeighbors();
 
 				// if the sum mod 10 of neighbors is equal to tile clicked, set tiles to false and make invisible
-				System.out.println(temp.getSumMod());
 				if (temp.getSumMod() == temp.getNumber()) {
 					for (Tile tile : neighbors) {
-						System.out.println(temp.getSumMod());
 						
 						//dont remove blank tiles
 						if (!tile.isBlank()) {
-							tile.setVisible(false);
-							tile.setBlank(true);
+							//tile.setVisible(false);
+							tile.setBlank();
 							tile = null;
 						}
 					}
-					temp.setVisible(false);
+					temp.setBlank();
 					temp = null;
 					linkTiles();
 				}
