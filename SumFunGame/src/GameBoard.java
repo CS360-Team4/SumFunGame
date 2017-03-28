@@ -6,9 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class GameBoard extends JFrame {
 
@@ -22,7 +20,12 @@ public class GameBoard extends JFrame {
 	private JPanel generalPanel2;
 	private JPanel generalPanel3;
 	private JPanel generalPanel4;
-
+	private JMenuBar menuBar;
+	private JMenuItem newUntimedGame;
+	private JMenu newMenu;
+	private JMenuItem untimedGame;
+	
+	
 	public GameBoard() {
 
 		// create mainpanel
@@ -89,6 +92,16 @@ public class GameBoard extends JFrame {
 
 		mainPanel.add(queueBorderPanel, BorderLayout.EAST);
 		mainPanel.add(gridPanel, BorderLayout.CENTER);
+		
+		menuBar = new JMenuBar();
+		newMenu = new JMenu("New..");
+		menuBar.add(newMenu);
+		untimedGame = new JMenuItem("Untimed Game");
+		untimedGame.addActionListener(new NewGameListener());
+		newMenu.add(untimedGame);
+		setJMenuBar(menuBar);
+		
+	
 
 		add(mainPanel);
 		mainPanel.setVisible(true);
@@ -139,6 +152,18 @@ public class GameBoard extends JFrame {
 			}
 
 		}
+	}
+	
+	
+	private class NewGameListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			dispose();
+			new GameBoard();
+		}
+		
 	}
 
 	//Sets the output of the queuePanel to corresponding tiles in queue
