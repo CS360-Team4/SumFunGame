@@ -92,9 +92,9 @@ public class GameBoard extends JFrame {
 		queueBorderPanel.add(lblMovesLeft);
 		// queueBorderPanel.setPreferredSize(new Dimension(100,5));
 		
-		//queueBorderPanel.add(new JLabel("Score: "));
-		//lblScore = new JLabel(String.valueOf(0));
-		//queueBorderPanel.add(lblScore);
+		queueBorderPanel.add(new JLabel("Score: "));
+		lblScore = new JLabel(String.valueOf(0));
+		queueBorderPanel.add(lblScore);
 
 		mainPanel.add(queueBorderPanel, BorderLayout.EAST);
 		mainPanel.add(gridPanel, BorderLayout.CENTER);
