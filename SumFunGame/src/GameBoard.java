@@ -131,7 +131,7 @@ public class GameBoard extends JFrame {
 			Tile temp = (Tile) e.getSource();
 
 			// Decrement the moves remaining and update the JLabel text
-			if (TileQueue.movesLeft > 0) {
+			if (TileQueue.movesLeft > 0 && temp.isBlank()) {
 				TileQueue.movesLeft--;
 				lblMovesLeft.setText(String.valueOf(TileQueue.movesLeft));
 
