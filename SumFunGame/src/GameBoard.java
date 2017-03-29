@@ -84,7 +84,7 @@ public class GameBoard extends JFrame {
 
 		// queueBorderPanel.add(queuePanel, BorderLayout.CENTER);
 
-		queueBorderPanel.add(new JLabel("Tile Queue->"));
+		queueBorderPanel.add(new JLabel("Tile Queue >>"));
 		queueBorderPanel.add(queuePanel);
 
 		// todo
