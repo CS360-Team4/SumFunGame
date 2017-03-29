@@ -32,8 +32,16 @@ public class TileQueue {
 		return temp;
 	}
 
+	public Tile getQueueTop() {
+		return queue[0];
+	}
+
 	public Tile[] getQueue() {
 		return queue;
+	}
+
+	public void setQueue(Tile[] queue) {
+		this.queue = queue;
 	}
 
 }

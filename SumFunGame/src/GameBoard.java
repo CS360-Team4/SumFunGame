@@ -26,6 +26,7 @@ public class GameBoard extends JFrame {
 	private JMenuItem untimedGame;
 	JLabel lblMovesLeft;
 	JLabel lblScore;
+	int score;
 
 	public GameBoard() {
 
@@ -93,7 +94,8 @@ public class GameBoard extends JFrame {
 		// queueBorderPanel.setPreferredSize(new Dimension(100,5));
 		
 		queueBorderPanel.add(new JLabel("Score: "));
-		lblScore = new JLabel(String.valueOf(0));
+		score = 0;
+		lblScore = new JLabel(String.valueOf(score));
 		queueBorderPanel.add(lblScore);
 
 		mainPanel.add(queueBorderPanel, BorderLayout.EAST);
@@ -134,13 +136,21 @@ public class GameBoard extends JFrame {
 			if (TileQueue.movesLeft > 0 && temp.isBlank()) {
 				TileQueue.movesLeft--;
 				lblMovesLeft.setText(String.valueOf(TileQueue.movesLeft));
-
+				
 				// if blank tile is clicked put queue tile onto board
 				if (temp.getNumber() == 0 && temp.isBlank()) {
 					temp.setText(queue.pop());
 					temp.setBlank(false);
 
 					ArrayList<Tile> neighbors = temp.getNeighbors();
+					
+					//Creating a temp score for that specific move and then updating the total score
+					int tempScore = 0;
+					if(neighbors.size() > 2){
+						tempScore = neighbors.size()*10;
+					}
+					score += tempScore;
+					lblScore.setText(String.valueOf(score));
 
 					// if the sum mod 10 of neighbors is equal to tile clicked,
 					// set tiles to false and make invisible
