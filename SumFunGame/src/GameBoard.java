@@ -24,8 +24,8 @@ public class GameBoard extends JFrame {
 	private JMenuItem newUntimedGame;
 	private JMenu newMenu;
 	private JMenuItem untimedGame;
-	
-	
+	JLabel lblMovesLeft;
+
 	public GameBoard() {
 
 		// create mainpanel
@@ -52,13 +52,13 @@ public class GameBoard extends JFrame {
 					tiles[i][j] = new Tile();
 				}
 
-				//add tiles to panel and add actionlisteners
+				// add tiles to panel and add actionlisteners
 				gridPanel.add(tiles[i][j]);
 				tiles[i][j].addActionListener(new SwapListener());
 			}
 		}
-		
-		//set tile links
+
+		// set tile links
 		linkTiles();
 
 		// create queuePanel and initialize queue tiles
@@ -87,12 +87,13 @@ public class GameBoard extends JFrame {
 
 		// todo
 		queueBorderPanel.add(new JLabel("Moves left: "));
-		queueBorderPanel.add(new JLabel("50"));
+		lblMovesLeft = new JLabel(String.valueOf(TileQueue.movesLeft));
+		queueBorderPanel.add(lblMovesLeft);
 		// queueBorderPanel.setPreferredSize(new Dimension(100,5));
 
 		mainPanel.add(queueBorderPanel, BorderLayout.EAST);
 		mainPanel.add(gridPanel, BorderLayout.CENTER);
-		
+
 		menuBar = new JMenuBar();
 		newMenu = new JMenu("New..");
 		menuBar.add(newMenu);
@@ -100,8 +101,6 @@ public class GameBoard extends JFrame {
 		untimedGame.addActionListener(new NewGameListener());
 		newMenu.add(untimedGame);
 		setJMenuBar(menuBar);
-		
-	
 
 		add(mainPanel);
 		mainPanel.setVisible(true);
@@ -114,9 +113,11 @@ public class GameBoard extends JFrame {
 
 	}
 
-	//swaplistener is attached to all tiles in the 9x9 grid(not queue tiles)
-	//when called it evaluates the tile clicked and the neigjboring tiles and determines
-	//if it was a valid move, if so then it pops from queue and removes nieghbors as needed
+	// swaplistener is attached to all tiles in the 9x9 grid(not queue tiles)
+	// when called it evaluates the tile clicked and the neighboring tiles and
+	// determines
+	// if it was a valid move, if so then it pops from queue and removes
+	// neighbors as needed
 	private class SwapListener implements ActionListener {
 
 		@Override
@@ -124,36 +125,41 @@ public class GameBoard extends JFrame {
 
 			Tile temp = (Tile) e.getSource();
 
-			// if blank tile is clicked put queue tile onto board
-			if (temp.getNumber() == 0 && temp.isBlank()) {
-				temp.setText(queue.pop());
-				temp.setBlank(false);
+			// Decrement the moves remaining and update the JLabel text
+			if (TileQueue.movesLeft > 0) {
+				TileQueue.movesLeft--;
+				lblMovesLeft.setText(String.valueOf(TileQueue.movesLeft));
 
-				ArrayList<Tile> neighbors = temp.getNeighbors();
+				// if blank tile is clicked put queue tile onto board
+				if (temp.getNumber() == 0 && temp.isBlank()) {
+					temp.setText(queue.pop());
+					temp.setBlank(false);
 
-				// if the sum mod 10 of neighbors is equal to tile clicked, set tiles to false and make invisible
-				if (temp.getSumMod() == temp.getNumber()) {
-					for (Tile tile : neighbors) {
-						
-						//dont remove blank tiles
-						if (!tile.isBlank()) {
-							//tile.setVisible(false);
-							tile.setBlank();
-							tile = null;
+					ArrayList<Tile> neighbors = temp.getNeighbors();
+
+					// if the sum mod 10 of neighbors is equal to tile clicked,
+					// set tiles to false and make invisible
+					if (temp.getSumMod() == temp.getNumber()) {
+						for (Tile tile : neighbors) {
+
+							// dont remove blank tiles
+							if (!tile.isBlank()) {
+								// tile.setVisible(false);
+								tile.setBlank();
+								tile = null;
+							}
 						}
+						temp.setBlank();
+						temp = null;
+						linkTiles();
 					}
-					temp.setBlank();
-					temp = null;
-					linkTiles();
+
 				}
-
 			}
-
 		}
 	}
-	
-	
-	private class NewGameListener implements ActionListener{
+
+	private class NewGameListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -161,24 +167,23 @@ public class GameBoard extends JFrame {
 			dispose();
 			new GameBoard();
 		}
-		
+
 	}
 
-	//Sets the output of the queuePanel to corresponding tiles in queue
-	private void setQueue(){
-		queuePanel = new JPanel(new GridLayout(5,1));
+	// Sets the output of the queuePanel to corresponding tiles in queue
+	private void setQueue() {
+		queuePanel = new JPanel(new GridLayout(5, 1));
 		Tile[] temp = queue.getQueue();
-		
-		for(int i = 0; i < temp.length; i++ ){
-	
+
+		for (int i = 0; i < temp.length; i++) {
+
 			queuePanel.add(temp[i]);
 		}
 		queuePanel.setBackground(Color.WHITE);
 		queuePanel.setVisible(true);
 
-		
 	}
-	
+
 	// set all the nsew links for the tiles
 	private void linkTiles() {
 

@@ -1,4 +1,6 @@
 /Driver.class
+/GameBoard$NewGameListener.class
+/GameBoard$SwapListener.class
 /GameBoard.class
 /Tile.class
 /TileQueue.class

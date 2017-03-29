@@ -3,6 +3,7 @@ public class TileQueue {
 
 	private Tile[] queue;
 	final int SIZE = 5;
+	public static int movesLeft;
 
 	public TileQueue() {
 
@@ -12,6 +13,7 @@ public class TileQueue {
 			queue[i] = new Tile();
 
 		}
+		movesLeft = 50;
 	}
 
 	public int pop() {
@@ -25,7 +27,6 @@ public class TileQueue {
 		
 		// new tile at end of queue
 		queue[SIZE - 1].setNumber(new Tile().getNumber());
-
 
 		return temp;
 	}
