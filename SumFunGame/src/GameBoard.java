@@ -25,6 +25,7 @@ public class GameBoard extends JFrame {
 	private JMenu newMenu;
 	private JMenuItem untimedGame;
 	JLabel lblMovesLeft;
+	JLabel lblScore;
 
 	public GameBoard() {
 
@@ -67,7 +68,7 @@ public class GameBoard extends JFrame {
 
 		// create generalpanels and add queuepanel to main queue panel
 		queueBorderPanel = new JPanel();
-		queueBorderPanel.setLayout(new GridLayout(2, 2));
+		queueBorderPanel.setLayout(new GridLayout(3, 2));
 
 		/*
 		 * generalPanel = new JPanel(); generalPanel2 = new JPanel();
@@ -90,6 +91,10 @@ public class GameBoard extends JFrame {
 		lblMovesLeft = new JLabel(String.valueOf(TileQueue.movesLeft));
 		queueBorderPanel.add(lblMovesLeft);
 		// queueBorderPanel.setPreferredSize(new Dimension(100,5));
+		
+		//queueBorderPanel.add(new JLabel("Score: "));
+		//lblScore = new JLabel(String.valueOf(0));
+		//queueBorderPanel.add(lblScore);
 
 		mainPanel.add(queueBorderPanel, BorderLayout.EAST);
 		mainPanel.add(gridPanel, BorderLayout.CENTER);
