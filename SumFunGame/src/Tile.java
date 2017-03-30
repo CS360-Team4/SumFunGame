@@ -43,7 +43,8 @@ public class Tile extends JButton {
 		setBorder(border);
 		setVisible(true);
 		setPreferredSize(new Dimension(10, 10));
-
+		setOpaque(true);
+		setBackground(Color.WHITE);
 	}
 	
 	//returns the sum of neighbors mod 10

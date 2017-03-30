@@ -12,9 +12,9 @@ public class TileQueue {
 		queue = new Tile[SIZE];
 		for (int i = 0; i < SIZE; i++) {
 			queue[i] = new Tile();
-
 		}
 		movesLeft = 50;
+		queue[0].setBackground(Color.decode("#f28282"));
 	}
 
 	public int pop() {
