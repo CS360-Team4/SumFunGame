@@ -9,9 +9,7 @@ import javax.swing.border.Border;
 import javafx.beans.Observable;
 
 
-public class Tile extends JButton {
-
-	Random rand = new Random();
+public class Tile extends JButton /*implements Observer*/{
 
 	private Tile north;
 	private Tile east;
@@ -21,7 +19,7 @@ public class Tile extends JButton {
 	private Tile northwest;
 	private Tile southeast;
 	private Tile southwest;
-	private int number;
+	private Number number;
 	private ArrayList<Tile> neighbors;
 	private boolean isBlank;
 
@@ -36,8 +34,8 @@ public class Tile extends JButton {
 		northwest = null;
 		southeast = null;
 		southwest = null;
-		number = rand.nextInt(10);
-		setText(Integer.toString(number));
+		number = new Number();
+		setText(number.toString());
 		setSize(20,20);
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
 		setBorder(border);
@@ -103,13 +101,13 @@ public class Tile extends JButton {
 	public void setText(int in)
 	{
 		
-		this.number = in;
+		this.number.setNum(in);
 		setText(Integer.toString(in));
 	}
 	
 	//setBlank() is used to initialize the outer edges of the tiles to blank tiles
 	public void setBlank(){
-		this.number = 0;
+		this.number.setNum(0);;
 		isBlank = true;
 		setText("");
 		revalidate();
@@ -124,11 +122,11 @@ public class Tile extends JButton {
 	
 	//setters/getters only below
 	public int getNumber(){
-		return number;
+		return number.getNum();
 	}
 	
 	public void setNumber(int number) {
-		this.number = number;
+		this.number.setNum(number);
 		setText(Integer.toString(number)); //sets output of tile to number
 	}
 

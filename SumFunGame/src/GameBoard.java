@@ -145,14 +145,6 @@ public class GameBoard extends JFrame {
 
 					ArrayList<Tile> neighbors = temp.getNeighbors();
 					
-					//Creating a temp score for that specific move and then updating the total score
-					int tempScore = 0;
-					if(neighbors.size() > 2){
-						tempScore = neighbors.size()*10;
-					}
-					score += tempScore;
-					lblScore.setText(String.valueOf(score));
-
 					// if the sum mod 10 of neighbors is equal to tile clicked,
 					// set tiles to false and make invisible
 					if (temp.getSumMod() == temp.getNumber()) {
@@ -168,6 +160,14 @@ public class GameBoard extends JFrame {
 						temp.setBlank();
 						temp = null;
 						linkTiles();
+						
+						//Creating a temp score for that specific move and then updating the total score
+						int tempScore = 0;
+						if(neighbors.size() > 2){
+							tempScore = neighbors.size()*10;
+						}
+						score += tempScore;
+						lblScore.setText(String.valueOf(score));
 					}
 
 				}
