@@ -1,6 +1,7 @@
 import java.util.Observable;
 import java.util.Random;
 
+//Observable class for the model
 public class Number extends Observable{
 	
 	Random rand = new Random();
@@ -23,5 +24,7 @@ public class Number extends Observable{
 
 	public void setNum(int num) {
 		this.num = num;
+		setChanged();
+		notifyObservers();
 	}
 }

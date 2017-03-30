@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Observer;
 import java.util.Random;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -9,7 +10,7 @@ import javax.swing.border.Border;
 import javafx.beans.Observable;
 
 
-public class Tile extends JButton /*implements Observer*/{
+public class Tile extends JButton implements Observer{
 
 	private Tile north;
 	private Tile east;
@@ -35,6 +36,7 @@ public class Tile extends JButton /*implements Observer*/{
 		southeast = null;
 		southwest = null;
 		number = new Number();
+		number.addObserver(this);
 		setText(number.toString());
 		setSize(20,20);
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
@@ -64,6 +66,12 @@ public class Tile extends JButton /*implements Observer*/{
 	
 	public boolean isBlank(){
 		return isBlank;
+	}
+	
+	//Controller for the model
+	@Override
+	public void update(java.util.Observable o, Object arg) {
+		this.setText(this.number.toString());		
 	}
 	
 	//returns arrayList of all non-null, non-blank neighbors
@@ -98,13 +106,6 @@ public class Tile extends JButton /*implements Observer*/{
 		return temp;
 	}
 	
-	public void setText(int in)
-	{
-		
-		this.number.setNum(in);
-		setText(Integer.toString(in));
-	}
-	
 	//setBlank() is used to initialize the outer edges of the tiles to blank tiles
 	public void setBlank(){
 		this.number.setNum(0);;
@@ -128,6 +129,19 @@ public class Tile extends JButton /*implements Observer*/{
 	public void setNumber(int number) {
 		this.number.setNum(number);
 		setText(Integer.toString(number)); //sets output of tile to number
+	}
+	
+	public void setNum(int in)
+	{
+		this.number.setNum(in);
+	}
+	
+	public Number getNumObject(){
+		return this.number;
+	}
+	
+	public void setNumber(Number number) {
+		this.number = number;
 	}
 
 	public Tile getNorth() {

@@ -5,11 +5,12 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.*;
 
-public class GameBoard extends JFrame {
+public class GameBoard extends JFrame{
 
 	private Tile[][] tiles;
 	private TileQueue queue;
@@ -140,7 +141,8 @@ public class GameBoard extends JFrame {
 				
 				// if blank tile is clicked put queue tile onto board
 				if (temp.getNumber() == 0 && temp.isBlank()) {
-					temp.setText(queue.pop());
+					temp.setNum(queue.pop());
+					temp.update(temp.getNumObject(), temp);
 					temp.setBlank(false);
 
 					ArrayList<Tile> neighbors = temp.getNeighbors();
@@ -284,5 +286,4 @@ public class GameBoard extends JFrame {
 			}
 		}
 	}
-
 }
