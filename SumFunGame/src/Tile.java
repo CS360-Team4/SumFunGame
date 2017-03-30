@@ -6,6 +6,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.border.Border;
 
+import javafx.beans.Observable;
+
 
 public class Tile extends JButton {
 
@@ -34,7 +36,7 @@ public class Tile extends JButton {
 		northwest = null;
 		southeast = null;
 		southwest = null;
-		number = rand.nextInt(9);
+		number = rand.nextInt(10);
 		setText(Integer.toString(number));
 		setSize(20,20);
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
