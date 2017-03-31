@@ -1,29 +1,22 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.*;
 
-public class GameBoard extends JFrame{
+public class GameBoard extends JFrame {
 
-	private Tile[][] tiles;
+	private TileModel[][] tiles;
+	private Tile[][] tileButtons;
 	private TileQueue queue;
 	private JPanel mainPanel;
 	private JPanel gridPanel;
 	private JPanel queuePanel;
 	private JPanel queueBorderPanel;
-	private JPanel generalPanel;
-	private JPanel generalPanel2;
-	private JPanel generalPanel3;
-	private JPanel generalPanel4;
 	private JMenuBar menuBar;
-	private JMenuItem newUntimedGame;
 	private JMenu newMenu;
 	private JMenuItem untimedGame;
 	JLabel lblMovesLeft;
@@ -43,22 +36,19 @@ public class GameBoard extends JFrame{
 		gridPanel.setBackground(Color.WHITE);
 
 		// create tiles and add to board
-		tiles = new Tile[9][9];
+		tiles = new TileModel[9][9];
+		tileButtons = new Tile[9][9];
 		for (int i = 0; i < tiles.length; i++) {
 			for (int j = 0; j < tiles[i].length; j++) {
-
+				tiles[i][j] = new TileModel();
+				tileButtons[i][j] = new Tile(tiles[i][j]);
 				// if tiles is on outer edge set it as blank tile
 				if (i == 0 || j == 0 || i == tiles.length - 1 || j == tiles[i].length - 1) {
-
-					tiles[i][j] = new Tile();
 					tiles[i][j].setBlank();
-				} else {
-					tiles[i][j] = new Tile();
 				}
-
 				// add tiles to panel and add actionlisteners
-				gridPanel.add(tiles[i][j]);
-				tiles[i][j].addActionListener(new SwapListener());
+				gridPanel.add(tileButtons[i][j]);
+				tileButtons[i][j].addActionListener(new SwapListener());
 			}
 		}
 
@@ -132,8 +122,9 @@ public class GameBoard extends JFrame{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
-			Tile temp = (Tile) e.getSource();
-
+			Tile button = (Tile) e.getSource();
+			TileModel temp = button.getTileModel();
+			
 			// Decrement the moves remaining and update the JLabel text
 			if (TileQueue.movesLeft > 0 && temp.isBlank()) {
 				TileQueue.movesLeft--;
@@ -141,16 +132,16 @@ public class GameBoard extends JFrame{
 				
 				// if blank tile is clicked put queue tile onto board
 				if (temp.getNumber() == 0 && temp.isBlank()) {
-					temp.setNum(queue.pop());
-					temp.update(temp.getNumObject(), temp);
+					temp.setNumber(queue.pop());
+					// temp.update(temp.getNumObject(), temp);
 					temp.setBlank(false);
 
-					ArrayList<Tile> neighbors = temp.getNeighbors();
+					ArrayList<TileModel> neighbors = temp.getNeighbors();
 					
 					// if the sum mod 10 of neighbors is equal to tile clicked,
 					// set tiles to false and make invisible
 					if (temp.getSumMod() == temp.getNumber()) {
-						for (Tile tile : neighbors) {
+						for (TileModel tile : neighbors) {
 
 							// dont remove blank tiles
 							if (!tile.isBlank()) {
@@ -191,11 +182,11 @@ public class GameBoard extends JFrame{
 	// Sets the output of the queuePanel to corresponding tiles in queue
 	private void setQueue() {
 		queuePanel = new JPanel(new GridLayout(5, 1));
-		Tile[] temp = queue.getQueue();
-
+		TileModel[] temp = queue.getQueue();
+		
 		for (int i = 0; i < temp.length; i++) {
-
-			queuePanel.add(temp[i]);
+			Tile tmp = new Tile(temp[i]);
+			queuePanel.add(tmp);
 		}
 		queuePanel.setBackground(Color.WHITE);
 		queuePanel.setVisible(true);
@@ -205,7 +196,7 @@ public class GameBoard extends JFrame{
 	// set all the nsew links for the tiles
 	private void linkTiles() {
 
-		Tile curr;
+		TileModel curr;
 
 		// i == row, j == column
 		for (int i = 0; i < tiles.length; i++) {

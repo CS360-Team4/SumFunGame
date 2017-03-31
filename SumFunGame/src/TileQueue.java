@@ -1,20 +1,19 @@
-import java.awt.Color;
+//import java.awt.Color;
 
 public class TileQueue {
 
-	private Tile[] queue;
+	private TileModel[] queue;
 	final int SIZE = 5;
 	public static int movesLeft;
 
 	public TileQueue() {
 
 		// initialize queue and tiles
-		queue = new Tile[SIZE];
+		queue = new TileModel[SIZE];
 		for (int i = 0; i < SIZE; i++) {
-			queue[i] = new Tile();
+			queue[i] = new TileModel();
 		}
 		movesLeft = 50;
-		queue[0].setBackground(Color.decode("#f28282"));
 	}
 
 	public int pop() {
@@ -27,20 +26,20 @@ public class TileQueue {
 		}
 		
 		// new tile at end of queue
-		queue[SIZE - 1].setNumber(new Tile().getNumber());
+		queue[SIZE - 1].setNumber(new TileModel().getNumber());
 
 		return temp;
 	}
 
-	public Tile getQueueTop() {
+	public TileModel getQueueTop() {
 		return queue[0];
 	}
 
-	public Tile[] getQueue() {
+	public TileModel[] getQueue() {
 		return queue;
 	}
 
-	public void setQueue(Tile[] queue) {
+	public void setQueue(TileModel[] queue) {
 		this.queue = queue;
 	}
 
