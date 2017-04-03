@@ -1,3 +1,5 @@
+import java.util.Random;
+
 //import java.awt.Color;
 
 public class TileQueue {
@@ -5,6 +7,7 @@ public class TileQueue {
 	private TileModel[] queue;
 	final int SIZE = 5;
 	public static int movesLeft;
+	Random rand = new Random();
 
 	public TileQueue() {
 
@@ -41,6 +44,13 @@ public class TileQueue {
 
 	public void setQueue(TileModel[] queue) {
 		this.queue = queue;
+	}
+	
+	//Instantiates a new queue and sets the queue equal to it
+	public void resetQueue() {
+		for(int i = 0; i < queue.length; i++) {
+			queue[i].setNumber(rand.nextInt(10)); 
+		}
 	}
 
 }

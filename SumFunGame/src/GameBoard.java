@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,12 +17,17 @@ public class GameBoard extends JFrame {
 	private JPanel gridPanel;
 	private JPanel queuePanel;
 	private JPanel queueBorderPanel;
+	private JPanel labelGridPanel;
 	private JMenuBar menuBar;
-	private JMenu newMenu;
+	private JMenu gameMenu;
+	private JMenu queueMenu;
 	private JMenuItem untimedGame;
+	private JMenuItem resetQueue;
 	JLabel lblMovesLeft;
 	JLabel lblScore;
+	JLabel lblTime;
 	int score;
+	private int resetQueueValue = 1;
 
 	public GameBoard() {
 
@@ -61,7 +67,14 @@ public class GameBoard extends JFrame {
 
 		// create generalpanels and add queuepanel to main queue panel
 		queueBorderPanel = new JPanel();
-		queueBorderPanel.setLayout(new GridLayout(3, 2));
+		queueBorderPanel.setLayout(new BorderLayout());
+		queueBorderPanel.setBackground(Color.WHITE);
+		queueBorderPanel.setOpaque(true);
+		
+		labelGridPanel = new JPanel();
+		labelGridPanel.setLayout(new GridLayout(3,2));
+		labelGridPanel.setOpaque(true);
+		labelGridPanel.setBackground(Color.WHITE);
 
 		/*
 		 * generalPanel = new JPanel(); generalPanel2 = new JPanel();
@@ -76,33 +89,51 @@ public class GameBoard extends JFrame {
 
 		// queueBorderPanel.add(queuePanel, BorderLayout.CENTER);
 
-		queueBorderPanel.add(new JLabel("Tile Queue >>"));
-		queueBorderPanel.add(queuePanel);
+		JLabel lblQueue = new JLabel("Tile Queue");
+		lblQueue.setHorizontalAlignment(SwingConstants.CENTER);
+		lblQueue.setVerticalAlignment(SwingConstants.CENTER);
+		
+		queueBorderPanel.add(lblQueue, BorderLayout.NORTH);
+		queueBorderPanel.add(queuePanel, BorderLayout.CENTER);
 
 		// todo
-		queueBorderPanel.add(new JLabel("Moves left: "));
+		labelGridPanel.add(new JLabel("Moves left: "));
 		lblMovesLeft = new JLabel(String.valueOf(TileQueue.movesLeft));
-		queueBorderPanel.add(lblMovesLeft);
+		labelGridPanel.add(lblMovesLeft);
 		// queueBorderPanel.setPreferredSize(new Dimension(100,5));
 		
-		queueBorderPanel.add(new JLabel("Score: "));
+		labelGridPanel.add(new JLabel("Score: "));
 		score = 0;
 		lblScore = new JLabel(String.valueOf(score));
-		queueBorderPanel.add(lblScore);
+		labelGridPanel.add(lblScore);
+		
+		labelGridPanel.add(new JLabel("Time: "));
+		lblTime = new JLabel("00:00");
+		labelGridPanel.add(lblTime);
+		
+		queueBorderPanel.add(labelGridPanel, BorderLayout.SOUTH);
 
 		mainPanel.add(queueBorderPanel, BorderLayout.EAST);
 		mainPanel.add(gridPanel, BorderLayout.CENTER);
 
 		menuBar = new JMenuBar();
-		newMenu = new JMenu("New..");
-		menuBar.add(newMenu);
+		gameMenu = new JMenu("Game");
+		menuBar.add(gameMenu);
+		queueMenu = new JMenu("Queue");
+		menuBar.add(queueMenu);
 		untimedGame = new JMenuItem("Untimed Game");
 		untimedGame.addActionListener(new NewGameListener());
-		newMenu.add(untimedGame);
+		resetQueue = new JMenuItem("Reset Queue");
+		resetQueue.addActionListener(new resetQueueListener());
+		gameMenu.add(untimedGame);
+		queueMenu.add(resetQueue);
 		setJMenuBar(menuBar);
+		
+		
 
 		add(mainPanel);
 		mainPanel.setVisible(true);
+		mainPanel.setOpaque(true);
 		mainPanel.setBackground(Color.RED);
 		setSize(1000, 800);
 		setVisible(true);
@@ -178,6 +209,21 @@ public class GameBoard extends JFrame {
 		}
 
 	}
+	
+	private class resetQueueListener implements ActionListener {
+		
+		public void actionPerformed(ActionEvent e){
+			if(resetQueueValue > 0){
+				resetQueue();
+			}
+			resetQueueValue--;
+		}
+	}
+	
+	//Resets the values in the queue
+	private void resetQueue() {
+		queue.resetQueue();
+	}
 
 	// Sets the output of the queuePanel to corresponding tiles in queue
 	private void setQueue() {
@@ -190,7 +236,8 @@ public class GameBoard extends JFrame {
 		}
 		queuePanel.setBackground(Color.WHITE);
 		queuePanel.setVisible(true);
-
+		queuePanel.setOpaque(true);
+		queuePanel.setMaximumSize(new Dimension(50,50));
 	}
 
 	// set all the nsew links for the tiles
