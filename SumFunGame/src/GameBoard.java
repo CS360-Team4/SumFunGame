@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -92,24 +93,33 @@ public class GameBoard extends JFrame {
 		JLabel lblQueue = new JLabel("Tile Queue");
 		lblQueue.setHorizontalAlignment(SwingConstants.CENTER);
 		lblQueue.setVerticalAlignment(SwingConstants.CENTER);
+		lblQueue.setFont(new Font("Arial", Font.BOLD, 20));
 		
 		queueBorderPanel.add(lblQueue, BorderLayout.NORTH);
 		queueBorderPanel.add(queuePanel, BorderLayout.CENTER);
 
-		// todo
-		labelGridPanel.add(new JLabel("Moves left: "));
+		JLabel lblMovesTitle = new JLabel("Moves: ");
+		lblMovesTitle.setFont(new Font("Arial", Font.BOLD, 20));
+		labelGridPanel.add(lblMovesTitle);
 		lblMovesLeft = new JLabel(String.valueOf(TileQueue.movesLeft));
+		lblMovesLeft.setFont(new Font("Arial", Font.BOLD, 20));
 		labelGridPanel.add(lblMovesLeft);
 		// queueBorderPanel.setPreferredSize(new Dimension(100,5));
 		
-		labelGridPanel.add(new JLabel("Score: "));
+		JLabel lblTimeTitle = new JLabel("Time: ");
+		lblTimeTitle.setFont(new Font("Arial", Font.BOLD, 20));
+		labelGridPanel.add(lblTimeTitle);
+		lblTime = new JLabel("00:00");
+		lblTime.setFont(new Font("Arial", Font.BOLD, 20));
+		labelGridPanel.add(lblTime);
+		
+		JLabel lblScoreTitle = new JLabel("Score: ");
+		lblScoreTitle.setFont(new Font("Arial", Font.BOLD, 20));
+		labelGridPanel.add(lblScoreTitle);		
 		score = 0;
 		lblScore = new JLabel(String.valueOf(score));
+		lblScore.setFont(new Font("Arial", Font.BOLD, 20));
 		labelGridPanel.add(lblScore);
-		
-		labelGridPanel.add(new JLabel("Time: "));
-		lblTime = new JLabel("00:00");
-		labelGridPanel.add(lblTime);
 		
 		queueBorderPanel.add(labelGridPanel, BorderLayout.SOUTH);
 
