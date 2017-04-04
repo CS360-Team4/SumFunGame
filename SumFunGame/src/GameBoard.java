@@ -22,8 +22,10 @@ public class GameBoard extends JFrame {
 	private JMenuBar menuBar;
 	private JMenu gameMenu;
 	private JMenu queueMenu;
+	private JMenu topTenMenu;
 	private JMenuItem untimedGame;
 	private JMenuItem resetQueue;
+	private JMenuItem mnuTopTenMoves;
 	JLabel lblMovesLeft;
 	JLabel lblScore;
 	JLabel lblTime;
@@ -131,12 +133,17 @@ public class GameBoard extends JFrame {
 		menuBar.add(gameMenu);
 		queueMenu = new JMenu("Queue");
 		menuBar.add(queueMenu);
+		topTenMenu = new JMenu("Top 10");
+		menuBar.add(topTenMenu);
 		untimedGame = new JMenuItem("Untimed Game");
 		untimedGame.addActionListener(new NewGameListener());
 		resetQueue = new JMenuItem("Reset Queue");
 		resetQueue.addActionListener(new resetQueueListener());
+		mnuTopTenMoves = new JMenuItem("Top 10 Least Moves");
+		mnuTopTenMoves.addActionListener(new topTenMovesListener());
 		gameMenu.add(untimedGame);
 		queueMenu.add(resetQueue);
+		topTenMenu.add(mnuTopTenMoves);
 		setJMenuBar(menuBar);
 		
 		
@@ -227,6 +234,13 @@ public class GameBoard extends JFrame {
 				resetQueue();
 			}
 			resetQueueValue--;
+		}
+	}
+	
+	private class topTenMovesListener implements ActionListener {
+		
+		public void actionPerformed(ActionEvent e) {
+			//Need logic here to load the top ten least moves object and display it in a new JPane/JFrame
 		}
 	}
 	
