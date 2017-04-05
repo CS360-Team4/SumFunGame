@@ -2,7 +2,8 @@ public class Driver {
 
 	public static void main(String[] args) {
 		
-		new GameBoard();
+		new preGameScreen();
+		//new GameBoard();
 	}
 
 }

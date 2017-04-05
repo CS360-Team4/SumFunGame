@@ -31,8 +31,9 @@ public class GameBoard extends JFrame {
 	JLabel lblTime;
 	int score;
 	private int resetQueueValue = 1;
+	private String playerName;
 
-	public GameBoard() {
+	public GameBoard(String untimed, String name) {
 
 		// create mainpanel
 		mainPanel = new JPanel();
@@ -155,7 +156,8 @@ public class GameBoard extends JFrame {
 		setSize(1000, 800);
 		setVisible(true);
 		setLocationRelativeTo(null);
-		setTitle("Sum Fun Game");
+		playerName = name;
+		setTitle(playerName+"'s Sum Fun Game");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
@@ -222,7 +224,8 @@ public class GameBoard extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 
 			dispose();
-			new GameBoard();
+			//new GameBoard();
+			new preGameScreen();
 		}
 
 	}
@@ -347,5 +350,13 @@ public class GameBoard extends JFrame {
 				}
 			}
 		}
+	}
+	
+	public String getPlayerName() {
+		return playerName;
+	}
+
+	public void setPlayerName(String playerName) {
+		this.playerName = playerName;
 	}
 }
