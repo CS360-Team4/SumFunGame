@@ -26,7 +26,6 @@ public class Tile extends JButton implements Observer {
 		updateColor();
 	}
 	
-	@Override
 	public void update(java.util.Observable o, Object arg) {
 		TileModel model = (TileModel) o;
 		if (model.isBlank()) {

@@ -10,3 +10,10 @@
 /preGameScreen$timedListener.class
 /preGameScreen$untimedListener.class
 /preGameScreen.class
+/TopScoreList$NewGameListener.class
+/TopScoreList$SwapListener.class
+/TopScoreList$resetQueueListener.class
+/TopScoreList$topTenMovesListener.class
+/TopScoreList.class
+/GameBoard$TopTenListener.class
+/topScoreList/

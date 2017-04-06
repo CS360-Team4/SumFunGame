@@ -9,6 +9,8 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
+import topScoreList.TopScoreList;
+
 public class GameBoard extends JFrame {
 
 	private TileModel[][] tiles;
@@ -198,7 +200,6 @@ public class GameBoard extends JFrame {
 	// neighbors as needed
 	private class SwapListener implements ActionListener {
 
-		@Override
 		public void actionPerformed(ActionEvent e) {
 
 			Tile button = (Tile) e.getSource();
@@ -249,7 +250,6 @@ public class GameBoard extends JFrame {
 
 	private class NewGameListener implements ActionListener {
 
-		@Override
 		public void actionPerformed(ActionEvent e) {
 
 			dispose();
@@ -272,8 +272,11 @@ public class GameBoard extends JFrame {
 	private class topTenMovesListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
+			
 			//Need logic here to load the top ten least moves object and display it in a new JPane/JFrame
-		}
+			//TODO change
+			TopScoreList.getTopScoreList().setVisible(true);;
+			}
 	}
 	
 	//Resets the values in the queue
