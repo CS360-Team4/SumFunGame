@@ -99,7 +99,36 @@ public class GameBoard extends JFrame {
 		lblQueue.setFont(new Font("Arial", Font.BOLD, 20));
 		
 		queueBorderPanel.add(lblQueue, BorderLayout.NORTH);
-		queueBorderPanel.add(queuePanel, BorderLayout.CENTER);
+		JPanel innerBorder = new JPanel();
+		BorderLayout innerBorderLayout = new BorderLayout();
+		JPanel northPadding = new JPanel();
+		JPanel southPadding = new JPanel();
+		GridLayout paddingLayout = new GridLayout(8,1);
+		GridLayout paddingLayoutN = new GridLayout(4,1);
+		northPadding.setLayout(paddingLayoutN);
+		southPadding.setLayout(paddingLayout);
+		northPadding.setBackground(Color.WHITE);
+		southPadding.setBackground(Color.WHITE);
+		innerBorder.setLayout(innerBorderLayout);
+		innerBorder.setBackground(Color.WHITE);
+		innerBorder.add(queuePanel, BorderLayout.CENTER);
+		southPadding.add(new JLabel("                   "), BorderLayout.SOUTH);
+		northPadding.add(new JLabel("                   "), BorderLayout.NORTH);
+		southPadding.add(new JLabel("                   "), BorderLayout.SOUTH);
+		northPadding.add(new JLabel("                   "), BorderLayout.NORTH);
+		southPadding.add(new JLabel("                   "), BorderLayout.SOUTH);
+		northPadding.add(new JLabel("                   "), BorderLayout.NORTH);
+		southPadding.add(new JLabel("                   "), BorderLayout.SOUTH);
+		northPadding.add(new JLabel("                   "), BorderLayout.NORTH);
+		southPadding.add(new JLabel("                   "), BorderLayout.SOUTH);
+		northPadding.add(new JLabel("                   "), BorderLayout.SOUTH);
+		southPadding.add(new JLabel("                   "), BorderLayout.SOUTH);
+		northPadding.add(new JLabel("                   "), BorderLayout.SOUTH);
+		innerBorder.add(northPadding, BorderLayout.NORTH);
+		innerBorder.add(southPadding, BorderLayout.SOUTH);
+		innerBorder.add(new JLabel("       "), BorderLayout.EAST);
+		innerBorder.add(new JLabel("       "), BorderLayout.WEST);
+		queueBorderPanel.add(innerBorder);
 
 		JLabel lblMovesTitle = new JLabel("Moves: ");
 		lblMovesTitle.setFont(new Font("Arial", Font.BOLD, 20));
