@@ -18,7 +18,7 @@ public class GameBoard extends JFrame {
 	private JPanel gridPanel;
 	private JPanel queuePanel;
 	private JPanel queueBorderPanel;
-	private JPanel labelGridPanel;
+	protected JPanel labelGridPanel;
 	private JMenuBar menuBar;
 	private JMenu gameMenu;
 	private JMenu queueMenu;
@@ -26,14 +26,14 @@ public class GameBoard extends JFrame {
 	private JMenuItem untimedGame;
 	private JMenuItem resetQueue;
 	private JMenuItem mnuTopTenMoves;
-	JLabel lblMovesLeft;
-	JLabel lblScore;
-	JLabel lblTime;
+	protected JLabel lblMovesLeft;
+	protected JLabel lblScore;
+	protected JLabel lblTime;
 	int score;
 	private int resetQueueValue = 1;
 	private String playerName;
 
-	public GameBoard(String untimed, String name) {
+	public GameBoard(String name) {
 
 		// create mainpanel
 		mainPanel = new JPanel();
@@ -133,7 +133,7 @@ public class GameBoard extends JFrame {
 		JLabel lblMovesTitle = new JLabel("Moves: ");
 		lblMovesTitle.setFont(new Font("Arial", Font.BOLD, 20));
 		labelGridPanel.add(lblMovesTitle);
-		lblMovesLeft = new JLabel(String.valueOf(TileQueue.movesLeft));
+		lblMovesLeft = new JLabel("");
 		lblMovesLeft.setFont(new Font("Arial", Font.BOLD, 20));
 		labelGridPanel.add(lblMovesLeft);
 		// queueBorderPanel.setPreferredSize(new Dimension(100,5));
@@ -141,7 +141,7 @@ public class GameBoard extends JFrame {
 		JLabel lblTimeTitle = new JLabel("Time: ");
 		lblTimeTitle.setFont(new Font("Arial", Font.BOLD, 20));
 		labelGridPanel.add(lblTimeTitle);
-		lblTime = new JLabel("00:00");
+		lblTime = new JLabel("--:--");
 		lblTime.setFont(new Font("Arial", Font.BOLD, 20));
 		labelGridPanel.add(lblTime);
 		

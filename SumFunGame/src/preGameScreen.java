@@ -42,14 +42,16 @@ public class preGameScreen extends JFrame {
 
 		public void actionPerformed(ActionEvent e) {
 			if(txtName.getText().length() > 0){
-				GameBoard firstGame = new GameBoard("Untimed", txtName.getText());
+				GameBoard firstGame = new UntimedGame(txtName.getText());
 			}
 		}
 	}
 
 	private class timedListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-
+			if(txtName.getText().length() > 0){
+				GameBoard firstGame = new TimedGame(txtName.getText());
+			}
 		}
 	}
 
