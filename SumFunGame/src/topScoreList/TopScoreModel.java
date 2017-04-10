@@ -1,12 +1,15 @@
 package topScoreList;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
-public class TopScoreModel {
+public class TopScoreModel extends Observable {
 	
 	private static final int MAX_VALUE = 999;
 	private static final int LAST_PLACE = 9;	
 	private static ArrayList<TopScoreModel> topTenFewestMoves;
+	
+	private static int noPlayersInList = 0;
 	
 	
 	private String name;
@@ -18,6 +21,11 @@ public class TopScoreModel {
 		this.name = name;
 		this.moves = moves;
 //		this.totalTime = totalTime;
+		
+		this.addObserver(TopScoreList.getTopScoreList());
+		
+		setChanged();
+		notifyObservers();
 	}
 	
 	public String getName(){
@@ -45,28 +53,63 @@ public class TopScoreModel {
 	 * @return boolean - true if top score, false o.w.
 	 */
 	public static boolean checkScore(String name, int moves) {
-		if (topTenFewestMoves==null) createTopTen();
+		if (topTenFewestMoves == null) {
+			System.out.println("Null array list");
+			createTopTen();
+		}
 		
-		// check moves against array list
-		if (moves < getLastPlaceTotMoves())
-			// Compare score to the top ten list
+		if (noPlayersInList < 10){
+			System.out.println("Fewer than 10 players");
+			addTopScore(name, moves);
+			return true;
+		}
 
-			for (int i = 0; i < 10; i++) {
+		// check moves against array list
+		if (moves < getLastPlaceTotMoves()) {
+			System.out.println("Moves beat existing list");
+			// Compare score to the top ten list
+			addTopScore(name, moves);
+			return true;
+
+		}
+
+		return false;
+
+	}
+	
+	private static void addTopScore(String name, int moves) {
+		// Compare score to the top ten list
+
+		if (noPlayersInList == 0) {
+			topTenFewestMoves.add(0, new TopScoreModel(name, moves));
+			noPlayersInList++;
+		}
+
+		else {
+			for (int i = 0; i < noPlayersInList; i++) {
 				// totMoves is fewer than the entry in the top ten list
+				System.out.println("Index " + i + " position is: " + topTenFewestMoves.get(i).getName());
+				System.out.println("Index " + i + " position is: " + topTenFewestMoves.get(i).getName());
+
 				if (topTenFewestMoves.get(0).getMoves() > moves) {
 
 					// insert top score in position
 					topTenFewestMoves.add(i, new TopScoreModel(name, moves));
 
-					// remove last place - LAST_PLACE + 1 because there is currently 1 extra value in array list
-					topTenFewestMoves.remove(LAST_PLACE + 1);
-					
-					return true;
+					if (noPlayersInList >= 10) {
+						// remove last place - LAST_PLACE + 1 because there is
+						// currently 1 extra value in array list
+						topTenFewestMoves.remove(LAST_PLACE + 1);
+					} else {
+						// There are fewer than 10 top scores so increment
+						// number of players in list
+						noPlayersInList++;
+					}
+				} else {
+					System.out.println("NO. " + i);
 				}
 			}
-
-		return false;
-
+		}
 	}
 	
 	/**
@@ -76,6 +119,10 @@ public class TopScoreModel {
 	public static ArrayList<TopScoreModel> getTopScoreList(){
 		if (topTenFewestMoves ==null) createTopTen();
 		return topTenFewestMoves;
+	}
+	
+	public static int getNoPlayers(){
+		return noPlayersInList;
 	}
 	
 	private static void createTopTen(){
@@ -88,7 +135,7 @@ public class TopScoreModel {
 	}
 	
 	private static int getLastPlaceTotMoves(){
-		return topTenFewestMoves.get(LAST_PLACE).getMoves();
+		return topTenFewestMoves.get(noPlayersInList-1).getMoves();
 	}
 
 }

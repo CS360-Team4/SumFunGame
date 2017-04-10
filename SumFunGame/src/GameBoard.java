@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import topScoreList.TopScoreList;
+import topScoreList.TopScoreModel;
 
 public class GameBoard extends JFrame {
 
@@ -28,6 +29,7 @@ public class GameBoard extends JFrame {
 	private JMenuItem untimedGame;
 	private JMenuItem resetQueue;
 	private JMenuItem mnuTopTenMoves;
+	private JMenuItem addTopPlayer;
 	JLabel lblMovesLeft;
 	JLabel lblScore;
 	JLabel lblTime;
@@ -173,9 +175,12 @@ public class GameBoard extends JFrame {
 		resetQueue.addActionListener(new resetQueueListener());
 		mnuTopTenMoves = new JMenuItem("Top 10 Least Moves");
 		mnuTopTenMoves.addActionListener(new topTenMovesListener());
+		addTopPlayer = new JMenuItem("Add Top 10 Player");
+		addTopPlayer.addActionListener(new fakeTopTenMovesListener());
 		gameMenu.add(untimedGame);
 		queueMenu.add(resetQueue);
 		topTenMenu.add(mnuTopTenMoves);
+		topTenMenu.add(addTopPlayer);
 		setJMenuBar(menuBar);
 		
 		
@@ -274,8 +279,20 @@ public class GameBoard extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			
 			//Need logic here to load the top ten least moves object and display it in a new JPane/JFrame
-			//TODO change
+			//TODO change - this is getting a static instance
 			TopScoreList.getTopScoreList().setVisible(true);;
+			}
+	}
+	
+	private class fakeTopTenMovesListener implements ActionListener {
+		
+		public void actionPerformed(ActionEvent e) {
+			
+			TopScoreModel.checkScore("TestPerson", 5);
+			TopScoreModel.checkScore("TestPerson2", 15);
+			TopScoreModel.checkScore("TestPerson3", 52);
+			TopScoreModel.checkScore("TestPerson4", 45);
+			TopScoreModel.checkScore("TestPerson5", 25);						
 			}
 	}
 	

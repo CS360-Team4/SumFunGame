@@ -7,10 +7,12 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.*;
 
-public class TopScoreList extends JFrame {
+public class TopScoreList extends JFrame implements Observer {
 	
 	//singleton
 	private static TopScoreList topTenFrame;
@@ -21,7 +23,7 @@ public class TopScoreList extends JFrame {
 
 	private JPanel mainPanel;
 	private JPanel topTenListPanel;
-
+	
 	JLabel[] playerNames;
 	JLabel[] playerScores;
 
@@ -41,9 +43,9 @@ public class TopScoreList extends JFrame {
 		playerScores = new JLabel[10];
 		
 		for (int i = 0; i<10; i++) {
-			playerNames[i] = new JLabel(TopScoreModel.getTopScoreList().get(i).getName());
+			playerNames[i] = new JLabel("- NO PLAYER - ");
 
-			playerScores[i] = new JLabel(TopScoreModel.getTopScoreList().get(i).getMoves() + "");
+			playerScores[i] = new JLabel(9999 + "");
 			
 			topTenListPanel.add(playerNames[i]);
 			topTenListPanel.add(playerScores[i]);
@@ -69,7 +71,7 @@ public class TopScoreList extends JFrame {
 		mainPanel.setVisible(true);
 		mainPanel.setOpaque(true);
 		mainPanel.setBackground(Color.RED);
-		setSize(1000, 800);
+		setSize(500, 400);
 		setVisible(true);
 		setLocationRelativeTo(null);
 		setTitle(TOP_TEN_TITLE);
@@ -79,10 +81,15 @@ public class TopScoreList extends JFrame {
 	
 	private void updatePlayerScores(){
 		ArrayList<TopScoreModel> topScores = TopScoreModel.getTopScoreList();
-		
-		for (int i = 0; i<10; i++){			
-			playerNames[i].setText(topScores.get(i).getName());
-			playerScores[i].setText(topScores.get(i).getMoves() + "");			
+
+		if (TopScoreModel.getNoPlayers() > 0) {
+			for (int i = 0; i < TopScoreModel.getNoPlayers(); i++) {
+//				playerNames[i].setText(topScores.get(i).getName());
+//				playerScores[i].setText(topScores.get(i).getMoves() + "");
+				
+				playerNames[i].setText("Test");
+				playerScores[i].setText(TopScoreModel.getNoPlayers() + "");
+			}
 		}
 	}
 	
@@ -93,5 +100,20 @@ public class TopScoreList extends JFrame {
 		}
 		return topTenFrame;
 	}
+
+	
+	public void update(java.util.Observable o, Object arg) {
+//		TileModel model = (TileModel) o;
+//		if (model.isBlank()) {
+//			this.setText("");
+//		} else {
+//			this.setText(Integer.toString(model.getNumber()));		
+//		}
+//		this.updateColor();
+		
+		updatePlayerScores();
+
+	}
+	
 		
 }

@@ -17,3 +17,4 @@
 /TopScoreList.class
 /GameBoard$TopTenListener.class
 /topScoreList/
+/GameBoard$fakeTopTenMovesListener.class
