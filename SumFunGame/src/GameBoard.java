@@ -23,7 +23,7 @@ public class GameBoard extends JFrame {
 	private JMenu gameMenu;
 	private JMenu queueMenu;
 	private JMenu topTenMenu;
-	private JMenuItem untimedGame;
+	private JMenuItem newGame;
 	private JMenuItem resetQueue;
 	private JMenuItem mnuTopTenMoves;
 	protected JLabel lblMovesLeft;
@@ -165,13 +165,13 @@ public class GameBoard extends JFrame {
 		menuBar.add(queueMenu);
 		topTenMenu = new JMenu("Top 10");
 		menuBar.add(topTenMenu);
-		untimedGame = new JMenuItem("Untimed Game");
-		untimedGame.addActionListener(new NewGameListener());
+		newGame = new JMenuItem("New Game");
+		newGame.addActionListener(new NewGameListener());
 		resetQueue = new JMenuItem("Reset Queue");
 		resetQueue.addActionListener(new resetQueueListener());
 		mnuTopTenMoves = new JMenuItem("Top 10 Least Moves");
 		mnuTopTenMoves.addActionListener(new topTenMovesListener());
-		gameMenu.add(untimedGame);
+		gameMenu.add(newGame);
 		queueMenu.add(resetQueue);
 		topTenMenu.add(mnuTopTenMoves);
 		setJMenuBar(menuBar);
