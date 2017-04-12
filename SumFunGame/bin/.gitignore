@@ -7,6 +7,8 @@
 /Tile.class
 /TileModel.class
 /TileQueue.class
+/TimedGame.class
+/UntimedGame.class
 /preGameScreen$timedListener.class
 /preGameScreen$untimedListener.class
 /preGameScreen.class
