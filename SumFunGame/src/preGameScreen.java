@@ -43,6 +43,7 @@ public class preGameScreen extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			if(txtName.getText().length() > 0){
 				GameBoard firstGame = new UntimedGame(txtName.getText());
+				preGameScreen.this.dispose();
 			}
 		}
 	}
@@ -51,6 +52,7 @@ public class preGameScreen extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			if(txtName.getText().length() > 0){
 				GameBoard firstGame = new TimedGame(txtName.getText());
+				preGameScreen.this.dispose();
 			}
 		}
 	}

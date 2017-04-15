@@ -36,6 +36,8 @@ public class GameBoard extends JFrame {
 	int score;
 	private int resetQueueValue = 1;
 	private String playerName;
+	private int endMoves = 0;
+	private boolean gameIsWon = false;
 
 	public GameBoard(String name) {
 
@@ -212,7 +214,7 @@ public class GameBoard extends JFrame {
 			TileModel temp = button.getTileModel();
 			
 			// Decrement the moves remaining and update the JLabel text
-			if (TileQueue.movesLeft > 0 && temp.isBlank()) {
+			if (TileQueue.movesLeft > 0 && temp.isBlank() && !gameIsWon){
 				TileQueue.movesLeft--;
 				lblMovesLeft.setText(String.valueOf(TileQueue.movesLeft));
 				
@@ -251,6 +253,7 @@ public class GameBoard extends JFrame {
 
 				}
 			}
+			GameBoard.this.checkWin();
 		}
 	}
 
@@ -409,5 +412,28 @@ public class GameBoard extends JFrame {
 
 	public void setPlayerName(String playerName) {
 		this.playerName = playerName;
+	}
+	
+	public boolean checkWin(){
+		boolean output = false;
+		int counter = 0;
+		
+		for(int i = 0; i < 9; i++){
+			for(int j = 0; j < 9; j++){
+				if(tiles[i][j].getNumber() == 0 && tiles[i][j].isBlank()){
+					counter++;
+				}
+			}
+		}
+		
+		if(counter == 81 && !gameIsWon){
+			output = true;
+			System.out.println("You won the game!");
+			endMoves = TileQueue.movesLeft;
+			TileQueue.movesLeft = 0;
+			gameIsWon = false;
+		}
+	
+		return output;
 	}
 }
