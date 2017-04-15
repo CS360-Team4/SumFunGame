@@ -431,7 +431,7 @@ public class GameBoard extends JFrame {
 			System.out.println("You won the game!");
 			endMoves = TileQueue.movesLeft;
 			TileQueue.movesLeft = 0;
-			gameIsWon = false;
+			gameIsWon = true;
 		}
 	
 		return output;
