@@ -5,6 +5,10 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -38,8 +42,9 @@ public class GameBoard extends JFrame {
 	private String playerName;
 	private int endMoves = 0;
 	private boolean gameIsWon = false;
+	private TopScoreList topScore;
 
-	public GameBoard(String name) {
+	public GameBoard(String name) throws IOException, ClassNotFoundException {
 
 		// create mainpanel
 		mainPanel = new JPanel();
@@ -186,7 +191,7 @@ public class GameBoard extends JFrame {
 		setJMenuBar(menuBar);
 		
 		
-
+		topScore = new TopScoreList();
 		add(mainPanel);
 		mainPanel.setVisible(true);
 		mainPanel.setOpaque(true);
@@ -285,7 +290,12 @@ public class GameBoard extends JFrame {
 			
 			//Need logic here to load the top ten least moves object and display it in a new JPane/JFrame
 			//TODO change - this is getting a static instance
-			TopScoreList.getTopScoreList().setVisible(true);;
+			try {
+				topScore.getTopScoreList().setVisible(true);
+			} catch (IOException | ClassNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			};
 			}
 	}
 	
@@ -293,11 +303,13 @@ public class GameBoard extends JFrame {
 		
 		public void actionPerformed(ActionEvent e) {
 			
+			/*
 			TopScoreModel.checkScore("TestPerson", 5);
 			TopScoreModel.checkScore("TestPerson2", 15);
 			TopScoreModel.checkScore("TestPerson3", 52);
 			TopScoreModel.checkScore("TestPerson4", 45);
-			TopScoreModel.checkScore("TestPerson5", 25);						
+			TopScoreModel.checkScore("TestPerson5", 25);
+			*/						
 			}
 	}
 	
@@ -413,6 +425,7 @@ public class GameBoard extends JFrame {
 	public void setPlayerName(String playerName) {
 		this.playerName = playerName;
 	}
+	
 	
 	public boolean checkWin(){
 		boolean output = false;

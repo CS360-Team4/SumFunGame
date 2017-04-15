@@ -6,6 +6,11 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -15,11 +20,13 @@ import javax.swing.*;
 public class TopScoreList extends JFrame implements Observer {
 	
 	//singleton
-	private static TopScoreList topTenFrame;
+	private  TopScoreList topTenFrame;
 	
-	private static final int TOP_TEN_ROWS = 10;
-	private static final int TOP_TEN_COLUMNS = 2;
-	private static final String TOP_TEN_TITLE = "Top Ten List";
+	private  final int TOP_TEN_ROWS = 10;
+	private  final int TOP_TEN_COLUMNS = 2;
+	private  final String TOP_TEN_TITLE = "Top Ten List";
+	
+	private TopScoreModel model;
 
 	private JPanel mainPanel;
 	private JPanel topTenListPanel;
@@ -27,8 +34,10 @@ public class TopScoreList extends JFrame implements Observer {
 	JLabel[] playerNames;
 	JLabel[] playerScores;
 
-	private TopScoreList() {
+	public TopScoreList() throws IOException, ClassNotFoundException {
 
+		loadTopScore();
+		model.addObserver(this);
 		// create mainpanel
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
@@ -80,25 +89,25 @@ public class TopScoreList extends JFrame implements Observer {
 	}
 	
 	private void updatePlayerScores(){
-		ArrayList<TopScoreModel> topScores = TopScoreModel.getTopScoreList();
+		String[][] topScores = model.getTopScoreList();
 
-		if (TopScoreModel.getNoPlayers() > 0) {
-			for (int i = 0; i < TopScoreModel.getNoPlayers(); i++) {
+		if (model.getNoPlayers() > 0) {
+			for (int i = 0; i < model.getNoPlayers(); i++) {
 //				playerNames[i].setText(topScores.get(i).getName());
 //				playerScores[i].setText(topScores.get(i).getMoves() + "");
 				
 				playerNames[i].setText("Test");
-				playerScores[i].setText(TopScoreModel.getNoPlayers() + "");
+				playerScores[i].setText(model.getNoPlayers() + "");
 			}
 		}
 	}
 	
-	public static TopScoreList getTopScoreList(){
+	public  TopScoreList getTopScoreList() throws IOException, ClassNotFoundException{
 		if (topTenFrame==null){
 			//TODO
 			topTenFrame = new TopScoreList();
 		}
-		return topTenFrame;
+		return this;
 	}
 
 	
@@ -114,6 +123,15 @@ public class TopScoreList extends JFrame implements Observer {
 		updatePlayerScores();
 
 	}
+	
+
+	public void loadTopScore() throws FileNotFoundException, IOException, ClassNotFoundException
+	{
+		ObjectInputStream in = new ObjectInputStream(new FileInputStream("TopScore.ser"));
+		model = (TopScoreModel) in.readObject();
+	}
+	
+	
 	
 		
 }

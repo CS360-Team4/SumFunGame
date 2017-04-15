@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.*;
 
@@ -42,7 +43,12 @@ public class preGameScreen extends JFrame {
 
 		public void actionPerformed(ActionEvent e) {
 			if(txtName.getText().length() > 0){
-				GameBoard firstGame = new UntimedGame(txtName.getText());
+				try {
+					GameBoard firstGame = new UntimedGame(txtName.getText());
+				} catch (IOException | ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				preGameScreen.this.dispose();
 			}
 		}
@@ -51,7 +57,12 @@ public class preGameScreen extends JFrame {
 	private class timedListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if(txtName.getText().length() > 0){
-				GameBoard firstGame = new TimedGame(txtName.getText());
+				try {
+					GameBoard firstGame = new TimedGame(txtName.getText());
+				} catch (IOException | ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				preGameScreen.this.dispose();
 			}
 		}
