@@ -1,41 +1,42 @@
-import java.util.Timer;
-import java.util.TimerTask;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Timer;
 
 public class TimedGame extends GameBoard {
 
 	private Timer timer;
-	private int delay = 1000;
-	private int period = 1000;
-	private int timeSeconds = 300;
+	private int timeLeft = (1000*60*5);
 	
 	public TimedGame(String name) {
 		super(name);
 		lblTime.setText("5:00");
 		
-		timer = new Timer();
+		timer = new Timer(timeLeft,new timerListener());
 		System.out.println(getTimeString());
-		timer.scheduleAtFixedRate(new TimerTask() {
-			public void run(){
-				setTime();
-				String timeString = (getTimeString());
-				System.out.println(timeString);
-			}
-		}, delay, period);
 	}
 	
-	private void setTime() {
-	    if (timeSeconds == 1)
-	        timer.cancel();
-	    timeSeconds--;
-	}	
+	private class timerListener implements ActionListener{
+		
+	    public void actionPerformed(ActionEvent e)
+	    {
+	        timeLeft -= 1000;
+	        SimpleDateFormat df=new SimpleDateFormat("mm:ss:S");
+	        jLabel1.setText(df.format(timeLeft));
+	        if(timeLeft<=0)
+	        {
+	            timer.stop();
+	        }
+	    }
+	};
 	
 	private String getTimeString(){
 		String timeString = "";
-		if(timeSeconds%60 == 0){
-			timeString = (Integer.toString(timeSeconds/60) + ":" + Integer.toString(timeSeconds%60) + "0");
+		if(timeLeft%60000 == 0){
+			timeString = (Integer.toString(timeLeft/60000) + ":" + Integer.toString((timeLeft%60000)/1000) + "0");
 		}
 		else{
-			timeString = (Integer.toString(timeSeconds/60) + ":" + Integer.toString(timeSeconds%60));
+			timeString = (Integer.toString(timeLeft/60000) + ":" + Integer.toString((timeLeft%60000)/1000));
 		}
 		return timeString;
 	}
