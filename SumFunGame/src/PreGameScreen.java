@@ -1,11 +1,17 @@
-import java.awt.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
-public class preGameScreen extends JFrame {
+
+
+public class PreGameScreen extends JFrame {
 
 	private JPanel mainPanel;
 	private JButton btnUntimed;
@@ -13,15 +19,15 @@ public class preGameScreen extends JFrame {
 	private JTextField txtName;
 	private JLabel lblName;
 
-	public preGameScreen() {
+	public PreGameScreen() {
 		mainPanel = new JPanel();
 		// GridLayout mainLayout = new GridLayout(2,2);
 		// mainPanel.setLayout(mainLayout);
 
 		btnUntimed = new JButton("Start Untimed Game");
-		btnUntimed.addActionListener(new untimedListener());
+		btnUntimed.addActionListener(new UntimedListener());
 		btnTimed = new JButton("Start Timed Game");
-		btnTimed.addActionListener(new timedListener());
+		btnTimed.addActionListener(new TimedListener());
 		lblName = new JLabel("Name: ");
 		txtName = new JTextField("");
 		txtName.setColumns(15);
@@ -39,7 +45,7 @@ public class preGameScreen extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
-	private class untimedListener implements ActionListener {
+	private class UntimedListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
 			if(txtName.getText().length() > 0){
@@ -49,12 +55,12 @@ public class preGameScreen extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				preGameScreen.this.dispose();
+				PreGameScreen.this.dispose();
 			}
 		}
 	}
 
-	private class timedListener implements ActionListener {
+	private class TimedListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			if(txtName.getText().length() > 0){
 				try {
@@ -63,7 +69,7 @@ public class preGameScreen extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				preGameScreen.this.dispose();
+				PreGameScreen.this.dispose();
 			}
 		}
 	}
