@@ -13,8 +13,9 @@ public class TimedGame extends GameBoard {
 		super(name);
 		lblTime.setText("5:00");
 		
-		timer = new Timer(timeLeft,new timerListener());
+		timer = new Timer(1000 ,new timerListener());
 		System.out.println(getTimeString());
+		timer.start();
 	}
 	
 	private class timerListener implements ActionListener{
@@ -24,6 +25,7 @@ public class TimedGame extends GameBoard {
 	        timeLeft -= 1000;
 	        //SimpleDateFormat df=new SimpleDateFormat("mm:ss:S");
 	       // jLabel1.setText(df.format(timeLeft));
+	        lblTime.setText(getTimeString());
 	        if(timeLeft<=0)
 	        {
 	            timer.stop();
