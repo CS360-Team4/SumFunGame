@@ -18,11 +18,11 @@ import topScoreList.TopScoreModel;
 
 public class GameBoard extends JFrame {
 
-	private TileModel[][] tiles;
-	private Tile[][] tileButtons;
-	private TileQueue queue;
+	protected TileModel[][] tiles;
+	protected Tile[][] tileButtons;
+	TileQueue queue;
 	private JPanel mainPanel;
-	private JPanel gridPanel;
+	protected JPanel gridPanel;
 	private JPanel queuePanel;
 	private JPanel queueBorderPanel;
 	protected JPanel labelGridPanel;
@@ -40,8 +40,8 @@ public class GameBoard extends JFrame {
 	int score;
 	private int resetQueueValue = 1;
 	private String playerName;
-	private int endMoves = 0;
-	private boolean gameIsWon = false;
+	protected int playerMoves = 0;
+	protected boolean gameIsWon = false;
 	private TopScoreList topScore;
 
 	public GameBoard(String name) throws IOException, ClassNotFoundException {
@@ -69,7 +69,9 @@ public class GameBoard extends JFrame {
 				}
 				// add tiles to panel and add actionlisteners
 				gridPanel.add(tileButtons[i][j]);
-				tileButtons[i][j].addActionListener(new SwapListener());
+				
+				//give the tiles actionListeners in the subclass
+				//tileButtons[i][j].addActionListener(new SwapListener());
 			}
 		}
 
@@ -258,6 +260,7 @@ public class GameBoard extends JFrame {
 
 				}
 			}
+			playerMoves++;
 			GameBoard.this.checkWin();
 		}
 	}
@@ -334,7 +337,7 @@ public class GameBoard extends JFrame {
 	}
 
 	// set all the nsew links for the tiles
-	private void linkTiles() {
+	void linkTiles() {
 
 		TileModel curr;
 
@@ -442,11 +445,12 @@ public class GameBoard extends JFrame {
 		if(counter == 81 && !gameIsWon){
 			output = true;
 			System.out.println("You won the game!");
-			endMoves = TileQueue.movesLeft;
+			//endMoves = TileQueue.movesLeft;
 			TileQueue.movesLeft = 0;
 			gameIsWon = true;
 		}
-	
+		
+		System.out.println("Moves: " + playerMoves);
 		return output;
 	}
 }

@@ -9,11 +9,12 @@
 /Tile.class
 /TileModel.class
 /TileQueue.class
+/topScoreList/
+/TimedGame$timerListener.class
 /TimedGame.class
 /UntimedGame.class
 /preGameScreen$timedListener.class
 /preGameScreen$untimedListener.class
 /preGameScreen.class
-/topScoreList/
-/TimedGame$1.class
-/TimedGame$timerListener.class
+/TimedGame$SwapListener.class
+/UntimedGame$SwapListener.class
