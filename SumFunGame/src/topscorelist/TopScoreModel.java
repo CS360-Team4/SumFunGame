@@ -1,4 +1,4 @@
-package topScoreList;
+package topscorelist;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,8 +12,8 @@ import java.util.Observable;
 
 public class TopScoreModel extends Observable implements Serializable {
 	
-	private  final int MAX_VALUE = 999;
-	private  final int LAST_PLACE = 9;	
+	private  final int maxValue = 999;
+	private  final int lastPlace = 9;	
 	private String[][] topScores;
 	//private  ArrayList<TopScoreModel> topTenFewestMoves;
 	
@@ -24,30 +24,10 @@ public class TopScoreModel extends Observable implements Serializable {
 	private String name;
 	private int moves;
 	//TODO how to store time? String? double? Object of some sort?
-//	String totalTime;
-	
-	/*
-	public TopScoreModel(String name, int moves){
-		this.name = name;
-		this.moves = moves;
-//		this.totalTime = totalTime;
-		
-		this.addObserver(topScore.getTopScoreList());
-		
-		setChanged();
-		notifyObservers();
-	}
-	*/
-	
-	public TopScoreModel() throws IOException{
 
-		
+	public TopScoreModel() throws IOException {
 		topScores = new String[10][2];
-		createTopTen();//initialize to dummy list
-		
-//		this.totalTime = totalTime;
-		
-		
+		createTopTen();//initialize to dummy list		
 		
 		setChanged();
 		notifyObservers();
@@ -60,10 +40,6 @@ public class TopScoreModel extends Observable implements Serializable {
 	public int getMoves(){
 		return moves;
 	}
-	
-//	public String getTime(){
-//		return totalTime;
-//	}
 	
 	// -------------------------------------------------------------
 	// --------------- Static Methods ------------------------------
@@ -111,13 +87,10 @@ public class TopScoreModel extends Observable implements Serializable {
 			topScores[0][0] = name;
 			topScores[0][1] = Integer.toString(moves);
 			noPlayersInList++;
-		}
-
-		else {
+		} else {
 			for (int i = noPlayersInList - 1; i > 0; i--) {
 				
-				if(moves < Integer.parseInt(topScores[i][1]))
-				{
+				if (moves < Integer.parseInt(topScores[i][1])) {
 					topScores[i][0] = name;
 					topScores[1][1] = Integer.toString(moves);
 				}
@@ -137,21 +110,20 @@ public class TopScoreModel extends Observable implements Serializable {
 	 */
 	
 	
-	public String[][] getTopScoreList()
-	{
+	public String[][] getTopScoreList() {
 		return topScores;
 	}
-	public  int getNoPlayers(){
+	public  int getNoPlayers() {
 		return noPlayersInList;
 	}
 	
-	private void createTopTen(){
+	private void createTopTen() {
 		
 		//topTenFewestMoves = new ArrayList<TopScoreModel>();
 		for (int i = 0; i<10; i++){
 			//topTenFewestMoves.add(new TopScoreModel("-NO PLAYER-", MAX_VALUE));
 			topScores[i][0] = "-NO PLAYER-";
-			topScores[i][1] = Integer.toString(MAX_VALUE);
+			topScores[i][1] = Integer.toString(maxValue);
 		}
 		
 	}
@@ -160,8 +132,7 @@ public class TopScoreModel extends Observable implements Serializable {
 		return Integer.parseInt(topScores[9][1]);
 	}
 
-	public void saveTopScore() throws IOException
-	{
+	public void saveTopScore() throws IOException {
 		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("TopScore.ser"));
 		out.writeObject(this);
 		out.close();
