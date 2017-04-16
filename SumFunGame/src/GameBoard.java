@@ -19,8 +19,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import topscorelist.TopScoreList;
-import topscorelist.TopScoreModel;
+import topScoreList.*;
 
 public class GameBoard extends JFrame {
 
@@ -278,7 +277,7 @@ public class GameBoard extends JFrame {
 
 			dispose();
 			//new GameBoard();
-			new PreGameScreen();
+			new preGameScreen();
 		}
 
 	}
