@@ -37,9 +37,7 @@ public class TopScoreList extends JFrame implements Observer {
 	public TopScoreList() throws IOException, ClassNotFoundException {
 
 		//read model from serialized file
-		//loadTopScore();
-		
-		model = new TopScoreModel();
+		loadTopScore();
 		
 		model.addObserver(this);
 		// create mainpanel
