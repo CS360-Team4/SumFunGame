@@ -5,18 +5,16 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 
-import topscorelist.TopScoreList;
+import topScoreList.TopScoreList;
+import topScoreList.TopScoreModel;
 
 public class GameBoard extends JFrame {
 
@@ -181,11 +179,11 @@ public class GameBoard extends JFrame {
 		newGame = new JMenuItem("New Game");
 		newGame.addActionListener(new NewGameListener());
 		resetQueue = new JMenuItem("Reset Queue");
-		resetQueue.addActionListener(new ResetQueueListener());
+		resetQueue.addActionListener(new resetQueueListener());
 		mnuTopTenMoves = new JMenuItem("Top 10 Least Moves");
-		mnuTopTenMoves.addActionListener(new TopTenMovesListener());
+		mnuTopTenMoves.addActionListener(new topTenMovesListener());
 		addTopPlayer = new JMenuItem("Add Top 10 Player");
-		addTopPlayer.addActionListener(new FakeTopTenMovesListener());
+		addTopPlayer.addActionListener(new fakeTopTenMovesListener());
 		gameMenu.add(newGame);
 		queueMenu.add(resetQueue);
 		topTenMenu.add(mnuTopTenMoves);
@@ -271,12 +269,12 @@ public class GameBoard extends JFrame {
 
 			dispose();
 			//new GameBoard();
-			new PreGameScreen();
+			new preGameScreen();
 		}
 
 	}
 	
-	private class ResetQueueListener implements ActionListener {
+	private class resetQueueListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e){
 			if(resetQueueValue > 0){
@@ -286,7 +284,7 @@ public class GameBoard extends JFrame {
 		}
 	}
 	
-	private class TopTenMovesListener implements ActionListener {
+	private class topTenMovesListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
 			
@@ -297,11 +295,11 @@ public class GameBoard extends JFrame {
 			} catch (IOException | ClassNotFoundException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
+			};
 			}
-		}
 	}
 	
-	private class FakeTopTenMovesListener implements ActionListener {
+	private class fakeTopTenMovesListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
 			
@@ -351,44 +349,60 @@ public class GameBoard extends JFrame {
 					curr.setEast(tiles[i][j + 1]);
 					curr.setSoutheast(tiles[i + 1][j + 1]);
 
-				} else if (i == 0 && j != tiles[i].length - 1) {
+				}
+				// first row not first or last column
+				else if (i == 0 && j != tiles[i].length - 1) {
 					curr.setSouth(tiles[i + 1][j]);
 					curr.setEast(tiles[i][j + 1]);
 					curr.setWest(tiles[i][j - 1]);
 					curr.setSoutheast(tiles[i + 1][j + 1]);
 					curr.setSouthwest(tiles[i + 1][j - 1]);
-				} else if (i == 0 && j == tiles[i].length - 1) {
+				}
+				// first row last column
+				else if (i == 0 && j == tiles[i].length - 1) {
 					curr.setWest(tiles[i][j - 1]);
 					curr.setSouthwest(tiles[i + 1][j - 1]);
 					curr.setSouth(tiles[i + 1][j]);
-				} else if (j == 0 && (i != 0 && i != tiles.length - 1)) {
+				}
+				// first column any row besides 1st and last
+				else if (j == 0 && (i != 0 && i != tiles.length - 1)) {
 					curr.setNorth(tiles[i - 1][j]);
 					curr.setNortheast(tiles[i - 1][j + 1]);
 					curr.setEast(tiles[i][j + 1]);
 					curr.setSoutheast(tiles[i + 1][j + 1]);
 					curr.setSouth(tiles[i + 1][j]);
-				} else if (i == tiles.length - 1 && j == 0) {
+				}
+				// first column last row
+				else if (i == tiles.length - 1 && j == 0) {
 					curr.setNorth(tiles[i - 1][j]);
 					curr.setNortheast(tiles[i - 1][j + 1]);
 					curr.setEast(tiles[i][j + 1]);
-				} else if (i == tiles.length - 1 && (j != tiles[i].length - 1 && j != 0)) {
+				}
+				// any column except first and last on last row
+				else if (i == tiles.length - 1 && (j != tiles[i].length - 1 && j != 0)) {
 					curr.setWest(tiles[i][j - 1]);
 					curr.setNorthwest(tiles[i - 1][j - 1]);
 					curr.setNorth(tiles[i - 1][j]);
 					curr.setNortheast(tiles[i - 1][j + 1]);
 					curr.setEast(tiles[i][j + 1]);
 
-				} else if (i == tiles.length - 1 && j == tiles[i].length - 1) {
+				}
+				// last row last column
+				else if (i == tiles.length - 1 && j == tiles[i].length - 1) {
 					curr.setWest(tiles[i][j - 1]);
 					curr.setNorthwest(tiles[i - 1][j - 1]);
 					curr.setNorth(tiles[i - 1][j]);
-				} else if ((i != 0 && i != tiles.length - 1) && j == tiles[i].length - 1) {
+				}
+				// last column any row except 1st or last
+				else if ((i != 0 && i != tiles.length - 1) && j == tiles[i].length - 1) {
 					curr.setNorth(tiles[i - 1][j]);
 					curr.setNorthwest(tiles[i - 1][j - 1]);
 					curr.setWest(tiles[i][j - 1]);
 					curr.setSouthwest(tiles[i + 1][j - 1]);
 					curr.setSouth(tiles[i + 1][j]);
-				} else {
+				}
+				// otherwise its a non-border tile
+				else {
 
 					curr.setNorth(tiles[i - 1][j]);
 					curr.setSouth(tiles[i + 1][j]);

@@ -1,13 +1,7 @@
-
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
+import java.awt.*;
 import java.util.Observer;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.border.Border;
-
+import javax.swing.*;
+import javax.swing.border.*;
 
 //import javafx.beans.Observable;
 
@@ -51,10 +45,11 @@ public class Tile extends JButton implements Observer {
 		switch (this.getTileModel().getNumber()) {
 			
 			case 0:
-				if (!this.getTileModel().isBlank()){
+				if(!this.getTileModel().isBlank()){
 					this.setBackground(Color.BLACK);
 					this.setForeground(Color.WHITE);
-				} else {
+				}
+				else{
 					this.setBackground(Color.WHITE);
 					this.setForeground(Color.BLACK);
 				}
@@ -104,7 +99,6 @@ public class Tile extends JButton implements Observer {
 				this.setBackground(Color.decode("#fc207f"));
 				this.setForeground(Color.WHITE);
 				break;
-			default:
 		}
 	}
 	

@@ -13,19 +13,21 @@ public class TimedGame extends GameBoard {
 		super(name);
 		lblTime.setText("5:00");
 		
-		timer = new Timer(1000 ,new TimerListener());
+		timer = new Timer(1000 ,new timerListener());
 		System.out.println(getTimeString());
 		timer.start();
 	}
 	
-	private class TimerListener implements ActionListener{
+	private class timerListener implements ActionListener{
 		
-	    public void actionPerformed(ActionEvent e) {
+	    public void actionPerformed(ActionEvent e)
+	    {
 	        timeLeft -= 1000;
 	        //SimpleDateFormat df=new SimpleDateFormat("mm:ss:S");
-	        // jLabel1.setText(df.format(timeLeft));
+	       // jLabel1.setText(df.format(timeLeft));
 	        lblTime.setText(getTimeString());
-	        if (timeLeft<=0) {
+	        if(timeLeft<=0)
+	        {
 	            timer.stop();
 	        }
 	    }
@@ -35,7 +37,8 @@ public class TimedGame extends GameBoard {
 		String timeString = "";
 		if(timeLeft%60000 == 0){
 			timeString = (Integer.toString(timeLeft/60000) + ":" + Integer.toString((timeLeft%60000)/1000) + "0");
-		} else {
+		}
+		else{
 			timeString = (Integer.toString(timeLeft/60000) + ":" + Integer.toString((timeLeft%60000)/1000));
 		}
 		return timeString;
