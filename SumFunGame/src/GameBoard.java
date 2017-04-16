@@ -265,7 +265,6 @@ public class GameBoard extends JFrame {
 
 				}
 			}
-			playerMoves++;
 			GameBoard.this.checkWin();
 		}
 	}

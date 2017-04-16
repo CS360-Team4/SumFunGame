@@ -37,6 +37,8 @@ public class UntimedGame extends GameBoard {
 					temp.setNumber(queue.pop());
 					// temp.update(temp.getNumObject(), temp);
 					temp.setBlank(false);
+					
+					playerMoves++;
 
 					ArrayList<TileModel> neighbors = temp.getNeighbors();
 					
@@ -67,7 +69,6 @@ public class UntimedGame extends GameBoard {
 
 				}
 			}
-			playerMoves++;
 			UntimedGame.this.checkWin();
 		}
 	}

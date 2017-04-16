@@ -53,6 +53,8 @@ public class TimedGame extends GameBoard {
 					temp.setNumber(TimedGame.this.queue.pop());
 					// temp.update(temp.getNumObject(), temp);
 					temp.setBlank(false);
+					
+					playerMoves++;
 
 					ArrayList<TileModel> neighbors = temp.getNeighbors();
 					
@@ -83,7 +85,6 @@ public class TimedGame extends GameBoard {
 
 				}
 			}
-			playerMoves++;
 			TimedGame.this.checkWin();
 		}
 	}
