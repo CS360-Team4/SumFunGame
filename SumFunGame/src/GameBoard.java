@@ -37,7 +37,7 @@ public class GameBoard extends JFrame {
 	private JMenu topTenMenu;
 	private JMenuItem newGame;
 	private JMenuItem resetQueue;
-	private JMenuItem mnuTopTenMoves;
+	private JMenuItem mnuTopTenScore;
 	private JMenuItem addTopPlayer;
 	protected JLabel lblMovesLeft;
 	protected JLabel lblScore;
@@ -187,13 +187,13 @@ public class GameBoard extends JFrame {
 		newGame.addActionListener(new NewGameListener());
 		resetQueue = new JMenuItem("Reset Queue");
 		resetQueue.addActionListener(new ResetQueueListener());
-		mnuTopTenMoves = new JMenuItem("Top 10 Least Moves");
-		mnuTopTenMoves.addActionListener(new TopTenMovesListener());
+		mnuTopTenScore = new JMenuItem("Top 10 Most Points");
+		mnuTopTenScore.addActionListener(new TopTenScoreListener());
 		addTopPlayer = new JMenuItem("Add Top 10 Player");
 		addTopPlayer.addActionListener(new FakeTopTenMovesListener());
 		gameMenu.add(newGame);
 		queueMenu.add(resetQueue);
-		topTenMenu.add(mnuTopTenMoves);
+		topTenMenu.add(mnuTopTenScore);
 		topTenMenu.add(addTopPlayer);
 		setJMenuBar(menuBar);
 		
@@ -291,7 +291,7 @@ public class GameBoard extends JFrame {
 		}
 	}
 	
-	private class TopTenMovesListener implements ActionListener {
+	private class TopTenScoreListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
 			
