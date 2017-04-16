@@ -1,139 +1,102 @@
-package topScoreList;
+package topscorelist;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Observable;
 
 public class TopScoreModel extends Observable implements Serializable {
-	
-	private  final int maxValue = 999;
-	private  final int lastPlace = 9;	
-	private String[][] topScores;
-	//private  ArrayList<TopScoreModel> topTenFewestMoves;
-	
-	private  int noPlayersInList = 0;
-	private TopScoreList topScore;
-	
-	
-	private String name;
-	private int moves;
-	//TODO how to store time? String? double? Object of some sort?
 
+	private final int NAME = 0;
+	private final int POINTS = 1;
+	private String[][] topScores;
+
+	//TopScoreModel uses a 2d String array to maintain a list of the top scores
+	//Operates as the model for the TopScoreList
 	public TopScoreModel() throws IOException {
+
 		topScores = new String[10][2];
-		createTopTen();//initialize to dummy list		
-		
+		createTopTen();// initialize to dummy list
+
+		// this.totalTime = totalTime;
+
+		saveTopScore();
 		setChanged();
 		notifyObservers();
 	}
-	
-	public String getName(){
-		return name;
-	}
-	
-	public int getMoves(){
-		return moves;
-	}
-	
-	// -------------------------------------------------------------
-	// --------------- Static Methods ------------------------------
-	// -------------------------------------------------------------
 
 	/**
-	 * This method checks whether the final score should be added to the
-	 * top score list.
+	 * This method checks whether the final score should be added to the top
+	 * score list. If so it is added to the top score
 	 * 
-	 * @param name - player name
-	 * @param moves - total moves
+	 * @param name
+	 *            - player name
+	 * @param points
+	 *            - total points
 	 * @return boolean - true if top score, false o.w.
 	 */
-	public boolean checkScore(String name, int moves) {
-		/*if (topTenFewestMoves == null) {
-			System.out.println("Null array list");
-			createTopTen();
-		}
-		*/
+	public boolean checkScore(String name, int points) {
 		
-		if (noPlayersInList < 10){
-			System.out.println("Fewer than 10 players");
-			addTopScore(name, moves);
-			return true;
-		}
-
-		// check moves against array list
-		if (moves < getLastPlaceTotMoves()) {
-			System.out.println("Moves beat existing list");
-			// Compare score to the top ten list
-			addTopScore(name, moves);
-			return true;
-
+		for(int i = topScores.length; i < 0; i--)
+		{
+			//if score is high  enough to be in top add to list
+			if(points > Integer.parseInt(topScores[i][POINTS]))
+			{
+				addTopScore(name, points, i);
+				return true;
+			}
 		}
 
 		return false;
 
 	}
-	
-	private void addTopScore(String name, int moves) {
-		// Compare score to the top ten list
 
-		if (noPlayersInList == 0) {
-			//topTenFewestMoves.add(0, new TopScoreModel(name, moves));
-			topScores[0][0] = name;
-			topScores[0][1] = Integer.toString(moves);
-			noPlayersInList++;
-		} else {
-			for (int i = noPlayersInList - 1; i > 0; i--) {
-				
-				if (moves < Integer.parseInt(topScores[i][1])) {
-					topScores[i][0] = name;
-					topScores[1][1] = Integer.toString(moves);
-				}
-			
-			}
+	//updates the topscore model
+	//only called by checkScore(), takes the index of that the new score belongs in and moves the rest of the scores down accordingly
+	private void addTopScore(String name, int points, int index) {
+
+		for(int i = index - 1; i > 1; i--)
+		{
+			topScores[i-1][NAME] = topScores[i][NAME];
+			topScores[i-1][POINTS] = topScores[i][POINTS];
 		}
+		
+		topScores[index][NAME] = name;
+		topScores[index][POINTS] = Integer.toString(points);
+
+		try {
+			saveTopScore();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		setChanged();
+		notifyObservers();
 	}
-	
-	/**
-	 * Returns the array list of top ten scores
-	 * @return ArrayList<TopScoreModel> - array list of top ten fewest moves
-	
-	public  ArrayList<TopScoreModel> getTopScoreList(){
-		if (topTenFewestMoves ==null) createTopTen();
-		return topTenFewestMoves;
-	}
-	 */
-	
-	
+
 	public String[][] getTopScoreList() {
 		return topScores;
 	}
-	public  int getNoPlayers() {
-		return noPlayersInList;
-	}
-	
+
+
+	//use to set topten to default values
 	private void createTopTen() {
-		
-		//topTenFewestMoves = new ArrayList<TopScoreModel>();
-		for (int i = 0; i<10; i++){
-			//topTenFewestMoves.add(new TopScoreModel("-NO PLAYER-", MAX_VALUE));
+		// topTenFewestMoves = new ArrayList<TopScoreModel>();
+		for (int i = 0; i < 10; i++) {
+			// topTenFewestMoves.add(new TopScoreModel("-NO PLAYER-",
+			// MAX_VALUE));
 			topScores[i][0] = "-NO PLAYER-";
-			topScores[i][1] = Integer.toString(maxValue);
+			topScores[i][1] = Integer.toString(0);
 		}
-		
-	}
-	
-	private  int getLastPlaceTotMoves(){
-		return Integer.parseInt(topScores[9][1]);
+
 	}
 
+	
+	//Serializes this object
 	public void saveTopScore() throws IOException {
-		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("TopScore.ser"));
+		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(
+				"TopScore.ser"));
 		out.writeObject(this);
 		out.close();
 	}

@@ -11,7 +11,7 @@ import javax.swing.JTextField;
 
 
 
-public class preGameScreen extends JFrame {
+public class PreGameScreen extends JFrame {
 
 	private JPanel mainPanel;
 	private JButton btnUntimed;
@@ -19,7 +19,7 @@ public class preGameScreen extends JFrame {
 	private JTextField txtName;
 	private JLabel lblName;
 
-	public preGameScreen() {
+	public PreGameScreen() {
 		mainPanel = new JPanel();
 		// GridLayout mainLayout = new GridLayout(2,2);
 		// mainPanel.setLayout(mainLayout);
@@ -55,7 +55,7 @@ public class preGameScreen extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				preGameScreen.this.dispose();
+				PreGameScreen.this.dispose();
 			}
 		}
 	}
@@ -69,7 +69,7 @@ public class preGameScreen extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				preGameScreen.this.dispose();
+				PreGameScreen.this.dispose();
 			}
 		}
 	}
