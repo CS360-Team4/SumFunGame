@@ -41,8 +41,10 @@ public class GameBoard extends JFrame {
 	private JMenuItem resetQueue;
 	private JMenuItem mnuTopTenMoves;
 	private JMenuItem addTopPlayer;
+	protected JLabel lblMovesTitle;
 	protected JLabel lblMovesLeft;
 	protected JLabel lblScore;
+	protected JLabel lblTimeTitle;
 	protected JLabel lblTime;
 	protected int score;
 	protected String name;
@@ -152,7 +154,7 @@ public class GameBoard extends JFrame {
 		innerBorder.add(new JLabel("       "), BorderLayout.WEST);
 		queueBorderPanel.add(innerBorder);
 
-		JLabel lblMovesTitle = new JLabel("Moves: ");
+		lblMovesTitle = new JLabel("Moves: ");
 		lblMovesTitle.setFont(new Font("Arial", Font.BOLD, 20));
 		labelGridPanel.add(lblMovesTitle);
 		lblMovesLeft = new JLabel("");
@@ -160,7 +162,7 @@ public class GameBoard extends JFrame {
 		labelGridPanel.add(lblMovesLeft);
 		// queueBorderPanel.setPreferredSize(new Dimension(100,5));
 		
-		JLabel lblTimeTitle = new JLabel("Time: ");
+		lblTimeTitle = new JLabel("Time: ");
 		lblTimeTitle.setFont(new Font("Arial", Font.BOLD, 20));
 		labelGridPanel.add(lblTimeTitle);
 		lblTime = new JLabel("--:--");

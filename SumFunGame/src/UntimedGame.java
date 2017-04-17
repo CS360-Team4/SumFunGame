@@ -17,6 +17,9 @@ public class UntimedGame extends GameBoard {
 				tileButtons[i][j].addActionListener(new SwapListener());
 			}
 		}
+		
+		super.lblTimeTitle.setVisible(false);
+		super.lblTime.setVisible(false);
 	}
 
 	private class SwapListener implements ActionListener {

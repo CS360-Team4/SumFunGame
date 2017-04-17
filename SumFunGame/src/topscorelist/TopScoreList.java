@@ -70,6 +70,11 @@ public class TopScoreList extends JFrame implements Observer {
 			//System.out.println(temp[i][0]);
 			topTenListPanel.add(playerNames[i]);
 			topTenListPanel.add(playerScores[i]);
+			
+			if(playerNames[i].getText().equals("-NO PLAYER-")){
+				playerNames[i].setVisible(false);
+				playerScores[i].setVisible(false);
+			}
 
 			
 		}

@@ -24,6 +24,8 @@ public class TimedGame extends GameBoard {
 				tileButtons[i][j].addActionListener(new SwapListener());
 			}
 		}
+		super.lblMovesLeft.setVisible(false);
+		super.lblMovesTitle.setVisible(false);
 	}
 	
 	private class TimerListener implements ActionListener{
