@@ -91,7 +91,7 @@ public class TopScoreList extends JFrame implements Observer {
 		mainPanel.setOpaque(true);
 		mainPanel.setBackground(Color.RED);
 		setSize(500, 400);
-		setVisible(true);
+		setVisible(false);
 		setLocationRelativeTo(null);
 		setTitle(TOP_TEN_TITLE);
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
