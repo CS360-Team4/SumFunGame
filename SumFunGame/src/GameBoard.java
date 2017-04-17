@@ -20,7 +20,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import topscorelist.*;
+import topscorelist.TopScoreList;
+import topscorelist.TopScoreModel;
 
 public class GameBoard extends JFrame {
 
@@ -455,12 +456,9 @@ public class GameBoard extends JFrame {
 			gameIsWon = true;
 			
 			//checks if score is top ten worthy and displays a jbox either way.
-			if(topScore.checkScore(name, score))
-			{
+			if (topScore.checkScore(name, score)) {
 				JOptionPane.showMessageDialog(null, "You won the game! Your score has been added to the Top Ten Most Points List!");
-			}
-			else
-			{
+			} else {
 				JOptionPane.showMessageDialog(null, "You won the game!");
 			}
 		}
