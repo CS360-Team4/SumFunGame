@@ -16,7 +16,7 @@ public class TimedGame extends GameBoard {
 		lblTime.setText("5:00");
 		
 		timer = new Timer(1000 ,new TimerListener());
-		System.out.println(getTimeString());
+		//System.out.println(getTimeString());
 		timer.start();
 		
 		for (int i = 0; i < tiles.length; i++) {
@@ -31,7 +31,7 @@ public class TimedGame extends GameBoard {
 	    public void actionPerformed(ActionEvent e) {
 	        timeLeft -= 1000;
 	        lblTime.setText(getTimeString());
-	        if(timeLeft<=0) {
+	        if(timeLeft<=0 || gameIsWon) {
 	            timer.stop();
 	            timerOn = false;
 	        }
@@ -85,9 +85,6 @@ public class TimedGame extends GameBoard {
 			}
 
 			checkWin();
-			if(gameIsWon){
-				timer.stop();
-			}
 		}
 	}
 	

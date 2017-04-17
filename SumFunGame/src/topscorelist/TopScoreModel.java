@@ -48,7 +48,7 @@ public class TopScoreModel extends Observable implements Serializable {
 			//if score is high  enough to be in top add to list
 			if(points > Integer.parseInt(topScores[i][POINTS]))
 			{
-				System.out.println("checkscore model");
+				//System.out.println("checkscore model");
 				addTopScore(name, points, i);
 				return true;
 			}
@@ -72,7 +72,7 @@ public class TopScoreModel extends Observable implements Serializable {
 		topScores[index][NAME] = name;
 		topScores[index][POINTS] = Integer.toString(points);
 
-		System.out.println("added");
+		//System.out.println("added");
 		try {
 			saveTopScore();
 		} catch (IOException e) {
