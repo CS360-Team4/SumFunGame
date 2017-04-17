@@ -2,7 +2,6 @@
 /GameBoard$FakeTopTenMovesListener.class
 /GameBoard$NewGameListener.class
 /GameBoard$ResetQueueListener.class
-/GameBoard$SwapListener.class
 /GameBoard$TopTenMovesListener.class
 /GameBoard.class
 /PreGameScreen$TimedListener.class
@@ -17,4 +16,3 @@
 /UntimedGame$SwapListener.class
 /UntimedGame.class
 /topscorelist/
-/GameBoard$TopTenScoreListener.class

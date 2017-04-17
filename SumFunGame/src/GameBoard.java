@@ -457,11 +457,11 @@ public class GameBoard extends JFrame {
 			//checks if score is top ten worthy and displays a jbox either way.
 			if(topScore.checkScore(name, score))
 			{
-				JOptionPane.showMessageDialog(null, "You won the game, your score has been added to the top ten most points;");
+				JOptionPane.showMessageDialog(null, "You won the game! Your score has been added to the Top Ten Most Points List!");
 			}
 			else
 			{
-				JOptionPane.showMessageDialog(null, "You won the game");
+				JOptionPane.showMessageDialog(null, "You won the game!");
 			}
 		}
 		return output;

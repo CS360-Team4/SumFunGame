@@ -85,6 +85,9 @@ public class TimedGame extends GameBoard {
 			}
 
 			checkWin();
+			if(gameIsWon){
+				timer.stop();
+			}
 		}
 	}
 	
@@ -92,7 +95,10 @@ public class TimedGame extends GameBoard {
 		String timeString = "";
 		if(timeLeft%60000 == 0){
 			timeString = (Integer.toString(timeLeft/60000) + ":" + Integer.toString((timeLeft%60000)/1000) + "0");
-		} else {
+		} else if(timeLeft%6000 > 0 && timeLeft%6000 < 10){
+			timeString = (Integer.toString(timeLeft/60000) + ":0" + Integer.toString((timeLeft%60000)/1000));
+		}
+		else{
 			timeString = (Integer.toString(timeLeft/60000) + ":" + Integer.toString((timeLeft%60000)/1000));
 		}
 		return timeString;
