@@ -37,9 +37,7 @@ public class UntimedGame extends GameBoard {
 					temp.setNumber(queue.pop());
 					// temp.update(temp.getNumObject(), temp);
 					temp.setBlank(false);
-					
 					playerMoves++;
-
 					ArrayList<TileModel> neighbors = temp.getNeighbors();
 					
 					// if the sum mod 10 of neighbors is equal to tile clicked,
@@ -63,13 +61,16 @@ public class UntimedGame extends GameBoard {
 						if(neighbors.size() > 2){
 							tempScore = neighbors.size()*10;
 						}
+	
+						
 						score += tempScore;
 						lblScore.setText(String.valueOf(score));
 					}
 
 				}
 			}
-			UntimedGame.this.checkWin();
+			
+			checkWin();
 		}
 	}
 }

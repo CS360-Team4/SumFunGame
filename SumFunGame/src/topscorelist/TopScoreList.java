@@ -38,6 +38,8 @@ public class TopScoreList extends JFrame implements Observer {
 
 		//read model from serialized file
 		loadTopScore();
+		//or create a dummy list
+		//model = new TopScoreModel();
 		
 		model.addObserver(this);
 		// create mainpanel
@@ -59,13 +61,16 @@ public class TopScoreList extends JFrame implements Observer {
 		for (int i = 0; i < temp.length; i++) {
 			playerNames[i] = new JLabel(temp[i][0]);
 
-			playerScores[i] = new JLabel(temp[1][1] + "");
+			playerScores[i] = new JLabel(temp[i][1] + "");
 			
+			//System.out.println(temp[i][0]);
 			topTenListPanel.add(playerNames[i]);
 			topTenListPanel.add(playerScores[i]);
 
 			
 		}
+		
+
 		 			
 		
 //		JLabel lblScoreTitle = new JLabel("Score: ");
@@ -93,22 +98,21 @@ public class TopScoreList extends JFrame implements Observer {
 
 	}
 	
-	//sets 
+	//sets the jlabels of the top ten to the current score list
 	public void updatePlayerScores(){
 		String[][] temp = model.getTopScoreList();
 		
 		for (int i = 0; i < temp.length; i++) {
 			playerNames[i].setText(temp[i][0]);
 
-			playerScores[i].setText(temp[1][1] + "");
-
-			
+			playerScores[i].setText(temp[i][1] + "");
 		}
 	}
 	
-	public void checkScore(String name, int score)
+	//call the checkscore method for the model
+	public boolean checkScore(String name, int score)
 	{
-		
+		return model.checkScore(name, score);
 	}
 	
 	public  TopScoreList getTopScoreList() throws IOException, ClassNotFoundException{
@@ -138,6 +142,7 @@ public class TopScoreList extends JFrame implements Observer {
 	{
 		ObjectInputStream in = new ObjectInputStream(new FileInputStream("TopScore.ser"));
 		model = (TopScoreModel) in.readObject();
+		in.close();
 	}
 	
 	

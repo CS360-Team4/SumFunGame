@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -37,20 +38,22 @@ public class GameBoard extends JFrame {
 	private JMenu topTenMenu;
 	private JMenuItem newGame;
 	private JMenuItem resetQueue;
-	private JMenuItem mnuTopTenScore;
+	private JMenuItem mnuTopTenMoves;
 	private JMenuItem addTopPlayer;
 	protected JLabel lblMovesLeft;
 	protected JLabel lblScore;
 	protected JLabel lblTime;
-	int score;
+	protected int score;
+	protected String name;
 	private int resetQueueValue = 1;
 	private String playerName;
 	protected int playerMoves = 0;
 	protected boolean gameIsWon = false;
-	private TopScoreList topScore;
+	protected TopScoreList topScore;
 
 	public GameBoard(String name) throws IOException, ClassNotFoundException {
 
+		this.name = name;
 		// create mainpanel
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
@@ -176,6 +179,7 @@ public class GameBoard extends JFrame {
 		mainPanel.add(queueBorderPanel, BorderLayout.EAST);
 		mainPanel.add(gridPanel, BorderLayout.CENTER);
 
+		//menubar and menuitems
 		menuBar = new JMenuBar();
 		gameMenu = new JMenu("Game");
 		menuBar.add(gameMenu);
@@ -187,14 +191,14 @@ public class GameBoard extends JFrame {
 		newGame.addActionListener(new NewGameListener());
 		resetQueue = new JMenuItem("Reset Queue");
 		resetQueue.addActionListener(new ResetQueueListener());
-		mnuTopTenScore = new JMenuItem("Top 10 Most Points");
-		mnuTopTenScore.addActionListener(new TopTenScoreListener());
-		addTopPlayer = new JMenuItem("Add Top 10 Player");
-		addTopPlayer.addActionListener(new FakeTopTenMovesListener());
+		mnuTopTenMoves = new JMenuItem("Top 10 Score");
+		mnuTopTenMoves.addActionListener(new TopTenMovesListener());
+		//addTopPlayer = new JMenuItem("Add Top 10 Player");
+		//addTopPlayer.addActionListener(new FakeTopTenMovesListener());
 		gameMenu.add(newGame);
 		queueMenu.add(resetQueue);
-		topTenMenu.add(mnuTopTenScore);
-		topTenMenu.add(addTopPlayer);
+		topTenMenu.add(mnuTopTenMoves);
+		//topTenMenu.add(addTopPlayer);
 		setJMenuBar(menuBar);
 		
 		
@@ -212,6 +216,8 @@ public class GameBoard extends JFrame {
 
 	}
 
+	/*
+	 *CREATED IN SUBCLASSES
 	// swaplistener is attached to all tiles in the 9x9 grid(not queue tiles)
 	// when called it evaluates the tile clicked and the neighboring tiles and
 	// determines
@@ -222,6 +228,8 @@ public class GameBoard extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
+			
+			System.out.println("Temp: ");
 			Tile button = (Tile) e.getSource();
 			TileModel temp = button.getTileModel();
 			
@@ -259,16 +267,21 @@ public class GameBoard extends JFrame {
 						if(neighbors.size() > 2){
 							tempScore = neighbors.size()*10;
 						}
+						
 						score += tempScore;
 						lblScore.setText(String.valueOf(score));
+						
+				
 					}
 
 				}
 			}
-			GameBoard.this.checkWin();
+			playerMoves++;
+			checkWin();
 		}
 	}
 
+*/
 	private class NewGameListener implements ActionListener {
 
 		@Override
@@ -291,7 +304,7 @@ public class GameBoard extends JFrame {
 		}
 	}
 	
-	private class TopTenScoreListener implements ActionListener {
+	private class TopTenMovesListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
 			
@@ -418,10 +431,12 @@ public class GameBoard extends JFrame {
 	}
 	
 	
+	//checks if the board has been cleared of tiles, which is a win
 	public boolean checkWin(){
 		boolean output = false;
 		int counter = 0;
 		
+		//gets count of total number of blank tiles
 		for(int i = 0; i < 9; i++){
 			for(int j = 0; j < 9; j++){
 				if(tiles[i][j].getNumber() == 0 && tiles[i][j].isBlank()){
@@ -430,15 +445,25 @@ public class GameBoard extends JFrame {
 			}
 		}
 		
+
+		//if there is 81 blank tiles then print out result and check for top ten placement.
 		if(counter == 81 && !gameIsWon){
 			output = true;
 			System.out.println("You won the game!");
 			//endMoves = TileQueue.movesLeft;
 			TileQueue.movesLeft = 0;
 			gameIsWon = true;
+			
+			//checks if score is top ten worthy and displays a jbox either way.
+			if(topScore.checkScore(name, score))
+			{
+				JOptionPane.showMessageDialog(null, "You won the game, your score has been added to the top ten most points;");
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "You won the game");
+			}
 		}
-		
-		System.out.println("Moves: " + playerMoves);
 		return output;
 	}
 }

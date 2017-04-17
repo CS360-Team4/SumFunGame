@@ -53,9 +53,7 @@ public class TimedGame extends GameBoard {
 					temp.setNumber(TimedGame.this.queue.pop());
 					// temp.update(temp.getNumObject(), temp);
 					temp.setBlank(false);
-					
 					playerMoves++;
-
 					ArrayList<TileModel> neighbors = temp.getNeighbors();
 					
 					// if the sum mod 10 of neighbors is equal to tile clicked,
@@ -85,7 +83,8 @@ public class TimedGame extends GameBoard {
 
 				}
 			}
-			TimedGame.this.checkWin();
+
+			checkWin();
 		}
 	}
 	

@@ -8,6 +8,10 @@ import java.util.Observable;
 
 public class TopScoreModel extends Observable implements Serializable {
 
+	/**
+	 *serialVersionUID so that changes to model does not corrupt serialized object
+	 */
+	private static final long serialVersionUID = 1L;
 	private final int NAME = 0;
 	private final int POINTS = 1;
 	private String[][] topScores;
@@ -38,11 +42,13 @@ public class TopScoreModel extends Observable implements Serializable {
 	 */
 	public boolean checkScore(String name, int points) {
 		
-		for(int i = topScores.length; i < 0; i--)
+		for(int i = 0; i < topScores.length - 1; i++)
 		{
+		
 			//if score is high  enough to be in top add to list
 			if(points > Integer.parseInt(topScores[i][POINTS]))
 			{
+				System.out.println("checkscore model");
 				addTopScore(name, points, i);
 				return true;
 			}
@@ -56,15 +62,17 @@ public class TopScoreModel extends Observable implements Serializable {
 	//only called by checkScore(), takes the index of that the new score belongs in and moves the rest of the scores down accordingly
 	private void addTopScore(String name, int points, int index) {
 
-		for(int i = index - 1; i > 1; i--)
+		//move all scores down
+		for(int i = topScores.length - 1 ; i > index; i--)
 		{
-			topScores[i-1][NAME] = topScores[i][NAME];
-			topScores[i-1][POINTS] = topScores[i][POINTS];
+			topScores[i][NAME] = topScores[i-1][NAME];
+			topScores[i][POINTS] = topScores[i-1][POINTS];
 		}
 		
 		topScores[index][NAME] = name;
 		topScores[index][POINTS] = Integer.toString(points);
 
+		System.out.println("added");
 		try {
 			saveTopScore();
 		} catch (IOException e) {
