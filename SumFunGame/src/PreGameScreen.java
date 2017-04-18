@@ -50,7 +50,7 @@ public class PreGameScreen extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			if(txtName.getText().length() > 0){
 				try {
-					GameBoard firstGame = new UntimedGame(txtName.getText());
+					GameBoard firstGame = new UntimedGame();
 				} catch (IOException | ClassNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -64,7 +64,7 @@ public class PreGameScreen extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			if(txtName.getText().length() > 0){
 				try {
-					GameBoard firstGame = new TimedGame(txtName.getText());
+					GameBoard firstGame = new TimedGame();
 				} catch (IOException | ClassNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

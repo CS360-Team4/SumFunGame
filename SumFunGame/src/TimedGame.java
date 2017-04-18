@@ -3,6 +3,8 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 public class TimedGame extends GameBoard {
@@ -10,9 +12,10 @@ public class TimedGame extends GameBoard {
     private Timer timer;
     private int timeLeft = (1000 * 60 * 5);
     private boolean timerOn = true;
+    private boolean winFlag = false;
 
-	public TimedGame(String name) throws IOException, ClassNotFoundException {
-		super(name);
+	public TimedGame() throws IOException, ClassNotFoundException {
+		super();
 		lblTime.setText("5:00");
 		
 		timer = new Timer(1000 ,new TimerListener());
@@ -87,6 +90,14 @@ public class TimedGame extends GameBoard {
 			}
 
 			checkWin();
+			if(gameIsWon && !winFlag){
+				JFrame frame = new JFrame();
+			    String message = "You won! Please enter your name: ";
+			    String text = JOptionPane.showInputDialog(frame, message);
+			    if (text != null) {
+			    	name = text;
+			    }
+			}
 		}
 	}
 	

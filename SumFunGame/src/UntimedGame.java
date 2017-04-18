@@ -4,12 +4,16 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class UntimedGame extends GameBoard {
 	
-	public UntimedGame(String name) throws IOException, ClassNotFoundException {
-		super(name);
+	private boolean winFlag = false;
+	
+	public UntimedGame() throws IOException, ClassNotFoundException {
+		super();
 		lblMovesLeft.setText(String.valueOf(TileQueue.movesLeft));
 		
 		for (int i = 0; i < tiles.length; i++) {
@@ -74,6 +78,14 @@ public class UntimedGame extends GameBoard {
 			}
 			
 			checkWin();
+			if(gameIsWon && !winFlag){
+				JFrame frame = new JFrame();
+			    String message = "You won! Please enter your name: ";
+			    String text = JOptionPane.showInputDialog(frame, message);
+			    if (text != null) {
+			    	name = text;
+			    }
+			}
 		}
 	}
 }

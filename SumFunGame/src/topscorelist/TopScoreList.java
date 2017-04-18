@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -126,9 +127,14 @@ public class TopScoreList extends JFrame implements Observer {
 	
 
 	public void loadTopScore() throws FileNotFoundException, IOException, ClassNotFoundException {
-		ObjectInputStream in = new ObjectInputStream(new FileInputStream("TopScore.ser"));
-		model = (TopScoreModel) in.readObject();
-		in.close();
+		if(new File("TopScore.ser").exists()){
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream("TopScore.ser"));
+			model = (TopScoreModel) in.readObject();
+			in.close();
+		}
+		else{
+			model = new TopScoreModel();
+		}
 	}
 	
 	

@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -29,18 +30,15 @@ public class GameBoard extends JFrame {
 	protected Tile[][] tileButtons;
 	TileQueue queue;
 	private JPanel mainPanel;
+	protected JPanel buttonPanel;
 	protected JPanel gridPanel;
 	private JPanel queuePanel;
 	private JPanel queueBorderPanel;
 	protected JPanel labelGridPanel;
-	private JMenuBar menuBar;
-	private JMenu gameMenu;
-	private JMenu queueMenu;
-	private JMenu topTenMenu;
-	private JMenuItem newGame;
-	private JMenuItem resetQueue;
-	private JMenuItem mnuTopTenMoves;
-	private JMenuItem addTopPlayer;
+	private JButton btnNewTimedGame;
+	private JButton btnNewUntimedGame;
+	private JButton btnResetQueue;
+	private JButton btnTopTen;
 	protected JLabel lblMovesTitle;
 	protected JLabel lblMovesLeft;
 	protected JLabel lblScore;
@@ -54,7 +52,7 @@ public class GameBoard extends JFrame {
 	protected boolean gameIsWon = false;
 	protected TopScoreList topScore;
 
-	public GameBoard(String name) throws IOException, ClassNotFoundException {
+	public GameBoard() throws IOException, ClassNotFoundException {
 
 		this.name = name;
 		// create mainpanel
@@ -182,28 +180,29 @@ public class GameBoard extends JFrame {
 		mainPanel.add(queueBorderPanel, BorderLayout.EAST);
 		mainPanel.add(gridPanel, BorderLayout.CENTER);
 
-		//menubar and menuitems
-		menuBar = new JMenuBar();
-		gameMenu = new JMenu("Game");
-		menuBar.add(gameMenu);
-		queueMenu = new JMenu("Queue");
-		menuBar.add(queueMenu);
-		topTenMenu = new JMenu("Top 10");
-		menuBar.add(topTenMenu);
-		newGame = new JMenuItem("New Game");
-		newGame.addActionListener(new NewGameListener());
-		resetQueue = new JMenuItem("Reset Queue");
-		resetQueue.addActionListener(new ResetQueueListener());
-		mnuTopTenMoves = new JMenuItem("Top 10 Score");
-		mnuTopTenMoves.addActionListener(new TopTenMovesListener());
+		//button queue and buttons
+		buttonPanel = new JPanel();
+		GridLayout buttonLayout = new GridLayout(1,4);
+		buttonPanel.setLayout(buttonLayout);
+		btnNewTimedGame = new JButton("New Timed Game");
+		btnNewTimedGame.addActionListener(new NewTimedGameListener());
+		btnNewUntimedGame = new JButton("New Untimed Game");
+		btnNewUntimedGame.addActionListener(new NewUntimedGameListener());
+		btnResetQueue = new JButton("Reset Queue");
+		btnResetQueue.addActionListener(new ResetQueueListener());
+		btnTopTen = new JButton("Top 10 Lists");
+		btnTopTen.addActionListener(new TopTenMovesListener());
 		//addTopPlayer = new JMenuItem("Add Top 10 Player");
 		//addTopPlayer.addActionListener(new FakeTopTenMovesListener());
-		gameMenu.add(newGame);
-		queueMenu.add(resetQueue);
-		topTenMenu.add(mnuTopTenMoves);
+		buttonPanel.add(btnNewUntimedGame);
+		buttonPanel.add(btnNewTimedGame);
+		buttonPanel.add(btnTopTen);
+		buttonPanel.add(btnResetQueue);
 		//topTenMenu.add(addTopPlayer);
-		setJMenuBar(menuBar);
-		
+		buttonPanel.setVisible(true);
+		buttonPanel.setOpaque(true);
+		buttonPanel.setBackground(Color.WHITE);
+		mainPanel.add(buttonPanel, BorderLayout.NORTH);
 		
 		topScore = new TopScoreList();
 		add(mainPanel);
@@ -285,14 +284,42 @@ public class GameBoard extends JFrame {
 	}
 
 */
-	private class NewGameListener implements ActionListener {
+	private class NewTimedGameListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
 			dispose();
 			//new GameBoard();
-			new PreGameScreen();
+			try {
+				new TimedGame();
+			} catch (ClassNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	
+	private class NewUntimedGameListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+
+			dispose();
+			//new GameBoard();
+			try {
+				new UntimedGame();
+			} catch (ClassNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 
 	}
@@ -452,14 +479,20 @@ public class GameBoard extends JFrame {
 		//if there is 81 blank tiles then print out result and check for top ten placement.
 		if(counter == 81 && !gameIsWon){
 			output = true;
-			System.out.println("You won the game!");
+			//System.out.println("You won the game!");
 			//endMoves = TileQueue.movesLeft;
 			TileQueue.movesLeft = 0;
 			gameIsWon = true;
 			
 			//checks if score is top ten worthy and displays a jbox either way.
 			if (topScore.checkScore(name, score)) {
-				JOptionPane.showMessageDialog(null, "You won the game! Your score has been added to the Top Ten Most Points List!");
+				JFrame frame = new JFrame();
+			    String message = "You won! Your score has made it in the Top Ten Most Points! Please enter your name.";
+			    String text = JOptionPane.showInputDialog(frame, message);
+			    if (text != null) {
+			    	name = text;
+			    }
+				//JOptionPane.showMessageDialog(null, "You won the game! Your score has been added to the Top Ten Most Points List!");
 			} else {
 				JOptionPane.showMessageDialog(null, "You won the game!");
 			}

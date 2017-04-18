@@ -16,3 +16,5 @@
 /UntimedGame$SwapListener.class
 /UntimedGame.class
 /topscorelist/
+/GameBoard$NewTimedGameListener.class
+/GameBoard$NewUntimedGameListener.class
