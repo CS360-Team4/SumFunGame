@@ -138,26 +138,27 @@ public class TopScoreList extends JFrame implements Observer {
 		else{
 			model = new TopScoreModel();
 		}*/
-		
-		model = new TopScoreModel();
-		
-		String[][] temp = new String[10][10];
-		File input = new File("TopTen.txt");
-		String currentLine = "";
-		Scanner scanFile = new Scanner(input);
-		for(int i = 0; i < temp.length; i++){
-			temp[i][0] = scanFile.nextLine();
-			temp[i][1] = scanFile.nextLine();
+		if(new File("TopTen.txt").exists())	{
+			String[][] temp = new String[10][10];
+			File input = new File("TopTen.txt");
+			Scanner scanFile = new Scanner(input);
+			for(int i = 0; i < temp.length; i++){
+				temp[i][0] = scanFile.next();
+				temp[i][1] = Integer.toString(scanFile.nextInt());
+				scanFile.nextLine();
+			}
+				model = new TopScoreModel(temp);
+				scanFile.close();
 		}
-			model.setTopScores(temp);
-			model.saveTopScore();
-			model.notifyObservers();
+		else{
+			model = new TopScoreModel();
+		}
 
-		String[][] tester = model.getTopScores();
+		/*String[][] tester = model.getTopScores();
 		for(int i = 0; i < tester.length; i++){
 			System.out.println(tester[i][0]);
 			System.out.println(tester[i][1]);
-		}
+		}*/
 		
 	}	
 }

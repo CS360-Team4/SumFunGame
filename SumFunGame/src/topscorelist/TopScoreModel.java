@@ -1,11 +1,13 @@
 package topscorelist;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.Observable;
+import java.util.Scanner;
 
 public class TopScoreModel extends Observable implements Serializable {
 
@@ -29,6 +31,17 @@ public class TopScoreModel extends Observable implements Serializable {
 		saveTopScore();
 		setChanged();
 		notifyObservers();
+	}
+	
+	public TopScoreModel(String[][] topScores) throws IOException {
+		topScores = new String[10][10];
+		File input = new File("TopTen.txt");
+		Scanner scanFile = new Scanner(input);
+		for(int i = 0; i < topScores.length; i++){
+			topScores[i][0] = scanFile.nextLine();
+			topScores[i][1] = scanFile.nextLine();
+		}
+		scanFile.close();
 	}
 
 	/**
@@ -87,7 +100,7 @@ public class TopScoreModel extends Observable implements Serializable {
 		for (int i = 0; i < 10; i++) {
 			// topTenFewestMoves.add(new TopScoreModel("-NO PLAYER-",
 			// MAX_VALUE));
-			topScores[i][0] = "-NO PLAYER-";
+			topScores[i][0] = "NO_PLAYER";
 			topScores[i][1] = Integer.toString(0);
 		}
 
@@ -103,8 +116,9 @@ public class TopScoreModel extends Observable implements Serializable {
 		
 		PrintWriter output = new PrintWriter("TopTen.txt");
 		for(int i = 0; i < topScores.length; i++){
-			output.println(topScores[i][nameIndex]);
-			output.println(topScores[i][pointsIndex]);
+			output.print(topScores[i][nameIndex] + " ");
+			output.print(topScores[i][pointsIndex]);
+			output.println("");
 		}
 		output.close();
 	}
