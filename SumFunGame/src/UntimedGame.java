@@ -77,14 +77,14 @@ public class UntimedGame extends GameBoard {
 				}
 			}
 			
-			checkWin();
-			if(gameIsWon && !winFlag){
-				JFrame frame = new JFrame();
-			    String message = "You won! Please enter your name: ";
-			    String text = JOptionPane.showInputDialog(frame, message);
-			    if (text != null) {
-			    	name = text;
-			    }
+			try {
+				checkWin();
+			} catch (ClassNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
 		}
 	}

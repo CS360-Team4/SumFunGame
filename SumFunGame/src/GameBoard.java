@@ -47,14 +47,12 @@ public class GameBoard extends JFrame {
 	protected int score;
 	protected String name;
 	private int resetQueueValue = 1;
-	private String playerName;
 	protected int playerMoves = 0;
 	protected boolean gameIsWon = false;
 	protected TopScoreList topScore;
 
 	public GameBoard() throws IOException, ClassNotFoundException {
 
-		this.name = name;
 		// create mainpanel
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
@@ -191,7 +189,7 @@ public class GameBoard extends JFrame {
 		btnResetQueue = new JButton("Reset Queue");
 		btnResetQueue.addActionListener(new ResetQueueListener());
 		btnTopTen = new JButton("Top 10 Lists");
-		btnTopTen.addActionListener(new TopTenMovesListener());
+		btnTopTen.addActionListener(new TopTenScoreListener());
 		//addTopPlayer = new JMenuItem("Add Top 10 Player");
 		//addTopPlayer.addActionListener(new FakeTopTenMovesListener());
 		buttonPanel.add(btnNewUntimedGame);
@@ -212,8 +210,7 @@ public class GameBoard extends JFrame {
 		setSize(1000, 800);
 		setVisible(true);
 		setLocationRelativeTo(null);
-		playerName = name;
-		setTitle(playerName+"'s Sum Fun Game");
+		setTitle("Sum Fun Game");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	}
@@ -334,7 +331,7 @@ public class GameBoard extends JFrame {
 		}
 	}
 	
-	private class TopTenMovesListener implements ActionListener {
+	private class TopTenScoreListener implements ActionListener {
 		
 		public void actionPerformed(ActionEvent e) {
 			
@@ -452,17 +449,8 @@ public class GameBoard extends JFrame {
 		}
 	}
 	
-	public String getPlayerName() {
-		return playerName;
-	}
-
-	public void setPlayerName(String playerName) {
-		this.playerName = playerName;
-	}
-	
-	
 	//checks if the board has been cleared of tiles, which is a win
-	public boolean checkWin(){
+	public boolean checkWin() throws ClassNotFoundException, IOException{
 		boolean output = false;
 		int counter = 0;
 		
@@ -492,6 +480,8 @@ public class GameBoard extends JFrame {
 			    if (text != null) {
 			    	name = text;
 			    }
+			    topScore.getTopScoreList().checkScore(name, score);
+			    topScore.updatePlayerScores();
 				//JOptionPane.showMessageDialog(null, "You won the game! Your score has been added to the Top Ten Most Points List!");
 			} else {
 				JOptionPane.showMessageDialog(null, "You won the game!");

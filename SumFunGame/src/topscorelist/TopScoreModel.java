@@ -3,6 +3,7 @@ package topscorelist;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.Observable;
 
@@ -80,11 +81,6 @@ public class TopScoreModel extends Observable implements Serializable {
 		notifyObservers();
 	}
 
-	public String[][] getTopScoreList() {
-		return topScores;
-	}
-
-
 	//use to set topten to default values
 	private void createTopTen() {
 		// topTenFewestMoves = new ArrayList<TopScoreModel>();
@@ -100,9 +96,28 @@ public class TopScoreModel extends Observable implements Serializable {
 	
 	//Serializes this object
 	public void saveTopScore() throws IOException {
-		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(
+		/*ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(
 				"TopScore.ser"));
 		out.writeObject(this);
-		out.close();
+		out.close();*/
+		
+		PrintWriter output = new PrintWriter("TopTen.txt");
+		for(int i = 0; i < topScores.length; i++){
+			output.println(topScores[i][nameIndex]);
+			output.println(topScores[i][pointsIndex]);
+		}
+		output.close();
+	}
+
+	public String[][] getTopScores() {
+		return topScores;
+	}
+
+	public void setTopScores(String[][] topScores) {
+		this.topScores = topScores;
+	}
+
+	public int getPointsIndex() {
+		return pointsIndex;
 	}
 }

@@ -18,3 +18,4 @@
 /topscorelist/
 /GameBoard$NewTimedGameListener.class
 /GameBoard$NewUntimedGameListener.class
+/GameBoard$TopTenScoreListener.class

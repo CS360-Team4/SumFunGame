@@ -6,15 +6,18 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Scanner;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -60,7 +63,7 @@ public class TopScoreList extends JFrame implements Observer {
 		playerNames = new JLabel[10];
 		playerScores = new JLabel[10];
 		
-		String[][] temp = model.getTopScoreList();
+		String[][] temp = model.getTopScores();
 		
 		//initialize 
 		for (int i = 0; i < temp.length; i++) {
@@ -96,7 +99,7 @@ public class TopScoreList extends JFrame implements Observer {
 	
 	//sets the jlabels of the top ten to the current score list
 	public void updatePlayerScores(){
-		String[][] temp = model.getTopScoreList();
+		String[][] temp = model.getTopScores();
 		
 		for (int i = 0; i < temp.length; i++) {
 			playerNames[i].setText(temp[i][0]);
@@ -127,17 +130,34 @@ public class TopScoreList extends JFrame implements Observer {
 	
 
 	public void loadTopScore() throws FileNotFoundException, IOException, ClassNotFoundException {
-		if(new File("TopScore.ser").exists()){
+		/*if(new File("TopScore.ser").exists()){
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream("TopScore.ser"));
 			model = (TopScoreModel) in.readObject();
 			in.close();
 		}
 		else{
 			model = new TopScoreModel();
-		}
-	}
-	
-	
-	
+		}*/
 		
+		model = new TopScoreModel();
+		
+		String[][] temp = new String[10][10];
+		File input = new File("TopTen.txt");
+		String currentLine = "";
+		Scanner scanFile = new Scanner(input);
+		for(int i = 0; i < temp.length; i++){
+			temp[i][0] = scanFile.nextLine();
+			temp[i][1] = scanFile.nextLine();
+		}
+			model.setTopScores(temp);
+			model.saveTopScore();
+			model.notifyObservers();
+
+		String[][] tester = model.getTopScores();
+		for(int i = 0; i < tester.length; i++){
+			System.out.println(tester[i][0]);
+			System.out.println(tester[i][1]);
+		}
+		
+	}	
 }
