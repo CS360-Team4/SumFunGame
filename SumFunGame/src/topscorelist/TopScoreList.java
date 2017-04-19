@@ -75,7 +75,7 @@ public class TopScoreList extends JFrame implements Observer {
 			topTenListPanel.add(playerNames[i]);
 			topTenListPanel.add(playerScores[i]);
 			
-			if(playerNames[i].getText().equals("-NO PLAYER-")){
+			if(playerNames[i].getText().equals("NO_PLAYER")){
 				playerNames[i].setVisible(false);
 				playerScores[i].setVisible(false);
 			}
@@ -97,6 +97,14 @@ public class TopScoreList extends JFrame implements Observer {
 
 	}
 	
+	public TopScoreModel getModel() {
+		return model;
+	}
+
+	public void setModel(TopScoreModel model) {
+		this.model = model;
+	}
+
 	//sets the jlabels of the top ten to the current score list
 	public void updatePlayerScores(){
 		String[][] temp = model.getTopScores();
@@ -139,7 +147,7 @@ public class TopScoreList extends JFrame implements Observer {
 			model = new TopScoreModel();
 		}*/
 		if(new File("TopTen.txt").exists())	{
-			String[][] temp = new String[10][10];
+			String[][] temp = new String[10][2];
 			File input = new File("TopTen.txt");
 			Scanner scanFile = new Scanner(input);
 			for(int i = 0; i < temp.length; i++){

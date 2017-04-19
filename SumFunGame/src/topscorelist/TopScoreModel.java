@@ -34,14 +34,21 @@ public class TopScoreModel extends Observable implements Serializable {
 	}
 	
 	public TopScoreModel(String[][] topScores) throws IOException {
-		topScores = new String[10][10];
+		/*topScores = new String[10][10];
 		File input = new File("TopTen.txt");
 		Scanner scanFile = new Scanner(input);
 		for(int i = 0; i < topScores.length; i++){
-			topScores[i][0] = scanFile.nextLine();
-			topScores[i][1] = scanFile.nextLine();
+			topScores[i][0] = scanFile.next();
+			topScores[i][1] = Integer.toString(scanFile.nextInt());
+			scanFile.nextLine();
 		}
-		scanFile.close();
+		scanFile.close();*/
+		
+		this.topScores = new String[10][2];
+		for(int i = 0; i < topScores.length; i++){
+			this.topScores[i][0] = topScores[i][0];
+			this.topScores[i][1] = topScores[i][1];
+		}
 	}
 
 	/**

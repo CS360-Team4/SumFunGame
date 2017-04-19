@@ -338,6 +338,8 @@ public class GameBoard extends JFrame {
 			//Need logic here to load the top ten least moves object and display it in a new JPane/JFrame
 			//TODO change - this is getting a static instance
 			try {
+				topScore = new TopScoreList();
+				//topScore.updatePlayerScores();
 				topScore.getTopScoreList().setVisible(true);
 			} catch (IOException | ClassNotFoundException e1) {
 				// TODO Auto-generated catch block
@@ -472,16 +474,17 @@ public class GameBoard extends JFrame {
 			TileQueue.movesLeft = 0;
 			gameIsWon = true;
 			
+			String[][] temp = topScore.getModel().getTopScores();
+			
 			//checks if score is top ten worthy and displays a jbox either way.
-			if (topScore.checkScore(name, score)) {
+			if (score > Integer.parseInt(temp[9][1])) {
 				JFrame frame = new JFrame();
 			    String message = "You won! Your score has made it in the Top Ten Most Points! Please enter your name.";
 			    String text = JOptionPane.showInputDialog(frame, message);
 			    if (text != null) {
 			    	name = text;
 			    }
-			    topScore.getTopScoreList().checkScore(name, score);
-			    topScore.updatePlayerScores();
+			    topScore.checkScore(name, score);
 				//JOptionPane.showMessageDialog(null, "You won the game! Your score has been added to the Top Ten Most Points List!");
 			} else {
 				JOptionPane.showMessageDialog(null, "You won the game!");
