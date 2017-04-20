@@ -46,6 +46,7 @@ public class leastTimeList extends JFrame implements Observer {
 
 		//read model from serialized file
 		loadLeastTimes();
+		//model.sort();  ----------------Uncomment this when the sort method is finished
 		//or create a dummy list
 		//model = new TopScoreModel();
 		

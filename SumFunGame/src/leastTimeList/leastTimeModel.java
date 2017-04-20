@@ -70,7 +70,7 @@ public class leastTimeModel extends Observable implements Serializable {
 		for(int i = 0; i < leastTimes.length - 1; i++) {
 		
 			//if score is high  enough to be in top add to list
-			if(time > times[i]) {
+			if(time < times[i]) {
 				//System.out.println("checkscore model");
 				addLeastTime(name, time, i);
 				return true;
@@ -167,5 +167,10 @@ public class leastTimeModel extends Observable implements Serializable {
 			timeString = (Integer.toString(time/60000) + ":" + Integer.toString((time%60000)/1000));
 		}
 		return timeString;
+	}
+	
+	//Sorting the values in case the text file is in the wrong order
+	public void sort(){
+		
 	}
 }

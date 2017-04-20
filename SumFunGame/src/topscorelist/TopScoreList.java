@@ -146,7 +146,7 @@ public class TopScoreList extends JFrame implements Observer {
 		else{
 			model = new TopScoreModel();
 		}*/
-		if(new File("TopTen.txt").exists())	{
+		if(new File("TopScore.txt").exists())	{
 			String[][] temp = new String[10][2];
 			File input = new File("TopScore.txt");
 			Scanner scanFile = new Scanner(input);
