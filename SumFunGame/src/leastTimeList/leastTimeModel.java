@@ -18,12 +18,14 @@ public class leastTimeModel extends Observable implements Serializable {
 	private final int nameIndex = 0;
 	private final int timesIndex = 1;
 	private String[][] leastTimes;
+	private int[] times;
 
 	//leastTimeModel uses a 2d String array to maintain a list of the names and times
 	//Operates as the model for the leastTimeList
 	public leastTimeModel() throws IOException {
 
 		leastTimes = new String[10][2];
+		times = new int[10];
 		createTopTen();// initialize to dummy list
 
 		// this.totalTime = totalTime;
@@ -33,7 +35,7 @@ public class leastTimeModel extends Observable implements Serializable {
 		notifyObservers();
 	}
 	
-	public leastTimeModel(String[][] leastTimes) throws IOException {
+	public leastTimeModel(String[][] leastTimes, int[] times) throws IOException {
 		/*topScores = new String[10][10];
 		File input = new File("TopTen.txt");
 		Scanner scanFile = new Scanner(input);
@@ -45,8 +47,10 @@ public class leastTimeModel extends Observable implements Serializable {
 		scanFile.close();*/
 		
 		this.leastTimes = new String[10][2];
+		this.times = new int[10];
 		for(int i = 0; i < leastTimes.length; i++){
 			this.leastTimes[i][0] = leastTimes[i][0];
+			this.times[i] = times[i];
 			this.leastTimes[i][1] = leastTimes[i][1];
 		}
 	}
@@ -66,7 +70,7 @@ public class leastTimeModel extends Observable implements Serializable {
 		for(int i = 0; i < leastTimes.length - 1; i++) {
 		
 			//if score is high  enough to be in top add to list
-			if(time > Integer.parseInt(leastTimes[i][timesIndex])) {
+			if(time > times[i]) {
 				//System.out.println("checkscore model");
 				addLeastTime(name, time, i);
 				return true;
@@ -85,10 +89,12 @@ public class leastTimeModel extends Observable implements Serializable {
 		for(int i = leastTimes.length - 1 ; i > index; i--) {
 			leastTimes[i][nameIndex] = leastTimes[i-1][nameIndex];
 			leastTimes[i][timesIndex] = leastTimes[i-1][timesIndex];
+			times[i] = times[i-1];
 		}
 		
 		leastTimes[index][nameIndex] = name;
-		leastTimes[index][timesIndex] = Integer.toString(time);
+		times[index] = time;
+		leastTimes[index][timesIndex] = getTimeString(time);
 
 		//System.out.println("added");
 		try {
@@ -108,7 +114,8 @@ public class leastTimeModel extends Observable implements Serializable {
 			// topTenFewestMoves.add(new TopScoreModel("-NO PLAYER-",
 			// MAX_VALUE));
 			leastTimes[i][0] = "NO_PLAYER";
-			leastTimes[i][1] = Integer.toString(0);
+			times[i] = 300000;
+			leastTimes[i][1] = getTimeString(300000);
 		}
 
 	}
@@ -124,10 +131,18 @@ public class leastTimeModel extends Observable implements Serializable {
 		PrintWriter output = new PrintWriter("LeastTimes.txt");
 		for(int i = 0; i < leastTimes.length; i++){
 			output.print(leastTimes[i][nameIndex] + " ");
-			output.print(leastTimes[i][timesIndex]);
+			output.print(Integer.toString(times[i]));
 			output.println("");
 		}
 		output.close();
+	}
+
+	public int[] getTimes() {
+		return times;
+	}
+
+	public void setTimes(int[] times) {
+		this.times = times;
 	}
 
 	public String[][] getLeastTimes() {
@@ -140,5 +155,17 @@ public class leastTimeModel extends Observable implements Serializable {
 
 	public int getTimesIndex() {
 		return timesIndex;
+	}
+	
+	public String getTimeString(int time){
+		String timeString = "";
+		if (time%60000 == 0){
+			timeString = (Integer.toString(time/60000) + ":" + Integer.toString((time%60000)/1000) + "0");
+		} else if(time%60000 > 0 && time%60000 < 10){
+			timeString = (Integer.toString(time/60000) + ":0" + Integer.toString((time%60000)/1000));
+		} else {
+			timeString = (Integer.toString(time/60000) + ":" + Integer.toString((time%60000)/1000));
+		}
+		return timeString;
 	}
 }

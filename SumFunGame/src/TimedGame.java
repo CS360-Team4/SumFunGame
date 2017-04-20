@@ -140,9 +140,10 @@ public class TimedGame extends GameBoard {
 			
 			String[][] temp = topScore.getModel().getTopScores();
 			String[][] temp2 = leastTimes.getModel().getLeastTimes();
+			int[] tempTimes = leastTimes.getModel().getTimes();
 			
 			//checks if score is top ten worthy and displays a jbox either way.
-			if ((300000 - timeLeft) < Integer.parseInt(temp2[9][1])) {
+			if ((300000 - timeLeft) < tempTimes[9]) {
 				JFrame frame = new JFrame();
 			    String message = "You won! Your time has made it in the Top Ten Least Times! Please enter your name.";
 			    String text = JOptionPane.showInputDialog(frame, message);

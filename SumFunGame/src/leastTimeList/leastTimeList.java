@@ -148,14 +148,16 @@ public class leastTimeList extends JFrame implements Observer {
 		}*/
 		if(new File("LeastTimes.txt").exists())	{
 			String[][] temp = new String[10][2];
+			int[] tempTimes = new int[10];
 			File input = new File("LeastTimes.txt");
 			Scanner scanFile = new Scanner(input);
 			for(int i = 0; i < temp.length; i++){
 				temp[i][0] = scanFile.next();
-				temp[i][1] = getTimeString(scanFile.nextInt());
+				tempTimes[i] = scanFile.nextInt();
 				scanFile.nextLine();
+				temp[i][1] = getTimeString(tempTimes[i]);
 			}
-				model = new leastTimeModel(temp);
+				model = new leastTimeModel(temp, tempTimes);
 				scanFile.close();
 		}
 		else{
