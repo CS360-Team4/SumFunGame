@@ -2,6 +2,7 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.text.ParseException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -51,7 +52,7 @@ public class PreGameScreen extends JFrame {
 			if(txtName.getText().length() > 0){
 				try {
 					GameBoard firstGame = new UntimedGame();
-				} catch (IOException | ClassNotFoundException e1) {
+				} catch (IOException | ClassNotFoundException | ParseException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
@@ -65,7 +66,7 @@ public class PreGameScreen extends JFrame {
 			if(txtName.getText().length() > 0){
 				try {
 					GameBoard firstGame = new TimedGame();
-				} catch (IOException | ClassNotFoundException e1) {
+				} catch (IOException | ClassNotFoundException | ParseException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}

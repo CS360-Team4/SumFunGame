@@ -14,14 +14,19 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 
 
@@ -31,7 +36,7 @@ public class leastTimeList extends JFrame implements Observer {
 	private  leastTimeList topTenFrame;
 	
 	private  final int topTenRows = 10;
-	private  final int topTenColumns = 2;
+	private  final int topTenColumns = 3;
 	private  final String topTenTitle = "Top Ten Least Times";
 	
 	private leastTimeModel model;
@@ -41,8 +46,10 @@ public class leastTimeList extends JFrame implements Observer {
 	
 	JLabel[] playerNames;
 	JLabel[] playerTimes;
+	JLabel[] playerDates;
+	private SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 
-	public leastTimeList() throws IOException, ClassNotFoundException {
+	public leastTimeList() throws IOException, ClassNotFoundException, ParseException {
 
 		//read model from serialized file
 		loadLeastTimes();
@@ -57,14 +64,26 @@ public class leastTimeList extends JFrame implements Observer {
 
 		// create gridpanel to hold tiles
 		topTenListPanel = new JPanel();
-		topTenListPanel.setLayout(new GridLayout(topTenRows, topTenColumns));
+		topTenListPanel.setLayout(new GridLayout(topTenRows+1, topTenColumns));
 		topTenListPanel.setVisible(true);
 		topTenListPanel.setBackground(Color.WHITE);
 		
+		JLabel playerTitle = new JLabel("Player");
+		JLabel timeTitle = new JLabel("Time");
+		JLabel dateTitle = new JLabel("Date");
+		playerTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		timeTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		dateTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		topTenListPanel.add(playerTitle);
+		topTenListPanel.add(timeTitle);
+		topTenListPanel.add(dateTitle);
+		
 		playerNames = new JLabel[10];
 		playerTimes = new JLabel[10];
+		playerDates = new JLabel[10];
 		
 		String[][] temp = model.getLeastTimes();
+		Date[] tempDates = model.getDates();
 		
 		//initialize 
 		for (int i = 0; i < temp.length; i++) {
@@ -72,13 +91,20 @@ public class leastTimeList extends JFrame implements Observer {
 
 			playerTimes[i] = new JLabel(temp[i][1] + "");
 			
+			playerDates[i] = new JLabel(formatter.format(tempDates[i]) + " ");
+			
 			//System.out.println(temp[i][0]);
 			topTenListPanel.add(playerNames[i]);
 			topTenListPanel.add(playerTimes[i]);
+			topTenListPanel.add(playerDates[i]);
+			playerNames[i].setHorizontalAlignment(SwingConstants.CENTER);
+			playerTimes[i].setHorizontalAlignment(SwingConstants.CENTER);
+			playerDates[i].setHorizontalAlignment(SwingConstants.CENTER);
 			
 			if(playerNames[i].getText().equals("NO_PLAYER")){
 				playerNames[i].setVisible(false);
 				playerTimes[i].setVisible(false);
+				playerDates[i].setVisible(false);
 			}
 
 			
@@ -107,23 +133,26 @@ public class leastTimeList extends JFrame implements Observer {
 	}
 
 	//sets the jlabels of the top ten to the current score list
-	public void updatePlayerTimes(){
+	public void updatePlayerTimes() throws IOException{
 		model.sort();
 		String[][] temp = model.getLeastTimes();
+		Date[] tempDates = model.getDates();
 		
 		for (int i = 0; i < temp.length; i++) {
 			playerNames[i].setText(temp[i][0]);
 
 			playerTimes[i].setText(temp[i][1] + "");
+			
+			playerDates[i].setText(formatter.format(tempDates[i]));
 		}
 	}
 	
 	//call the checkscore method for the model
-	public boolean checkTime(String name, int time) {
-		return model.checkTime(name, time);
+	public boolean checkTime(String name, int time, Date date ) {
+		return model.checkTime(name, time, date);
 	}
 	
-	public  leastTimeList getLeastTimeList() throws IOException, ClassNotFoundException{
+	public  leastTimeList getLeastTimeList() throws IOException, ClassNotFoundException, ParseException{
 		if (topTenFrame==null){
 			//TODO
 			topTenFrame = new leastTimeList();
@@ -134,12 +163,17 @@ public class leastTimeList extends JFrame implements Observer {
 	
 	public void update(java.util.Observable o, Object arg) {
 		
-		updatePlayerTimes();
+		try {
+			updatePlayerTimes();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 	
 
-	public void loadLeastTimes() throws FileNotFoundException, IOException, ClassNotFoundException {
+	public void loadLeastTimes() throws FileNotFoundException, IOException, ClassNotFoundException, ParseException {
 		/*if(new File("TopScore.ser").exists()){
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream("TopScore.ser"));
 			model = (TopScoreModel) in.readObject();
@@ -151,27 +185,28 @@ public class leastTimeList extends JFrame implements Observer {
 		if(new File("LeastTimes.txt").exists())	{
 			String[][] temp = new String[10][2];
 			int[] tempTimes = new int[10];
+			Date[] tempDates = new Date[10];
 			File input = new File("LeastTimes.txt");
 			Scanner scanFile = new Scanner(input);
 			for(int i = 0; i < temp.length; i++){
 				temp[i][0] = scanFile.next();
 				tempTimes[i] = scanFile.nextInt();
-				scanFile.nextLine();
+				tempDates[i] = formatter.parse(scanFile.next());
 				temp[i][1] = getTimeString(tempTimes[i]);
 			}
-				model = new leastTimeModel(temp, tempTimes);
+				model = new leastTimeModel(temp, tempTimes, tempDates);
 				scanFile.close();
 		}
 		else{
 			model = new leastTimeModel();
 		}
+		model.sort();
 
 		/*String[][] tester = model.getTopScores();
 		for(int i = 0; i < tester.length; i++){
 			System.out.println(tester[i][0]);
 			System.out.println(tester[i][1]);
 		}*/
-		
 	}	
 	
 	public String getTimeString(int time){

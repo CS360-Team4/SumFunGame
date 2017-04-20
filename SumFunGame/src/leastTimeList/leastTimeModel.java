@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Observable;
 import java.util.Scanner;
 
@@ -19,6 +21,8 @@ public class leastTimeModel extends Observable implements Serializable {
 	private final int timesIndex = 1;
 	private String[][] leastTimes;
 	private int[] times;
+	private Date[] dates;
+	private SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 
 	//leastTimeModel uses a 2d String array to maintain a list of the names and times
 	//Operates as the model for the leastTimeList
@@ -26,6 +30,7 @@ public class leastTimeModel extends Observable implements Serializable {
 
 		leastTimes = new String[10][2];
 		times = new int[10];
+		dates = new Date[10];
 		createTopTen();// initialize to dummy list
 
 		// this.totalTime = totalTime;
@@ -35,7 +40,7 @@ public class leastTimeModel extends Observable implements Serializable {
 		notifyObservers();
 	}
 	
-	public leastTimeModel(String[][] leastTimes, int[] times) throws IOException {
+	public leastTimeModel(String[][] leastTimes, int[] times, Date[] dates) throws IOException {
 		/*topScores = new String[10][10];
 		File input = new File("TopTen.txt");
 		Scanner scanFile = new Scanner(input);
@@ -48,9 +53,11 @@ public class leastTimeModel extends Observable implements Serializable {
 		
 		this.leastTimes = new String[10][2];
 		this.times = new int[10];
+		this.dates = new Date[10];
 		for(int i = 0; i < leastTimes.length; i++){
 			this.leastTimes[i][0] = leastTimes[i][0];
 			this.times[i] = times[i];
+			this.dates[i] = dates[i];
 			this.leastTimes[i][1] = leastTimes[i][1];
 		}
 	}
@@ -65,14 +72,14 @@ public class leastTimeModel extends Observable implements Serializable {
 	 *            - total points
 	 * @return boolean - true if top score, false o.w.
 	 */
-	public boolean checkTime(String name, int time) {
+	public boolean checkTime(String name, int time, Date date) {
 		
 		for(int i = 0; i < leastTimes.length - 1; i++) {
 		
 			//if score is high  enough to be in top add to list
 			if(time < times[i]) {
 				//System.out.println("checkscore model");
-				addLeastTime(name, time, i);
+				addLeastTime(name, time, date, i);
 				return true;
 			}
 		}
@@ -83,18 +90,20 @@ public class leastTimeModel extends Observable implements Serializable {
 
 	//updates the topscore model
 	//only called by checkScore(), takes the index of that the new score belongs in and moves the rest of the scores down accordingly
-	private void addLeastTime(String name, int time, int index) {
+	private void addLeastTime(String name, int time, Date date, int index) {
 
 		//move all scores down
 		for(int i = leastTimes.length - 1 ; i > index; i--) {
 			leastTimes[i][nameIndex] = leastTimes[i-1][nameIndex];
 			leastTimes[i][timesIndex] = leastTimes[i-1][timesIndex];
 			times[i] = times[i-1];
+			dates[i] = dates[i-1];
 		}
 		
 		leastTimes[index][nameIndex] = name;
 		times[index] = time;
 		leastTimes[index][timesIndex] = getTimeString(time);
+		dates[index] = date;
 
 		//System.out.println("added");
 		try {
@@ -116,6 +125,7 @@ public class leastTimeModel extends Observable implements Serializable {
 			leastTimes[i][0] = "NO_PLAYER";
 			times[i] = 300000;
 			leastTimes[i][1] = getTimeString(300000);
+			dates[i] = new Date();
 		}
 
 	}
@@ -131,7 +141,8 @@ public class leastTimeModel extends Observable implements Serializable {
 		PrintWriter output = new PrintWriter("LeastTimes.txt");
 		for(int i = 0; i < leastTimes.length; i++){
 			output.print(leastTimes[i][nameIndex] + " ");
-			output.print(Integer.toString(times[i]));
+			output.print(Integer.toString(times[i]) + " ");
+			output.print(formatter.format(dates[i]));
 			output.println("");
 		}
 		output.close();
@@ -170,23 +181,36 @@ public class leastTimeModel extends Observable implements Serializable {
 	}
 	
 	//Sorting the values in case the text file is in the wrong order
-	public void sort(){
+	public void sort() throws IOException{
 		String tempString = "";
 		int tempInt = 0;
+		Date tempDate = null;
 		
 		for(int i = 0; i < 9; i++){
 			if(times[i] > times[i+1]){
 				tempInt = times[i];
 				tempString = leastTimes[i][0];
+				tempDate = dates[i];
 				
 				times[i] = times[i+1];
+				dates[i] = dates[i+1];
 				leastTimes[i][0] = leastTimes[i+1][0];
 				leastTimes[i][1] = getTimeString(times[i+1]);
 				
 				leastTimes[i+1][0] = tempString;
 				leastTimes[i+1][1] = getTimeString(tempInt);
 				times[i+1] = tempInt;
+				dates[i+1] = tempDate;
 			}
 		}
+		saveLeastTime();
+	}
+
+	public Date[] getDates() {
+		return dates;
+	}
+
+	public void setDates(Date[] dates) {
+		this.dates = dates;
 	}
 }

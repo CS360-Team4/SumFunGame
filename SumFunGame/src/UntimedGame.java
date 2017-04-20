@@ -2,7 +2,9 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -12,7 +14,7 @@ public class UntimedGame extends GameBoard {
 	
 	private boolean winFlag = false;
 	
-	public UntimedGame() throws IOException, ClassNotFoundException {
+	public UntimedGame() throws IOException, ClassNotFoundException, ParseException {
 		super();
 		lblMovesLeft.setText(String.valueOf(TileQueue.movesLeft));
 		
@@ -122,7 +124,7 @@ public class UntimedGame extends GameBoard {
 			    if (text != null) {
 			    	name = text;
 			    }
-			    topScore.checkScore(name, score);
+			    topScore.checkScore(name, score, new Date());
 				//JOptionPane.showMessageDialog(null, "You won the game! Your score has been added to the Top Ten Most Points List!");
 			} else {
 				JOptionPane.showMessageDialog(null, "You won the game!");

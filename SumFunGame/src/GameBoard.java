@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -55,7 +56,7 @@ public class GameBoard extends JFrame {
     protected leastTimeList leastTimes;
 
 
-	public GameBoard() throws IOException, ClassNotFoundException {
+	public GameBoard() throws IOException, ClassNotFoundException, ParseException {
 
 		// create mainpanel
 		mainPanel = new JPanel();
@@ -304,6 +305,9 @@ public class GameBoard extends JFrame {
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
 		}
 
@@ -322,6 +326,9 @@ public class GameBoard extends JFrame {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (ParseException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
@@ -349,7 +356,7 @@ public class GameBoard extends JFrame {
 				topScore = new TopScoreList();
 				topScore.updatePlayerScores();
 				topScore.setVisible(true);
-			} catch (IOException | ClassNotFoundException e1) {
+			} catch (IOException | ClassNotFoundException | ParseException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
@@ -366,7 +373,7 @@ private class TopTenTimesListener implements ActionListener {
 				leastTimes = new leastTimeList();
 				leastTimes.updatePlayerTimes();
 				leastTimes.setVisible(true);
-			} catch (IOException | ClassNotFoundException e1) {
+			} catch (IOException | ClassNotFoundException | ParseException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}

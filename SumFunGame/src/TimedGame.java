@@ -1,7 +1,9 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -16,7 +18,7 @@ public class TimedGame extends GameBoard {
     private boolean timerOn = true;
     private boolean winFlag = false;
 
-	public TimedGame() throws IOException, ClassNotFoundException {
+	public TimedGame() throws IOException, ClassNotFoundException, ParseException {
 		super();
 		lblTime.setText("5:00");
 		
@@ -150,7 +152,7 @@ public class TimedGame extends GameBoard {
 			    if (text != null) {
 			    	name = text;
 			    }
-			    leastTimes.checkTime(name, (300000-timeLeft));
+			    leastTimes.checkTime(name, (300000-timeLeft), new Date());
 				//JOptionPane.showMessageDialog(null, "You won the game! Your score has been added to the Top Ten Most Points List!");
 			} 
 			if (score > Integer.parseInt(temp[9][1])) {
@@ -160,7 +162,7 @@ public class TimedGame extends GameBoard {
 			    if (text != null) {
 			    	name = text;
 			    }
-			    topScore.checkScore(name, score);
+			    topScore.checkScore(name, score, new Date());
 				//JOptionPane.showMessageDialog(null, "You won the game! Your score has been added to the Top Ten Most Points List!");
 			}
 			
