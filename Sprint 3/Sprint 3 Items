@@ -3,7 +3,6 @@ Sprint 3 Items
 —————————TO DO———————————
 add date to top ten lists
 
-13 — select a number and remove all of those instances from the game board
 14 — know where to place the tile to remove the most tiles
 22 — Engaging (see potential items below)
 
@@ -20,6 +19,8 @@ Animation for when they disappear
 
 —————————DONE——————————
 17 — Top Ten Least Time 
+13 — select a number and remove all of those instances from the game board
+
 
 Don't show irrelevant data
 ask for the name only when you win

@@ -42,6 +42,7 @@ public class GameBoard extends JFrame {
 	private JButton btnResetQueue;
 	private JButton btnTopScores;
 	private JButton btnLeastTimes;
+	private JButton btnRemoveNumber;
 	protected JLabel lblMovesTitle;
 	protected JLabel lblMovesLeft;
 	protected JLabel lblScore;
@@ -185,7 +186,7 @@ public class GameBoard extends JFrame {
 
 		//button queue and buttons
 		buttonPanel = new JPanel();
-		GridLayout buttonLayout = new GridLayout(1,5);
+		GridLayout buttonLayout = new GridLayout(1,6);
 		buttonPanel.setLayout(buttonLayout);
 		btnNewTimedGame = new JButton("New Timed Game");
 		btnNewTimedGame.addActionListener(new NewTimedGameListener());
@@ -197,6 +198,8 @@ public class GameBoard extends JFrame {
 		btnTopScores.addActionListener(new TopTenScoreListener());
 		btnLeastTimes = new JButton("Top 10 Least Times");
 		btnLeastTimes.addActionListener(new TopTenTimesListener());
+		btnRemoveNumber = new JButton("Remove Number");
+		btnRemoveNumber.addActionListener(new RemoveNumberListener());
 		//addTopPlayer = new JMenuItem("Add Top 10 Player");
 		//addTopPlayer.addActionListener(new FakeTopTenMovesListener());
 		buttonPanel.add(btnNewUntimedGame);
@@ -204,6 +207,7 @@ public class GameBoard extends JFrame {
 		buttonPanel.add(btnTopScores);
 		buttonPanel.add(btnLeastTimes);
 		buttonPanel.add(btnResetQueue);
+		buttonPanel.add(btnRemoveNumber);
 		//topTenMenu.add(addTopPlayer);
 		buttonPanel.setVisible(true);
 		buttonPanel.setOpaque(true);
@@ -343,6 +347,25 @@ public class GameBoard extends JFrame {
 				resetQueue();
 			}
 			resetQueueValue--;
+		}
+	}
+	
+private class RemoveNumberListener implements ActionListener {
+		
+		public void actionPerformed(ActionEvent e){
+			JFrame frame = new JFrame();
+		    String message = "Please enter the number to be removed.";
+		    String number = JOptionPane.showInputDialog(frame, message);
+		    if (number != null) {
+		    	for (int i = 0; i < tiles.length; i++) {
+					for (int j = 0; j < tiles[i].length; j++) {
+						if(tiles[i][j].getNumber() == Integer.parseInt(number)){
+							tiles[i][j].setBlank();
+							linkTiles();
+						}
+					}
+				}
+		    }
 		}
 	}
 	
