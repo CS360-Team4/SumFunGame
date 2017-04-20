@@ -3,7 +3,6 @@ Sprint 3 Items
 —————————TO DO———————————
 13 — select a number and remove all of those instances from the game board
 14 — know where to place the tile to remove the most tiles
-17 — Top Ten Least Time 
 22 — Engaging (see potential items below)
 
 Icon in the title bar different than the default java icon
@@ -18,6 +17,8 @@ Animation for when they disappear
 
 
 —————————DONE——————————
+17 — Top Ten Least Time 
+
 Don't show irrelevant data
 ask for the name only when you win
 Change the JMenus to Buttons on the board
