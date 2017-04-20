@@ -46,7 +46,7 @@ public class leastTimeList extends JFrame implements Observer {
 
 		//read model from serialized file
 		loadLeastTimes();
-		//model.sort();  ----------------Uncomment this when the sort method is finished
+		model.sort();  
 		//or create a dummy list
 		//model = new TopScoreModel();
 		
@@ -108,6 +108,7 @@ public class leastTimeList extends JFrame implements Observer {
 
 	//sets the jlabels of the top ten to the current score list
 	public void updatePlayerTimes(){
+		model.sort();
 		String[][] temp = model.getLeastTimes();
 		
 		for (int i = 0; i < temp.length; i++) {
@@ -175,9 +176,9 @@ public class leastTimeList extends JFrame implements Observer {
 	
 	public String getTimeString(int time){
 		String timeString = "";
-		if (time%60000 == 0){
+		if ((time%60000)/1000 == 0){
 			timeString = (Integer.toString(time/60000) + ":" + Integer.toString((time%60000)/1000) + "0");
-		} else if(time%60000 > 0 && time%60000 < 10){
+		} else if((time%60000)/1000 > 0 && (time%60000)/1000 < 10){
 			timeString = (Integer.toString(time/60000) + ":0" + Integer.toString((time%60000)/1000));
 		} else {
 			timeString = (Integer.toString(time/60000) + ":" + Integer.toString((time%60000)/1000));

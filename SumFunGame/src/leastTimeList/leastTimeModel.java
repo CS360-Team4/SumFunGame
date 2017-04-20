@@ -171,6 +171,22 @@ public class leastTimeModel extends Observable implements Serializable {
 	
 	//Sorting the values in case the text file is in the wrong order
 	public void sort(){
+		String tempString = "";
+		int tempInt = 0;
 		
+		for(int i = 0; i < 9; i++){
+			if(times[i] > times[i+1]){
+				tempInt = times[i];
+				tempString = leastTimes[i][0];
+				
+				times[i] = times[i+1];
+				leastTimes[i][0] = leastTimes[i+1][0];
+				leastTimes[i][1] = getTimeString(times[i+1]);
+				
+				leastTimes[i+1][0] = tempString;
+				leastTimes[i+1][1] = getTimeString(tempInt);
+				times[i+1] = tempInt;
+			}
+		}
 	}
 }

@@ -347,7 +347,7 @@ public class GameBoard extends JFrame {
 			//TODO change - this is getting a static instance
 			try {
 				topScore = new TopScoreList();
-				//topScore.updatePlayerScores();
+				topScore.updatePlayerScores();
 				topScore.setVisible(true);
 			} catch (IOException | ClassNotFoundException e1) {
 				// TODO Auto-generated catch block
@@ -364,7 +364,7 @@ private class TopTenTimesListener implements ActionListener {
 			//TODO change - this is getting a static instance
 			try {
 				leastTimes = new leastTimeList();
-				//topScore.updatePlayerScores();
+				leastTimes.updatePlayerTimes();
 				leastTimes.setVisible(true);
 			} catch (IOException | ClassNotFoundException e1) {
 				// TODO Auto-generated catch block

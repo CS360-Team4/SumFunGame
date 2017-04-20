@@ -46,6 +46,7 @@ public class TopScoreList extends JFrame implements Observer {
 
 		//read model from serialized file
 		loadTopScore();
+		model.sort();
 		//or create a dummy list
 		//model = new TopScoreModel();
 		
@@ -107,6 +108,7 @@ public class TopScoreList extends JFrame implements Observer {
 
 	//sets the jlabels of the top ten to the current score list
 	public void updatePlayerScores(){
+		model.sort();
 		String[][] temp = model.getTopScores();
 		
 		for (int i = 0; i < temp.length; i++) {
