@@ -121,7 +121,7 @@ public class TopScoreModel extends Observable implements Serializable {
 		out.writeObject(this);
 		out.close();*/
 		
-		PrintWriter output = new PrintWriter("TopTen.txt");
+		PrintWriter output = new PrintWriter("TopScore.txt");
 		for(int i = 0; i < topScores.length; i++){
 			output.print(topScores[i][nameIndex] + " ");
 			output.print(topScores[i][pointsIndex]);

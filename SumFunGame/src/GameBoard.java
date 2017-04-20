@@ -21,6 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import leastTimeList.leastTimeList;
 import topscorelist.TopScoreList;
 import topscorelist.TopScoreModel;
 
@@ -38,7 +39,8 @@ public class GameBoard extends JFrame {
 	private JButton btnNewTimedGame;
 	private JButton btnNewUntimedGame;
 	private JButton btnResetQueue;
-	private JButton btnTopTen;
+	private JButton btnTopScores;
+	private JButton btnLeastTimes;
 	protected JLabel lblMovesTitle;
 	protected JLabel lblMovesLeft;
 	protected JLabel lblScore;
@@ -50,6 +52,8 @@ public class GameBoard extends JFrame {
 	protected int playerMoves = 0;
 	protected boolean gameIsWon = false;
 	protected TopScoreList topScore;
+    protected leastTimeList leastTimes;
+
 
 	public GameBoard() throws IOException, ClassNotFoundException {
 
@@ -180,7 +184,7 @@ public class GameBoard extends JFrame {
 
 		//button queue and buttons
 		buttonPanel = new JPanel();
-		GridLayout buttonLayout = new GridLayout(1,4);
+		GridLayout buttonLayout = new GridLayout(1,5);
 		buttonPanel.setLayout(buttonLayout);
 		btnNewTimedGame = new JButton("New Timed Game");
 		btnNewTimedGame.addActionListener(new NewTimedGameListener());
@@ -188,13 +192,16 @@ public class GameBoard extends JFrame {
 		btnNewUntimedGame.addActionListener(new NewUntimedGameListener());
 		btnResetQueue = new JButton("Reset Queue");
 		btnResetQueue.addActionListener(new ResetQueueListener());
-		btnTopTen = new JButton("Top 10 Lists");
-		btnTopTen.addActionListener(new TopTenScoreListener());
+		btnTopScores = new JButton("Top 10 Most Points");
+		btnTopScores.addActionListener(new TopTenScoreListener());
+		btnLeastTimes = new JButton("Top 10 Least Times");
+		btnLeastTimes.addActionListener(new TopTenTimesListener());
 		//addTopPlayer = new JMenuItem("Add Top 10 Player");
 		//addTopPlayer.addActionListener(new FakeTopTenMovesListener());
 		buttonPanel.add(btnNewUntimedGame);
 		buttonPanel.add(btnNewTimedGame);
-		buttonPanel.add(btnTopTen);
+		buttonPanel.add(btnTopScores);
+		buttonPanel.add(btnLeastTimes);
 		buttonPanel.add(btnResetQueue);
 		//topTenMenu.add(addTopPlayer);
 		buttonPanel.setVisible(true);
@@ -203,6 +210,7 @@ public class GameBoard extends JFrame {
 		mainPanel.add(buttonPanel, BorderLayout.NORTH);
 		
 		topScore = new TopScoreList();
+		leastTimes = new leastTimeList();
 		add(mainPanel);
 		mainPanel.setVisible(true);
 		mainPanel.setOpaque(true);
@@ -340,7 +348,24 @@ public class GameBoard extends JFrame {
 			try {
 				topScore = new TopScoreList();
 				//topScore.updatePlayerScores();
-				topScore.getTopScoreList().setVisible(true);
+				topScore.setVisible(true);
+			} catch (IOException | ClassNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+	}
+	
+private class TopTenTimesListener implements ActionListener {
+		
+		public void actionPerformed(ActionEvent e) {
+			
+			//Need logic here to load the top ten least moves object and display it in a new JPane/JFrame
+			//TODO change - this is getting a static instance
+			try {
+				leastTimes = new leastTimeList();
+				//topScore.updatePlayerScores();
+				leastTimes.setVisible(true);
 			} catch (IOException | ClassNotFoundException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -451,6 +476,7 @@ public class GameBoard extends JFrame {
 		}
 	}
 	
+	/*This method was moved to each subclass so that we can add the top ten least times
 	//checks if the board has been cleared of tiles, which is a win
 	public boolean checkWin() throws ClassNotFoundException, IOException{
 		boolean output = false;
@@ -466,7 +492,7 @@ public class GameBoard extends JFrame {
 		}
 		
 
-		//if there is 81 blank tiles then print out result and check for top ten placement.
+		if there is 81 blank tiles then print out result and check for top ten placement.
 		if(counter == 81 && !gameIsWon){
 			output = true;
 			//System.out.println("You won the game!");
@@ -491,5 +517,5 @@ public class GameBoard extends JFrame {
 			}
 		}
 		return output;
-	}
+	}*/
 }

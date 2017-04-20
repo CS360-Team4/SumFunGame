@@ -88,4 +88,46 @@ public class UntimedGame extends GameBoard {
 			}
 		}
 	}
+	
+	//checks if the board has been cleared of tiles, which is a win
+	public boolean checkWin() throws ClassNotFoundException, IOException{
+		boolean output = false;
+		int counter = 0;
+		
+		//gets count of total number of blank tiles
+		for(int i = 0; i < 9; i++){
+			for(int j = 0; j < 9; j++){
+				if(tiles[i][j].getNumber() == 0 && tiles[i][j].isBlank()){
+					counter++;
+				}
+			}
+		}
+		
+
+		//if there is 81 blank tiles then print out result and check for top ten placement.
+		if(counter == 81 && !gameIsWon){
+			output = true;
+			//System.out.println("You won the game!");
+			//endMoves = TileQueue.movesLeft;
+			TileQueue.movesLeft = 0;
+			gameIsWon = true;
+			
+			String[][] temp = topScore.getModel().getTopScores();
+			
+			//checks if score is top ten worthy and displays a jbox either way.
+			if (score > Integer.parseInt(temp[9][1])) {
+				JFrame frame = new JFrame();
+			    String message = "You won! Your score has made it in the Top Ten Most Points! Please enter your name.";
+			    String text = JOptionPane.showInputDialog(frame, message);
+			    if (text != null) {
+			    	name = text;
+			    }
+			    topScore.checkScore(name, score);
+				//JOptionPane.showMessageDialog(null, "You won the game! Your score has been added to the Top Ten Most Points List!");
+			} else {
+				JOptionPane.showMessageDialog(null, "You won the game!");
+			}
+		}
+		return output;
+	}
 }

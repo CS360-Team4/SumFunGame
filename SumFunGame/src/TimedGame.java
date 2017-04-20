@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
+import leastTimeList.leastTimeList;
+
 public class TimedGame extends GameBoard {
 
     private Timer timer;
@@ -101,15 +103,70 @@ public class TimedGame extends GameBoard {
 		}
 	}
 	
-	private String getTimeString(){
+	public String getTimeString(){
 		String timeString = "";
-		if (timeLeft%60000 == 0){
+		if ((timeLeft%60000)/1000 == 0){
 			timeString = (Integer.toString(timeLeft/60000) + ":" + Integer.toString((timeLeft%60000)/1000) + "0");
-		} else if(timeLeft%6000 > 0 && timeLeft%6000 < 10){
+		} else if((timeLeft%60000)/1000 > 0 && (timeLeft%60000)/1000 < 10){
 			timeString = (Integer.toString(timeLeft/60000) + ":0" + Integer.toString((timeLeft%60000)/1000));
 		} else {
 			timeString = (Integer.toString(timeLeft/60000) + ":" + Integer.toString((timeLeft%60000)/1000));
 		}
 		return timeString;
+	}
+	
+	//checks if the board has been cleared of tiles, which is a win
+	public boolean checkWin() throws ClassNotFoundException, IOException{
+		boolean output = false;
+		int counter = 0;
+		
+		//gets count of total number of blank tiles
+		for(int i = 0; i < 9; i++){
+			for(int j = 0; j < 9; j++){
+				if(tiles[i][j].getNumber() == 0 && tiles[i][j].isBlank()){
+					counter++;
+				}
+			}
+		}
+		
+
+		//if there is 81 blank tiles then print out result and check for top ten placement.
+		if(counter == 81 && !gameIsWon){
+			output = true;
+			//System.out.println("You won the game!");
+			//endMoves = TileQueue.movesLeft;
+			TileQueue.movesLeft = 0;
+			gameIsWon = true;
+			
+			String[][] temp = topScore.getModel().getTopScores();
+			String[][] temp2 = leastTimes.getModel().getLeastTimes();
+			
+			//checks if score is top ten worthy and displays a jbox either way.
+			if ((300000 - timeLeft) < Integer.parseInt(temp2[9][1])) {
+				JFrame frame = new JFrame();
+			    String message = "You won! Your time has made it in the Top Ten Least Times! Please enter your name.";
+			    String text = JOptionPane.showInputDialog(frame, message);
+			    if (text != null) {
+			    	name = text;
+			    }
+			    leastTimes.checkTime(name, (300000-timeLeft));
+				//JOptionPane.showMessageDialog(null, "You won the game! Your score has been added to the Top Ten Most Points List!");
+			} 
+			if (score > Integer.parseInt(temp[9][1])) {
+				JFrame frame = new JFrame();
+			    String message = "You won! Your score has made it in the Top Ten Most Points! Please enter your name.";
+			    String text = JOptionPane.showInputDialog(frame, message);
+			    if (text != null) {
+			    	name = text;
+			    }
+			    topScore.checkScore(name, score);
+				//JOptionPane.showMessageDialog(null, "You won the game! Your score has been added to the Top Ten Most Points List!");
+			}
+			
+			else {
+				JOptionPane.showMessageDialog(null, "You won the game!");
+			}
+		}
+		return output;
 	}
 }

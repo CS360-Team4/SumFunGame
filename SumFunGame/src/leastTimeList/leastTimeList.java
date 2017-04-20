@@ -1,4 +1,4 @@
-package topscorelist;
+package leastTimeList;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -25,27 +25,27 @@ import javax.swing.JPanel;
 
 
 
-public class TopScoreList extends JFrame implements Observer {
+public class leastTimeList extends JFrame implements Observer {
 	
 	//singleton
-	private  TopScoreList topTenFrame;
+	private  leastTimeList topTenFrame;
 	
 	private  final int topTenRows = 10;
 	private  final int topTenColumns = 2;
-	private  final String topTenTitle = "Top Ten Most Points";
+	private  final String topTenTitle = "Top Ten Least Times";
 	
-	private TopScoreModel model;
+	private leastTimeModel model;
 
 	private JPanel mainPanel;
 	private JPanel topTenListPanel;
 	
 	JLabel[] playerNames;
-	JLabel[] playerScores;
+	JLabel[] playerTimes;
 
-	public TopScoreList() throws IOException, ClassNotFoundException {
+	public leastTimeList() throws IOException, ClassNotFoundException {
 
 		//read model from serialized file
-		loadTopScore();
+		loadLeastTimes();
 		//or create a dummy list
 		//model = new TopScoreModel();
 		
@@ -61,23 +61,23 @@ public class TopScoreList extends JFrame implements Observer {
 		topTenListPanel.setBackground(Color.WHITE);
 		
 		playerNames = new JLabel[10];
-		playerScores = new JLabel[10];
+		playerTimes = new JLabel[10];
 		
-		String[][] temp = model.getTopScores();
+		String[][] temp = model.getLeastTimes();
 		
 		//initialize 
 		for (int i = 0; i < temp.length; i++) {
 			playerNames[i] = new JLabel(temp[i][0]);
 
-			playerScores[i] = new JLabel(temp[i][1] + "");
+			playerTimes[i] = new JLabel(temp[i][1] + "");
 			
 			//System.out.println(temp[i][0]);
 			topTenListPanel.add(playerNames[i]);
-			topTenListPanel.add(playerScores[i]);
+			topTenListPanel.add(playerTimes[i]);
 			
 			if(playerNames[i].getText().equals("NO_PLAYER")){
 				playerNames[i].setVisible(false);
-				playerScores[i].setVisible(false);
+				playerTimes[i].setVisible(false);
 			}
 
 			
@@ -97,34 +97,34 @@ public class TopScoreList extends JFrame implements Observer {
 
 	}
 	
-	public TopScoreModel getModel() {
+	public leastTimeModel getModel() {
 		return model;
 	}
 
-	public void setModel(TopScoreModel model) {
+	public void setModel(leastTimeModel model) {
 		this.model = model;
 	}
 
 	//sets the jlabels of the top ten to the current score list
-	public void updatePlayerScores(){
-		String[][] temp = model.getTopScores();
+	public void updatePlayerTimes(){
+		String[][] temp = model.getLeastTimes();
 		
 		for (int i = 0; i < temp.length; i++) {
 			playerNames[i].setText(temp[i][0]);
 
-			playerScores[i].setText(temp[i][1] + "");
+			playerTimes[i].setText(temp[i][1] + "");
 		}
 	}
 	
 	//call the checkscore method for the model
-	public boolean checkScore(String name, int score) {
-		return model.checkScore(name, score);
+	public boolean checkTime(String name, int time) {
+		return model.checkTime(name, time);
 	}
 	
-	public  TopScoreList getTopScoreList() throws IOException, ClassNotFoundException{
+	public  leastTimeList getLeastTimeList() throws IOException, ClassNotFoundException{
 		if (topTenFrame==null){
 			//TODO
-			topTenFrame = new TopScoreList();
+			topTenFrame = new leastTimeList();
 		}
 		return this;
 	}
@@ -132,12 +132,12 @@ public class TopScoreList extends JFrame implements Observer {
 	
 	public void update(java.util.Observable o, Object arg) {
 		
-		updatePlayerScores();
+		updatePlayerTimes();
 
 	}
 	
 
-	public void loadTopScore() throws FileNotFoundException, IOException, ClassNotFoundException {
+	public void loadLeastTimes() throws FileNotFoundException, IOException, ClassNotFoundException {
 		/*if(new File("TopScore.ser").exists()){
 			ObjectInputStream in = new ObjectInputStream(new FileInputStream("TopScore.ser"));
 			model = (TopScoreModel) in.readObject();
@@ -146,20 +146,20 @@ public class TopScoreList extends JFrame implements Observer {
 		else{
 			model = new TopScoreModel();
 		}*/
-		if(new File("TopTen.txt").exists())	{
+		if(new File("LeastTimes.txt").exists())	{
 			String[][] temp = new String[10][2];
-			File input = new File("TopScore.txt");
+			File input = new File("LeastTimes.txt");
 			Scanner scanFile = new Scanner(input);
 			for(int i = 0; i < temp.length; i++){
 				temp[i][0] = scanFile.next();
-				temp[i][1] = Integer.toString(scanFile.nextInt());
+				temp[i][1] = getTimeString(scanFile.nextInt());
 				scanFile.nextLine();
 			}
-				model = new TopScoreModel(temp);
+				model = new leastTimeModel(temp);
 				scanFile.close();
 		}
 		else{
-			model = new TopScoreModel();
+			model = new leastTimeModel();
 		}
 
 		/*String[][] tester = model.getTopScores();
@@ -169,4 +169,16 @@ public class TopScoreList extends JFrame implements Observer {
 		}*/
 		
 	}	
+	
+	public String getTimeString(int time){
+		String timeString = "";
+		if (time%60000 == 0){
+			timeString = (Integer.toString(time/60000) + ":" + Integer.toString((time%60000)/1000) + "0");
+		} else if(time%60000 > 0 && time%60000 < 10){
+			timeString = (Integer.toString(time/60000) + ":0" + Integer.toString((time%60000)/1000));
+		} else {
+			timeString = (Integer.toString(time/60000) + ":" + Integer.toString((time%60000)/1000));
+		}
+		return timeString;
+	}
 }
