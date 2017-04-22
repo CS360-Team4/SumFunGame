@@ -514,14 +514,14 @@ private class TopTenTimesListener implements ActionListener {
 	private class HintListener implements ActionListener{
 		
 		
-		int bestRow = -1;
-		int bestColumn = -1;
-		int bestRemove = 0;
-		int nextInQueue = queue.peek();
-		int temp;
-		JButton button;
+		
 		public void actionPerformed(ActionEvent e ){
-			
+			int bestRow = -1;
+			int bestColumn = -1;
+			int bestRemove = 0;
+			int nextInQueue = queue.peek();
+			int temp;
+			JButton button;
 			for(int i = 0; i < tiles.length; i++)
 			{
 				for(int j = 0; j < tiles.length; j++){
@@ -542,7 +542,7 @@ private class TopTenTimesListener implements ActionListener {
 			if(bestRow != -1 && bestColumn != -1){
 				tileButtons[bestRow][bestColumn].setHintColor();
 				button = (JButton) e.getSource();
-				//button.setEnabled(false);
+				button.setEnabled(false);
 			}
 					
 			
