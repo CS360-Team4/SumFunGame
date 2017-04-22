@@ -49,6 +49,38 @@ public class TileModel extends Observable {
 		return val % 10;
 	}
 	
+	//returns the number of neighbors that could be potentially removed, modified version of getSumMod
+	//parameter num is the number of the next tile in the queue
+	public int getRemovalCount(int num){
+		
+		//if calling tile is blank return 0, dont check tiles that aren't blank
+		if(!isBlank)
+		{
+			return 0;
+		}
+		ArrayList<TileModel> temp = getNeighbors();
+		int val = 0;
+		int count = 0;
+		
+		
+		//loop through all neighbors, if the neighbor is not a blank add its val to total and increment count
+		for(TileModel tile : temp){
+			
+			if(!tile.isBlank()){
+				val += tile.getNumber();
+				count++;
+			}
+		}
+		
+		//if the mod 10 of neighbors sum is equal to num return the count of tiles that can be removed
+		if(val % 10 == num){
+			return count;
+		}
+		
+		//if not equal return 0 for invalid move
+		return 0;
+	}
+	
 	public boolean isBlank(){
 		return isBlank;
 	}

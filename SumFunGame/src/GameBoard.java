@@ -43,6 +43,7 @@ public class GameBoard extends JFrame {
 	private JButton btnTopScores;
 	private JButton btnLeastTimes;
 	private JButton btnRemoveNumber;
+	private JButton hintButton;
 	protected JLabel lblMovesTitle;
 	protected JLabel lblMovesLeft;
 	protected JLabel lblScore;
@@ -186,7 +187,7 @@ public class GameBoard extends JFrame {
 
 		//button queue and buttons
 		buttonPanel = new JPanel();
-		GridLayout buttonLayout = new GridLayout(1,6);
+		GridLayout buttonLayout = new GridLayout(1,7);
 		buttonPanel.setLayout(buttonLayout);
 		btnNewTimedGame = new JButton("New Timed Game");
 		btnNewTimedGame.addActionListener(new NewTimedGameListener());
@@ -200,6 +201,8 @@ public class GameBoard extends JFrame {
 		btnLeastTimes.addActionListener(new TopTenTimesListener());
 		btnRemoveNumber = new JButton("Remove Number");
 		btnRemoveNumber.addActionListener(new RemoveNumberListener());
+		hintButton = new JButton("Hint");
+		hintButton.addActionListener(new HintListener());
 		//addTopPlayer = new JMenuItem("Add Top 10 Player");
 		//addTopPlayer.addActionListener(new FakeTopTenMovesListener());
 		buttonPanel.add(btnNewUntimedGame);
@@ -208,6 +211,7 @@ public class GameBoard extends JFrame {
 		buttonPanel.add(btnLeastTimes);
 		buttonPanel.add(btnResetQueue);
 		buttonPanel.add(btnRemoveNumber);
+		buttonPanel.add(hintButton);
 		//topTenMenu.add(addTopPlayer);
 		buttonPanel.setVisible(true);
 		buttonPanel.setOpaque(true);
@@ -506,46 +510,42 @@ private class TopTenTimesListener implements ActionListener {
 		}
 	}
 	
-	/*This method was moved to each subclass so that we can add the top ten least times
-	//checks if the board has been cleared of tiles, which is a win
-	public boolean checkWin() throws ClassNotFoundException, IOException{
-		boolean output = false;
-		int counter = 0;
-		
-		//gets count of total number of blank tiles
-		for(int i = 0; i < 9; i++){
-			for(int j = 0; j < 9; j++){
-				if(tiles[i][j].getNumber() == 0 && tiles[i][j].isBlank()){
-					counter++;
-				}
-			}
-		}
-		
 
-		if there is 81 blank tiles then print out result and check for top ten placement.
-		if(counter == 81 && !gameIsWon){
-			output = true;
-			//System.out.println("You won the game!");
-			//endMoves = TileQueue.movesLeft;
-			TileQueue.movesLeft = 0;
-			gameIsWon = true;
+	private class HintListener implements ActionListener{
+		
+		
+		int bestRow = -1;
+		int bestColumn = -1;
+		int bestRemove = 0;
+		int nextInQueue = queue.peek();
+		int temp;
+		JButton button;
+		public void actionPerformed(ActionEvent e ){
 			
-			String[][] temp = topScore.getModel().getTopScores();
+			for(int i = 0; i < tiles.length; i++)
+			{
+				for(int j = 0; j < tiles.length; j++){
+					//temp = tiles[i][j].getTileModel();
+					
+					//check number of potential removals
+					temp = tiles[i][j].getRemovalCount(nextInQueue);
+					//mark tile location and removal values if better
+					if(temp != 0 && temp > bestRemove){
+						bestRow = i;
+						bestColumn = j;
+						bestRemove = temp;
+					}
+				}//end inner for
+			}//end outer for
 			
-			//checks if score is top ten worthy and displays a jbox either way.
-			if (score > Integer.parseInt(temp[9][1])) {
-				JFrame frame = new JFrame();
-			    String message = "You won! Your score has made it in the Top Ten Most Points! Please enter your name.";
-			    String text = JOptionPane.showInputDialog(frame, message);
-			    if (text != null) {
-			    	name = text;
-			    }
-			    topScore.checkScore(name, score);
-				//JOptionPane.showMessageDialog(null, "You won the game! Your score has been added to the Top Ten Most Points List!");
-			} else {
-				JOptionPane.showMessageDialog(null, "You won the game!");
+			//disable help button and mark best spot in red
+			if(bestRow != -1 && bestColumn != -1){
+				tileButtons[bestRow][bestColumn].setHintColor();
+				button = (JButton) e.getSource();
+				//button.setEnabled(false);
 			}
+					
+			
 		}
-		return output;
-	}*/
+	}
 }

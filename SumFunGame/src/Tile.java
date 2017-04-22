@@ -45,6 +45,11 @@ public class Tile extends JButton implements Observer {
 		return model;
 	}
 	
+	public void setHintColor(){
+		
+		this.setBackground(Color.RED);
+	}
+	
 	public void updateColor() {
 		
 		switch (this.getTileModel().getNumber()) {

@@ -33,6 +33,11 @@ public class TileQueue {
 
 		return temp;
 	}
+	
+	public int peek()
+	{
+		return queue[0].getNumber();
+	}
 
 	public TileModel getQueueTop() {
 		return queue[0];
