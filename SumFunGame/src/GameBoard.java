@@ -43,7 +43,7 @@ public class GameBoard extends JFrame {
 	private JButton btnTopScores;
 	private JButton btnLeastTimes;
 	private JButton btnRemoveNumber;
-	private JButton hintButton;
+	protected JButton hintButton;
 	protected JLabel lblMovesTitle;
 	protected JLabel lblMovesLeft;
 	protected JLabel lblScore;
@@ -55,9 +55,9 @@ public class GameBoard extends JFrame {
 	protected int playerMoves = 0;
 	protected boolean gameIsWon = false;
 	protected TopScoreList topScore;
-    protected leastTimeList leastTimes;
-
-
+	protected leastTimeList leastTimes;
+	protected int numHints = 3;
+	protected int numRemovals = 1;
 	public GameBoard() throws IOException, ClassNotFoundException, ParseException {
 
 		// create mainpanel
@@ -83,9 +83,9 @@ public class GameBoard extends JFrame {
 				}
 				// add tiles to panel and add actionlisteners
 				gridPanel.add(tileButtons[i][j]);
-				
-				//give the tiles actionListeners in the subclass
-				//tileButtons[i][j].addActionListener(new SwapListener());
+
+				// give the tiles actionListeners in the subclass
+				// tileButtons[i][j].addActionListener(new SwapListener());
 			}
 		}
 
@@ -101,9 +101,9 @@ public class GameBoard extends JFrame {
 		queueBorderPanel.setLayout(new BorderLayout());
 		queueBorderPanel.setBackground(Color.WHITE);
 		queueBorderPanel.setOpaque(true);
-		
+
 		labelGridPanel = new JPanel();
-		labelGridPanel.setLayout(new GridLayout(3,2));
+		labelGridPanel.setLayout(new GridLayout(3, 2));
 		labelGridPanel.setOpaque(true);
 		labelGridPanel.setBackground(Color.WHITE);
 
@@ -124,14 +124,14 @@ public class GameBoard extends JFrame {
 		lblQueue.setHorizontalAlignment(SwingConstants.CENTER);
 		lblQueue.setVerticalAlignment(SwingConstants.CENTER);
 		lblQueue.setFont(new Font("Arial", Font.BOLD, 20));
-		
+
 		queueBorderPanel.add(lblQueue, BorderLayout.NORTH);
 		JPanel innerBorder = new JPanel();
 		BorderLayout innerBorderLayout = new BorderLayout();
 		JPanel northPadding = new JPanel();
 		JPanel southPadding = new JPanel();
-		GridLayout paddingLayout = new GridLayout(8,1);
-		GridLayout paddingLayoutN = new GridLayout(4,1);
+		GridLayout paddingLayout = new GridLayout(8, 1);
+		GridLayout paddingLayoutN = new GridLayout(4, 1);
 		northPadding.setLayout(paddingLayoutN);
 		southPadding.setLayout(paddingLayout);
 		northPadding.setBackground(Color.WHITE);
@@ -164,30 +164,30 @@ public class GameBoard extends JFrame {
 		lblMovesLeft.setFont(new Font("Arial", Font.BOLD, 20));
 		labelGridPanel.add(lblMovesLeft);
 		// queueBorderPanel.setPreferredSize(new Dimension(100,5));
-		
+
 		lblTimeTitle = new JLabel("Time: ");
 		lblTimeTitle.setFont(new Font("Arial", Font.BOLD, 20));
 		labelGridPanel.add(lblTimeTitle);
 		lblTime = new JLabel("--:--");
 		lblTime.setFont(new Font("Arial", Font.BOLD, 20));
 		labelGridPanel.add(lblTime);
-		
+
 		JLabel lblScoreTitle = new JLabel("Score: ");
 		lblScoreTitle.setFont(new Font("Arial", Font.BOLD, 20));
-		labelGridPanel.add(lblScoreTitle);		
+		labelGridPanel.add(lblScoreTitle);
 		score = 0;
 		lblScore = new JLabel(String.valueOf(score));
 		lblScore.setFont(new Font("Arial", Font.BOLD, 20));
 		labelGridPanel.add(lblScore);
-		
+
 		queueBorderPanel.add(labelGridPanel, BorderLayout.SOUTH);
 
 		mainPanel.add(queueBorderPanel, BorderLayout.EAST);
 		mainPanel.add(gridPanel, BorderLayout.CENTER);
 
-		//button queue and buttons
+		// button queue and buttons
 		buttonPanel = new JPanel();
-		GridLayout buttonLayout = new GridLayout(1,7);
+		GridLayout buttonLayout = new GridLayout(2, 4);
 		buttonPanel.setLayout(buttonLayout);
 		btnNewTimedGame = new JButton("New Timed Game");
 		btnNewTimedGame.addActionListener(new NewTimedGameListener());
@@ -203,8 +203,8 @@ public class GameBoard extends JFrame {
 		btnRemoveNumber.addActionListener(new RemoveNumberListener());
 		hintButton = new JButton("Hint");
 		hintButton.addActionListener(new HintListener());
-		//addTopPlayer = new JMenuItem("Add Top 10 Player");
-		//addTopPlayer.addActionListener(new FakeTopTenMovesListener());
+		// addTopPlayer = new JMenuItem("Add Top 10 Player");
+		// addTopPlayer.addActionListener(new FakeTopTenMovesListener());
 		buttonPanel.add(btnNewUntimedGame);
 		buttonPanel.add(btnNewTimedGame);
 		buttonPanel.add(btnTopScores);
@@ -212,12 +212,12 @@ public class GameBoard extends JFrame {
 		buttonPanel.add(btnResetQueue);
 		buttonPanel.add(btnRemoveNumber);
 		buttonPanel.add(hintButton);
-		//topTenMenu.add(addTopPlayer);
+		// topTenMenu.add(addTopPlayer);
 		buttonPanel.setVisible(true);
 		buttonPanel.setOpaque(true);
 		buttonPanel.setBackground(Color.WHITE);
 		mainPanel.add(buttonPanel, BorderLayout.NORTH);
-		
+
 		topScore = new TopScoreList();
 		leastTimes = new leastTimeList();
 		add(mainPanel);
@@ -233,78 +233,56 @@ public class GameBoard extends JFrame {
 	}
 
 	/*
-	 *CREATED IN SUBCLASSES
-	// swaplistener is attached to all tiles in the 9x9 grid(not queue tiles)
-	// when called it evaluates the tile clicked and the neighboring tiles and
-	// determines
-	// if it was a valid move, if so then it pops from queue and removes
-	// neighbors as needed
-	private class SwapListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-
-			
-			System.out.println("Temp: ");
-			Tile button = (Tile) e.getSource();
-			TileModel temp = button.getTileModel();
-			
-			// Decrement the moves remaining and update the JLabel text
-			if (TileQueue.movesLeft > 0 && temp.isBlank() && !gameIsWon){
-				TileQueue.movesLeft--;
-				lblMovesLeft.setText(String.valueOf(TileQueue.movesLeft));
-				
-				// if blank tile is clicked put queue tile onto board
-				if (temp.getNumber() == 0 && temp.isBlank()) {
-					temp.setNumber(queue.pop());
-					// temp.update(temp.getNumObject(), temp);
-					temp.setBlank(false);
-
-					ArrayList<TileModel> neighbors = temp.getNeighbors();
-					
-					// if the sum mod 10 of neighbors is equal to tile clicked,
-					// set tiles to false and make invisible
-					if (temp.getSumMod() == temp.getNumber()) {
-						for (TileModel tile : neighbors) {
-
-							// dont remove blank tiles
-							if (!tile.isBlank()) {
-								// tile.setVisible(false);
-								tile.setBlank();
-								tile = null;
-							}
-						}
-						temp.setBlank();
-						temp = null;
-						linkTiles();
-						
-						//Creating a temp score for that specific move and then updating the total score
-						int tempScore = 0;
-						if(neighbors.size() > 2){
-							tempScore = neighbors.size()*10;
-						}
-						
-						score += tempScore;
-						lblScore.setText(String.valueOf(score));
-						
-				
-					}
-
-				}
-			}
-			playerMoves++;
-			checkWin();
-		}
-	}
-
-*/
+	 * CREATED IN SUBCLASSES // swaplistener is attached to all tiles in the 9x9
+	 * grid(not queue tiles) // when called it evaluates the tile clicked and
+	 * the neighboring tiles and // determines // if it was a valid move, if so
+	 * then it pops from queue and removes // neighbors as needed private class
+	 * SwapListener implements ActionListener {
+	 * 
+	 * @Override public void actionPerformed(ActionEvent e) {
+	 * 
+	 * 
+	 * System.out.println("Temp: "); Tile button = (Tile) e.getSource();
+	 * TileModel temp = button.getTileModel();
+	 * 
+	 * // Decrement the moves remaining and update the JLabel text if
+	 * (TileQueue.movesLeft > 0 && temp.isBlank() && !gameIsWon){
+	 * TileQueue.movesLeft--;
+	 * lblMovesLeft.setText(String.valueOf(TileQueue.movesLeft));
+	 * 
+	 * // if blank tile is clicked put queue tile onto board if
+	 * (temp.getNumber() == 0 && temp.isBlank()) { temp.setNumber(queue.pop());
+	 * // temp.update(temp.getNumObject(), temp); temp.setBlank(false);
+	 * 
+	 * ArrayList<TileModel> neighbors = temp.getNeighbors();
+	 * 
+	 * // if the sum mod 10 of neighbors is equal to tile clicked, // set tiles
+	 * to false and make invisible if (temp.getSumMod() == temp.getNumber()) {
+	 * for (TileModel tile : neighbors) {
+	 * 
+	 * // dont remove blank tiles if (!tile.isBlank()) { //
+	 * tile.setVisible(false); tile.setBlank(); tile = null; } }
+	 * temp.setBlank(); temp = null; linkTiles();
+	 * 
+	 * //Creating a temp score for that specific move and then updating the
+	 * total score int tempScore = 0; if(neighbors.size() > 2){ tempScore =
+	 * neighbors.size()*10; }
+	 * 
+	 * score += tempScore; lblScore.setText(String.valueOf(score));
+	 * 
+	 * 
+	 * }
+	 * 
+	 * } } playerMoves++; checkWin(); } }
+	 * 
+	 */
 	private class NewTimedGameListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
 			dispose();
-			//new GameBoard();
+			// new GameBoard();
 			try {
 				new TimedGame();
 			} catch (ClassNotFoundException e1) {
@@ -320,14 +298,14 @@ public class GameBoard extends JFrame {
 		}
 
 	}
-	
+
 	private class NewUntimedGameListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
 			dispose();
-			//new GameBoard();
+			// new GameBoard();
 			try {
 				new UntimedGame();
 			} catch (ClassNotFoundException e1) {
@@ -343,42 +321,47 @@ public class GameBoard extends JFrame {
 		}
 
 	}
-	
+
 	private class ResetQueueListener implements ActionListener {
-		
-		public void actionPerformed(ActionEvent e){
-			if(resetQueueValue > 0){
+
+		public void actionPerformed(ActionEvent e) {
+			if (resetQueueValue > 0) {
 				resetQueue();
 			}
 			resetQueueValue--;
 		}
 	}
-	
-private class RemoveNumberListener implements ActionListener {
-		
-		public void actionPerformed(ActionEvent e){
-			JFrame frame = new JFrame();
-		    String message = "Please enter the number to be removed.";
-		    String number = JOptionPane.showInputDialog(frame, message);
-		    if (number != null) {
-		    	for (int i = 0; i < tiles.length; i++) {
-					for (int j = 0; j < tiles[i].length; j++) {
-						if(tiles[i][j].getNumber() == Integer.parseInt(number)){
-							tiles[i][j].setBlank();
-							linkTiles();
+
+	private class RemoveNumberListener implements ActionListener {
+
+		public void actionPerformed(ActionEvent e) {
+
+			if(numRemovals > 0){
+				JFrame frame = new JFrame();
+				String message = "Please enter the number to be removed.";
+				String number = JOptionPane.showInputDialog(frame, message);
+				if (number != null) {
+					for (int i = 0; i < tiles.length; i++) {
+						for (int j = 0; j < tiles[i].length; j++) {
+							if (tiles[i][j].getNumber() == Integer.parseInt(number)) {
+								tiles[i][j].setBlank();
+								linkTiles();
+							}
 						}
 					}
 				}
-		    }
+				numRemovals--;
+			}
 		}
 	}
-	
+
 	private class TopTenScoreListener implements ActionListener {
-		
+
 		public void actionPerformed(ActionEvent e) {
-			
-			//Need logic here to load the top ten least moves object and display it in a new JPane/JFrame
-			//TODO change - this is getting a static instance
+
+			// Need logic here to load the top ten least moves object and
+			// display it in a new JPane/JFrame
+			// TODO change - this is getting a static instance
 			try {
 				topScore = new TopScoreList();
 				topScore.updatePlayerScores();
@@ -389,13 +372,14 @@ private class RemoveNumberListener implements ActionListener {
 			}
 		}
 	}
-	
-private class TopTenTimesListener implements ActionListener {
-		
+
+	private class TopTenTimesListener implements ActionListener {
+
 		public void actionPerformed(ActionEvent e) {
-			
-			//Need logic here to load the top ten least moves object and display it in a new JPane/JFrame
-			//TODO change - this is getting a static instance
+
+			// Need logic here to load the top ten least moves object and
+			// display it in a new JPane/JFrame
+			// TODO change - this is getting a static instance
 			try {
 				leastTimes = new leastTimeList();
 				leastTimes.updatePlayerTimes();
@@ -406,22 +390,60 @@ private class TopTenTimesListener implements ActionListener {
 			}
 		}
 	}
-	
+
 	private class FakeTopTenMovesListener implements ActionListener {
-		
+
 		public void actionPerformed(ActionEvent e) {
-			
+
 			/*
-			TopScoreModel.checkScore("TestPerson", 5);
-			TopScoreModel.checkScore("TestPerson2", 15);
-			TopScoreModel.checkScore("TestPerson3", 52);
-			TopScoreModel.checkScore("TestPerson4", 45);
-			TopScoreModel.checkScore("TestPerson5", 25);
-			*/						
-			}
+			 * TopScoreModel.checkScore("TestPerson", 5);
+			 * TopScoreModel.checkScore("TestPerson2", 15);
+			 * TopScoreModel.checkScore("TestPerson3", 52);
+			 * TopScoreModel.checkScore("TestPerson4", 45);
+			 * TopScoreModel.checkScore("TestPerson5", 25);
+			 */
+		}
 	}
-	
-	//Resets the values in the queue
+
+	private class HintListener implements ActionListener {
+
+		public void actionPerformed(ActionEvent e) {
+
+			if (numHints > 0) {
+				int bestRow = -1;
+				int bestColumn = -1;
+				int bestRemove = 0;
+				int nextInQueue = queue.peek();
+				int temp;
+				JButton button;
+				for (int i = 0; i < tiles.length; i++) {
+					for (int j = 0; j < tiles.length; j++) {
+						// temp = tiles[i][j].getTileModel();
+
+						// check number of potential removals
+						temp = tiles[i][j].getRemovalCount(nextInQueue);
+						// mark tile location and removal values if better
+						if (temp != 0 && temp > bestRemove) {
+							bestRow = i;
+							bestColumn = j;
+							bestRemove = temp;
+						}
+					} // end inner for
+				} // end outer for
+
+				// disable help button and mark best spot in red
+				if (bestRow != -1 && bestColumn != -1) {
+					tileButtons[bestRow][bestColumn].setHintColor();
+					button = (JButton) e.getSource();
+					button.setEnabled(false);
+				}
+
+				numHints--;
+			}
+		}
+	}
+
+	// Resets the values in the queue
 	private void resetQueue() {
 		queue.resetQueue();
 	}
@@ -430,7 +452,7 @@ private class TopTenTimesListener implements ActionListener {
 	private void setQueue() {
 		queuePanel = new JPanel(new GridLayout(5, 1));
 		TileModel[] temp = queue.getQueue();
-		
+
 		for (int i = 0; i < temp.length; i++) {
 			Tile tmp = new Tile(temp[i]);
 			queuePanel.add(tmp);
@@ -438,7 +460,7 @@ private class TopTenTimesListener implements ActionListener {
 		queuePanel.setBackground(Color.WHITE);
 		queuePanel.setVisible(true);
 		queuePanel.setOpaque(true);
-		queuePanel.setMaximumSize(new Dimension(50,50));
+		queuePanel.setMaximumSize(new Dimension(50, 50));
 	}
 
 	// set all the nsew links for the tiles
@@ -507,45 +529,6 @@ private class TopTenTimesListener implements ActionListener {
 
 				}
 			}
-		}
-	}
-	
-
-	private class HintListener implements ActionListener{
-		
-		
-		
-		public void actionPerformed(ActionEvent e ){
-			int bestRow = -1;
-			int bestColumn = -1;
-			int bestRemove = 0;
-			int nextInQueue = queue.peek();
-			int temp;
-			JButton button;
-			for(int i = 0; i < tiles.length; i++)
-			{
-				for(int j = 0; j < tiles.length; j++){
-					//temp = tiles[i][j].getTileModel();
-					
-					//check number of potential removals
-					temp = tiles[i][j].getRemovalCount(nextInQueue);
-					//mark tile location and removal values if better
-					if(temp != 0 && temp > bestRemove){
-						bestRow = i;
-						bestColumn = j;
-						bestRemove = temp;
-					}
-				}//end inner for
-			}//end outer for
-			
-			//disable help button and mark best spot in red
-			if(bestRow != -1 && bestColumn != -1){
-				tileButtons[bestRow][bestColumn].setHintColor();
-				button = (JButton) e.getSource();
-				button.setEnabled(false);
-			}
-					
-			
 		}
 	}
 }

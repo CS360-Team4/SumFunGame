@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,19 +12,19 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 public class UntimedGame extends GameBoard {
-	
+
 	private boolean winFlag = false;
-	
+
 	public UntimedGame() throws IOException, ClassNotFoundException, ParseException {
 		super();
 		lblMovesLeft.setText(String.valueOf(TileQueue.movesLeft));
-		
+
 		for (int i = 0; i < tiles.length; i++) {
 			for (int j = 0; j < tiles[i].length; j++) {
 				tileButtons[i][j].addActionListener(new SwapListener());
 			}
 		}
-		
+
 		super.lblTimeTitle.setVisible(false);
 		super.lblTime.setVisible(false);
 	}
@@ -33,14 +34,16 @@ public class UntimedGame extends GameBoard {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
+			hintButton.setEnabled(true);
+			
 			Tile button = (Tile) e.getSource();
 			TileModel temp = button.getTileModel();
-			
+
 			// Decrement the moves remaining and update the JLabel text
-			if (TileQueue.movesLeft > 0 && temp.isBlank() && !gameIsWon){
+			if (TileQueue.movesLeft > 0 && temp.isBlank() && !gameIsWon) {
 				TileQueue.movesLeft--;
 				lblMovesLeft.setText(String.valueOf(TileQueue.movesLeft));
-				
+
 				// if blank tile is clicked put queue tile onto board
 				if (temp.getNumber() == 0 && temp.isBlank()) {
 					temp.setNumber(queue.pop());
@@ -48,7 +51,7 @@ public class UntimedGame extends GameBoard {
 					temp.setBlank(false);
 					playerMoves++;
 					ArrayList<TileModel> neighbors = temp.getNeighbors();
-					
+
 					// if the sum mod 10 of neighbors is equal to tile clicked,
 					// set tiles to false and make invisible
 					if (temp.getSumMod() == temp.getNumber()) {
@@ -64,21 +67,21 @@ public class UntimedGame extends GameBoard {
 						temp.setBlank();
 						temp = null;
 						linkTiles();
-						
-						//Creating a temp score for that specific move and then updating the total score
+
+						// Creating a temp score for that specific move and then
+						// updating the total score
 						int tempScore = 0;
-						if(neighbors.size() > 2){
-							tempScore = neighbors.size()*10;
+						if (neighbors.size() > 2) {
+							tempScore = neighbors.size() * 10;
 						}
-	
-						
+
 						score += tempScore;
 						lblScore.setText(String.valueOf(score));
 					}
 
 				}
 			}
-			
+
 			try {
 				checkWin();
 			} catch (ClassNotFoundException e1) {
@@ -90,42 +93,44 @@ public class UntimedGame extends GameBoard {
 			}
 		}
 	}
-	
-	//checks if the board has been cleared of tiles, which is a win
-	public boolean checkWin() throws ClassNotFoundException, IOException{
+
+	// checks if the board has been cleared of tiles, which is a win
+	public boolean checkWin() throws ClassNotFoundException, IOException {
 		boolean output = false;
 		int counter = 0;
-		
-		//gets count of total number of blank tiles
-		for(int i = 0; i < 9; i++){
-			for(int j = 0; j < 9; j++){
-				if(tiles[i][j].getNumber() == 0 && tiles[i][j].isBlank()){
+
+		// gets count of total number of blank tiles
+		for (int i = 0; i < 9; i++) {
+			for (int j = 0; j < 9; j++) {
+				if (tiles[i][j].getNumber() == 0 && tiles[i][j].isBlank()) {
 					counter++;
+					tileButtons[i][j].setBackground(Color.WHITE);
 				}
 			}
 		}
-		
 
-		//if there is 81 blank tiles then print out result and check for top ten placement.
-		if(counter == 81 && !gameIsWon){
+		// if there is 81 blank tiles then print out result and check for top
+		// ten placement.
+		if (counter == 81 && !gameIsWon) {
 			output = true;
-			//System.out.println("You won the game!");
-			//endMoves = TileQueue.movesLeft;
+			// System.out.println("You won the game!");
+			// endMoves = TileQueue.movesLeft;
 			TileQueue.movesLeft = 0;
 			gameIsWon = true;
-			
+
 			String[][] temp = topScore.getModel().getTopScores();
-			
-			//checks if score is top ten worthy and displays a jbox either way.
+
+			// checks if score is top ten worthy and displays a jbox either way.
 			if (score > Integer.parseInt(temp[9][1])) {
 				JFrame frame = new JFrame();
-			    String message = "You won! Your score has made it in the Top Ten Most Points! Please enter your name.";
-			    String text = JOptionPane.showInputDialog(frame, message);
-			    if (text != null) {
-			    	name = text;
-			    }
-			    topScore.checkScore(name, score, new Date());
-				//JOptionPane.showMessageDialog(null, "You won the game! Your score has been added to the Top Ten Most Points List!");
+				String message = "You won! Your score has made it in the Top Ten Most Points! Please enter your name.";
+				String text = JOptionPane.showInputDialog(frame, message);
+				if (text != null) {
+					name = text;
+				}
+				topScore.checkScore(name, score, new Date());
+				// JOptionPane.showMessageDialog(null, "You won the game! Your
+				// score has been added to the Top Ten Most Points List!");
 			} else {
 				JOptionPane.showMessageDialog(null, "You won the game!");
 			}
