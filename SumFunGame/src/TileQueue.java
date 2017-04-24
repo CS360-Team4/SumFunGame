@@ -34,8 +34,7 @@ public class TileQueue {
 		return temp;
 	}
 	
-	public int peek()
-	{
+	public int peek() {
 		return queue[0].getNumber();
 	}
 

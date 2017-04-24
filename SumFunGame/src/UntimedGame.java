@@ -111,8 +111,7 @@ public class UntimedGame extends GameBoard {
 
 						score += tempScore;
 						lblScore.setText(String.valueOf(score));
-					}
-					else{
+					} else{
 						AudioInputStream audioInputStream;
 						Clip clip;
 						try {

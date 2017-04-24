@@ -54,8 +54,7 @@ public class TileModel extends Observable {
 	public int getRemovalCount(int num){
 		
 		//if calling tile is blank return 0, dont check tiles that aren't blank
-		if(!isBlank)
-		{
+		if (!isBlank) {
 			return 0;
 		}
 		ArrayList<TileModel> temp = getNeighbors();

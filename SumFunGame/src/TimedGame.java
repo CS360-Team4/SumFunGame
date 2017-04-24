@@ -125,8 +125,7 @@ public class TimedGame extends GameBoard {
 						}
 						score += tempScore;
 						lblScore.setText(String.valueOf(score));
-					}
-					else{
+					} else {
 						//plays sound
 						AudioInputStream audioInputStream;
 						Clip clip;
@@ -231,9 +230,7 @@ public class TimedGame extends GameBoard {
 				topScore.checkScore(name, score, new Date());
 				// JOptionPane.showMessageDialog(null, "You won the game! Your
 				// score has been added to the Top Ten Most Points List!");
-			}
-
-			else {
+			} else {
 				JOptionPane.showMessageDialog(null, "You won the game!");
 			}
 		}
