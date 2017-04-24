@@ -16,7 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
-import leastTimeList.leastTimeList;
+import leasttimelist.LeastTimeList;
 
 public class TimedGame extends GameBoard {
 

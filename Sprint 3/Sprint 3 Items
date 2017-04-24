@@ -5,10 +5,7 @@ Sprint 3 Items
 22 — Engaging (see potential items below)
 
 Icon in the title bar different than the default java icon
-Add colors
-Add a small sound for placement
-Add a medium sound for removal
-Add a big sound when you score 
+
 Animation for when they disappear
 
 
@@ -21,7 +18,10 @@ Animation for when they disappear
 14 — know where to place the tile to remove the most tiles
 add date to top ten lists
 
-
+Add colors
+Add a small sound for placement
+Add a medium sound for removal
+Add a big sound when you score 
 Don't show irrelevant data
 ask for the name only when you win
 Change the JMenus to Buttons on the board

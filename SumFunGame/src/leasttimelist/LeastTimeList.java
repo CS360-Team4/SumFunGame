@@ -1,4 +1,4 @@
-package leastTimeList;
+package leasttimelist;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -30,16 +30,16 @@ import javax.swing.SwingConstants;
 
 
 
-public class leastTimeList extends JFrame implements Observer {
+public class LeastTimeList extends JFrame implements Observer {
 	
 	//singleton
-	private  leastTimeList topTenFrame;
+	private  LeastTimeList topTenFrame;
 	
 	private  final int topTenRows = 10;
 	private  final int topTenColumns = 3;
 	private  final String topTenTitle = "Top Ten Least Times";
 	
-	private leastTimeModel model;
+	private LeastTimeModel model;
 
 	private JPanel mainPanel;
 	private JPanel topTenListPanel;
@@ -49,7 +49,7 @@ public class leastTimeList extends JFrame implements Observer {
 	JLabel[] playerDates;
 	private SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 
-	public leastTimeList() throws IOException, ClassNotFoundException, ParseException {
+	public LeastTimeList() throws IOException, ClassNotFoundException, ParseException {
 
 		//read model from serialized file
 		loadLeastTimes();
@@ -124,11 +124,11 @@ public class leastTimeList extends JFrame implements Observer {
 
 	}
 	
-	public leastTimeModel getModel() {
+	public LeastTimeModel getModel() {
 		return model;
 	}
 
-	public void setModel(leastTimeModel model) {
+	public void setModel(LeastTimeModel model) {
 		this.model = model;
 	}
 
@@ -152,10 +152,10 @@ public class leastTimeList extends JFrame implements Observer {
 		return model.checkTime(name, time, date);
 	}
 	
-	public  leastTimeList getLeastTimeList() throws IOException, ClassNotFoundException, ParseException{
+	public  LeastTimeList getLeastTimeList() throws IOException, ClassNotFoundException, ParseException{
 		if (topTenFrame==null){
 			//TODO
-			topTenFrame = new leastTimeList();
+			topTenFrame = new LeastTimeList();
 		}
 		return this;
 	}
@@ -194,11 +194,11 @@ public class leastTimeList extends JFrame implements Observer {
 				tempDates[i] = formatter.parse(scanFile.next());
 				temp[i][1] = getTimeString(tempTimes[i]);
 			}
-				model = new leastTimeModel(temp, tempTimes, tempDates);
+				model = new LeastTimeModel(temp, tempTimes, tempDates);
 				scanFile.close();
 		}
 		else{
-			model = new leastTimeModel();
+			model = new LeastTimeModel();
 		}
 		model.sort();
 
