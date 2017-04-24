@@ -33,6 +33,19 @@ public class UntimedGame extends GameBoard {
 
 		super.lblTimeTitle.setVisible(false);
 		super.lblTime.setVisible(false);
+		
+		//plays sound
+		AudioInputStream audioInputStream;
+		Clip clip;
+		try {
+			audioInputStream = AudioSystem.getAudioInputStream(new File("newGame.wav").getAbsoluteFile());
+			clip = AudioSystem.getClip();
+			clip.open(audioInputStream);
+			clip.start();
+		} catch ( UnsupportedAudioFileException | LineUnavailableException | IOException e2 ) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}//end sound
 	}
 
 	private class SwapListener implements ActionListener {
@@ -66,7 +79,7 @@ public class UntimedGame extends GameBoard {
 						AudioInputStream audioInputStream;
 						Clip clip;
 						try {
-							audioInputStream = AudioSystem.getAudioInputStream(new File("TODO-filenamehere").getAbsoluteFile());
+							audioInputStream = AudioSystem.getAudioInputStream(new File("TileRemoval.wav").getAbsoluteFile());
 							clip = AudioSystem.getClip();
 							clip.open(audioInputStream);
 							clip.start();
@@ -99,7 +112,19 @@ public class UntimedGame extends GameBoard {
 						score += tempScore;
 						lblScore.setText(String.valueOf(score));
 					}
-
+					else{
+						AudioInputStream audioInputStream;
+						Clip clip;
+						try {
+							audioInputStream = AudioSystem.getAudioInputStream(new File("Placement.wav").getAbsoluteFile());
+							clip = AudioSystem.getClip();
+							clip.open(audioInputStream);
+							clip.start();
+						} catch ( UnsupportedAudioFileException | LineUnavailableException | IOException e2 ) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						}//end sound
+					}
 				}
 			}
 
@@ -138,7 +163,7 @@ public class UntimedGame extends GameBoard {
 			AudioInputStream audioInputStream;
 			Clip clip;
 			try {
-				audioInputStream = AudioSystem.getAudioInputStream(new File("TODO-filenamehere").getAbsoluteFile());
+				audioInputStream = AudioSystem.getAudioInputStream(new File("checkWin.wav").getAbsoluteFile());
 				clip = AudioSystem.getClip();
 				clip.open(audioInputStream);
 				clip.start();

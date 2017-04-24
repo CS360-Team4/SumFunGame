@@ -313,6 +313,18 @@ public class GameBoard extends JFrame {
 					}
 				}
 				numRemovals--;
+				//plays sound
+				AudioInputStream audioInputStream;
+				Clip clip;
+				try {
+					audioInputStream = AudioSystem.getAudioInputStream(new File("numRemoval.wav").getAbsoluteFile());
+					clip = AudioSystem.getClip();
+					clip.open(audioInputStream);
+					clip.start();
+				} catch ( UnsupportedAudioFileException | LineUnavailableException | IOException e2 ) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}//end sound
 			}
 		}
 	}
@@ -406,7 +418,7 @@ public class GameBoard extends JFrame {
 				AudioInputStream audioInputStream;
 				Clip clip;
 				try {
-					audioInputStream = AudioSystem.getAudioInputStream(new File("TODO-filenamehere").getAbsoluteFile());
+					audioInputStream = AudioSystem.getAudioInputStream(new File("hint.wav").getAbsoluteFile());
 					clip = AudioSystem.getClip();
 					clip.open(audioInputStream);
 					clip.start();
