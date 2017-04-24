@@ -2,11 +2,17 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -55,8 +61,23 @@ public class UntimedGame extends GameBoard {
 					// if the sum mod 10 of neighbors is equal to tile clicked,
 					// set tiles to false and make invisible
 					if (temp.getSumMod() == temp.getNumber()) {
+						
+						//plays sound
+						AudioInputStream audioInputStream;
+						Clip clip;
+						try {
+							audioInputStream = AudioSystem.getAudioInputStream(new File("TODO-filenamehere").getAbsoluteFile());
+							clip = AudioSystem.getClip();
+							clip.open(audioInputStream);
+							clip.start();
+						} catch ( UnsupportedAudioFileException | LineUnavailableException | IOException e2 ) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						}//end sound
+						
 						for (TileModel tile : neighbors) {
 
+							
 							// dont remove blank tiles
 							if (!tile.isBlank()) {
 								// tile.setVisible(false);
@@ -113,6 +134,19 @@ public class UntimedGame extends GameBoard {
 		// ten placement.
 		if (counter == 81 && !gameIsWon) {
 			output = true;
+			//plays sound
+			AudioInputStream audioInputStream;
+			Clip clip;
+			try {
+				audioInputStream = AudioSystem.getAudioInputStream(new File("TODO-filenamehere").getAbsoluteFile());
+				clip = AudioSystem.getClip();
+				clip.open(audioInputStream);
+				clip.start();
+			} catch ( UnsupportedAudioFileException | LineUnavailableException e2 ) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}//end sound
+			
 			// System.out.println("You won the game!");
 			// endMoves = TileQueue.movesLeft;
 			TileQueue.movesLeft = 0;

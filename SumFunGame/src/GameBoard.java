@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -12,6 +13,11 @@ import java.io.ObjectOutputStream;
 import java.text.ParseException;
 import java.util.ArrayList;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -232,50 +238,6 @@ public class GameBoard extends JFrame {
 
 	}
 
-	/*
-	 * CREATED IN SUBCLASSES // swaplistener is attached to all tiles in the 9x9
-	 * grid(not queue tiles) // when called it evaluates the tile clicked and
-	 * the neighboring tiles and // determines // if it was a valid move, if so
-	 * then it pops from queue and removes // neighbors as needed private class
-	 * SwapListener implements ActionListener {
-	 * 
-	 * @Override public void actionPerformed(ActionEvent e) {
-	 * 
-	 * 
-	 * System.out.println("Temp: "); Tile button = (Tile) e.getSource();
-	 * TileModel temp = button.getTileModel();
-	 * 
-	 * // Decrement the moves remaining and update the JLabel text if
-	 * (TileQueue.movesLeft > 0 && temp.isBlank() && !gameIsWon){
-	 * TileQueue.movesLeft--;
-	 * lblMovesLeft.setText(String.valueOf(TileQueue.movesLeft));
-	 * 
-	 * // if blank tile is clicked put queue tile onto board if
-	 * (temp.getNumber() == 0 && temp.isBlank()) { temp.setNumber(queue.pop());
-	 * // temp.update(temp.getNumObject(), temp); temp.setBlank(false);
-	 * 
-	 * ArrayList<TileModel> neighbors = temp.getNeighbors();
-	 * 
-	 * // if the sum mod 10 of neighbors is equal to tile clicked, // set tiles
-	 * to false and make invisible if (temp.getSumMod() == temp.getNumber()) {
-	 * for (TileModel tile : neighbors) {
-	 * 
-	 * // dont remove blank tiles if (!tile.isBlank()) { //
-	 * tile.setVisible(false); tile.setBlank(); tile = null; } }
-	 * temp.setBlank(); temp = null; linkTiles();
-	 * 
-	 * //Creating a temp score for that specific move and then updating the
-	 * total score int tempScore = 0; if(neighbors.size() > 2){ tempScore =
-	 * neighbors.size()*10; }
-	 * 
-	 * score += tempScore; lblScore.setText(String.valueOf(score));
-	 * 
-	 * 
-	 * }
-	 * 
-	 * } } playerMoves++; checkWin(); } }
-	 * 
-	 */
 	private class NewTimedGameListener implements ActionListener {
 
 		@Override
@@ -439,6 +401,20 @@ public class GameBoard extends JFrame {
 				}
 
 				numHints--;
+				
+				//plays sound
+				AudioInputStream audioInputStream;
+				Clip clip;
+				try {
+					audioInputStream = AudioSystem.getAudioInputStream(new File("TODO-filenamehere").getAbsoluteFile());
+					clip = AudioSystem.getClip();
+					clip.open(audioInputStream);
+					clip.start();
+				} catch (LineUnavailableException | IOException  | UnsupportedAudioFileException e2 ) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}//end sound
+				
 			}
 		}
 	}
