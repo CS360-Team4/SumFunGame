@@ -193,8 +193,7 @@ public class TopScoreList extends JFrame implements Observer {
 			}
 				model = new TopScoreModel(temp, tempDates);
 				scanFile.close();
-		}
-		else{
+		} else{
 			model = new TopScoreModel();
 		}
 		

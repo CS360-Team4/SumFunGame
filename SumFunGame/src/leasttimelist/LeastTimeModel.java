@@ -1,4 +1,4 @@
-package leastTimeList;
+package leasttimelist;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.Observable;
 import java.util.Scanner;
 
-public class leastTimeModel extends Observable implements Serializable {
+public class LeastTimeModel extends Observable implements Serializable {
 
 	/**
 	 *serialVersionUID so that changes to model does not corrupt serialized object
@@ -26,7 +26,7 @@ public class leastTimeModel extends Observable implements Serializable {
 
 	//leastTimeModel uses a 2d String array to maintain a list of the names and times
 	//Operates as the model for the leastTimeList
-	public leastTimeModel() throws IOException {
+	public LeastTimeModel() throws IOException {
 
 		leastTimes = new String[10][2];
 		times = new int[10];
@@ -40,7 +40,7 @@ public class leastTimeModel extends Observable implements Serializable {
 		notifyObservers();
 	}
 	
-	public leastTimeModel(String[][] leastTimes, int[] times, Date[] dates) throws IOException {
+	public LeastTimeModel(String[][] leastTimes, int[] times, Date[] dates) throws IOException {
 		/*topScores = new String[10][10];
 		File input = new File("TopTen.txt");
 		Scanner scanFile = new Scanner(input);

@@ -28,7 +28,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import leastTimeList.leastTimeList;
+import leasttimelist.LeastTimeList;
 import topscorelist.TopScoreList;
 import topscorelist.TopScoreModel;
 
@@ -61,7 +61,7 @@ public class GameBoard extends JFrame {
 	protected int playerMoves = 0;
 	protected boolean gameIsWon = false;
 	protected TopScoreList topScore;
-	protected leastTimeList leastTimes;
+	protected LeastTimeList leastTimes;
 	protected int numHints = 3;
 	protected int numRemovals = 1;
 	public GameBoard() throws IOException, ClassNotFoundException, ParseException {
@@ -225,7 +225,7 @@ public class GameBoard extends JFrame {
 		mainPanel.add(buttonPanel, BorderLayout.NORTH);
 
 		topScore = new TopScoreList();
-		leastTimes = new leastTimeList();
+		leastTimes = new LeastTimeList();
 		add(mainPanel);
 		mainPanel.setVisible(true);
 		mainPanel.setOpaque(true);
@@ -355,7 +355,7 @@ public class GameBoard extends JFrame {
 			// display it in a new JPane/JFrame
 			// TODO change - this is getting a static instance
 			try {
-				leastTimes = new leastTimeList();
+				leastTimes = new LeastTimeList();
 				leastTimes.updatePlayerTimes();
 				leastTimes.setVisible(true);
 			} catch (IOException | ClassNotFoundException | ParseException e1) {

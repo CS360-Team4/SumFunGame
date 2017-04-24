@@ -154,34 +154,34 @@ public class TopScoreModel extends Observable implements Serializable {
 	}
 	
 	//Sorting the values in case the text file is in the wrong order
-		public void sort() throws IOException{
-			String tempString = "";
-			int tempInt = 0;
-			Date tempDate = null;
-			
-			for(int i = 0; i < 9; i++){
-				if(Integer.parseInt(topScores[i][1]) < Integer.parseInt(topScores[i+1][1])){
-					tempInt = Integer.parseInt(topScores[i][1]);
-					tempString = topScores[i][0];
-					tempDate = dates[i];
-					
-					dates[i] = dates[i+1];
-					topScores[i][1] = topScores[i+1][1];
-					topScores[i][0] = topScores[i+1][0];
-					
-					dates[i+1] = tempDate;
-					topScores[i+1][0] = tempString;
-					topScores[i+1][1] = Integer.toString(tempInt);
-				}
+	public void sort() throws IOException{
+		String tempString = "";
+		int tempInt = 0;
+		Date tempDate = null;
+		
+		for(int i = 0; i < 9; i++){
+			if(Integer.parseInt(topScores[i][1]) < Integer.parseInt(topScores[i+1][1])){
+				tempInt = Integer.parseInt(topScores[i][1]);
+				tempString = topScores[i][0];
+				tempDate = dates[i];
+				
+				dates[i] = dates[i+1];
+				topScores[i][1] = topScores[i+1][1];
+				topScores[i][0] = topScores[i+1][0];
+				
+				dates[i+1] = tempDate;
+				topScores[i+1][0] = tempString;
+				topScores[i+1][1] = Integer.toString(tempInt);
 			}
-			saveTopScore();
 		}
+		saveTopScore();
+	}
 
-		public Date[] getDates() {
-			return dates;
-		}
+	public Date[] getDates() {
+		return dates;
+	}
 
-		public void setDates(Date[] dates) {
-			this.dates = dates;
-		}
+	public void setDates(Date[] dates) {
+		this.dates = dates;
+	}
 }
