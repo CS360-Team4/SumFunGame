@@ -196,7 +196,7 @@ public class LeastTimeList extends JFrame implements Observer {
 			}
 				model = new LeastTimeModel(temp, tempTimes, tempDates);
 				scanFile.close();
-		} else{
+		} else {
 			model = new LeastTimeModel();
 		}
 		model.sort();
