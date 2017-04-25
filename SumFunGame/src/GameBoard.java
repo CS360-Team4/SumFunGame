@@ -291,6 +291,19 @@ public class GameBoard extends JFrame {
 				resetQueue();
 			}
 			resetQueueValue--;
+			
+			//plays sound
+			AudioInputStream audioInputStream;
+			Clip clip;
+			try {
+				audioInputStream = AudioSystem.getAudioInputStream(new File("ResetQueue.wav").getAbsoluteFile());
+				clip = AudioSystem.getClip();
+				clip.open(audioInputStream);
+				clip.start();
+			} catch (LineUnavailableException | IOException  | UnsupportedAudioFileException e2 ) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}//end sound
 		}
 	}
 
@@ -317,7 +330,7 @@ public class GameBoard extends JFrame {
 				AudioInputStream audioInputStream;
 				Clip clip;
 				try {
-					audioInputStream = AudioSystem.getAudioInputStream(new File("numRemoval.wav").getAbsoluteFile());
+					audioInputStream = AudioSystem.getAudioInputStream(new File("NumRemoval.wav").getAbsoluteFile());
 					clip = AudioSystem.getClip();
 					clip.open(audioInputStream);
 					clip.start();
@@ -418,7 +431,7 @@ public class GameBoard extends JFrame {
 				AudioInputStream audioInputStream;
 				Clip clip;
 				try {
-					audioInputStream = AudioSystem.getAudioInputStream(new File("hint.wav").getAbsoluteFile());
+					audioInputStream = AudioSystem.getAudioInputStream(new File("Hint.wav").getAbsoluteFile());
 					clip = AudioSystem.getClip();
 					clip.open(audioInputStream);
 					clip.start();

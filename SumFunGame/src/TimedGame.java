@@ -45,7 +45,7 @@ public class TimedGame extends GameBoard {
 		AudioInputStream audioInputStream;
 		Clip clip;
 		try {
-			audioInputStream = AudioSystem.getAudioInputStream(new File("newGame.wav").getAbsoluteFile());
+			audioInputStream = AudioSystem.getAudioInputStream(new File("NewGame.wav").getAbsoluteFile());
 			clip = AudioSystem.getClip();
 			clip.open(audioInputStream);
 			clip.start();
@@ -194,7 +194,7 @@ public class TimedGame extends GameBoard {
 			AudioInputStream audioInputStream;
 			Clip clip;
 			try {
-				audioInputStream = AudioSystem.getAudioInputStream(new File("checkWin.wav").getAbsoluteFile());
+				audioInputStream = AudioSystem.getAudioInputStream(new File("CheckWin.wav").getAbsoluteFile());
 				clip = AudioSystem.getClip();
 				clip.open(audioInputStream);
 				clip.start();
