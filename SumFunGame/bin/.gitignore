@@ -21,3 +21,12 @@
 /UntimedGame.class
 /leasttimelist/
 /topscorelist/
+/audiofiles/
+/checkWin.wav
+/Hint.wav
+/NewGame.wav
+/NumRemoval.wav
+/Placement.wav
+/ResetQueue.wav
+/TileRemoval.wav
+/.DS_Store

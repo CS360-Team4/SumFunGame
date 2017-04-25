@@ -71,6 +71,12 @@ public class LeastTimeList extends JFrame implements Observer {
 		JLabel playerTitle = new JLabel("Player");
 		JLabel timeTitle = new JLabel("Time");
 		JLabel dateTitle = new JLabel("Date");
+		playerTitle.setForeground(Color.WHITE);
+		timeTitle.setForeground(Color.WHITE);
+		dateTitle.setForeground(Color.WHITE);
+		playerTitle.setFont(new Font("Arial", Font.BOLD, 20));
+		timeTitle.setFont(new Font("Arial", Font.BOLD, 20));
+		dateTitle.setFont(new Font("Arial", Font.BOLD, 20));
 		playerTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		timeTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		dateTitle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -93,6 +99,13 @@ public class LeastTimeList extends JFrame implements Observer {
 			
 			playerDates[i] = new JLabel(formatter.format(tempDates[i]) + " ");
 			
+			playerNames[i].setForeground(Color.WHITE);
+			playerTimes[i].setForeground(Color.WHITE);
+			playerDates[i].setForeground(Color.WHITE);
+			playerNames[i].setFont(new Font("Arial", Font.BOLD, 16));
+			playerTimes[i].setFont(new Font("Arial", Font.BOLD, 16));
+			playerDates[i].setFont(new Font("Arial", Font.BOLD, 16));
+			
 			//System.out.println(temp[i][0]);
 			topTenListPanel.add(playerNames[i]);
 			topTenListPanel.add(playerTimes[i]);
@@ -110,6 +123,8 @@ public class LeastTimeList extends JFrame implements Observer {
 			
 		}
 
+		topTenListPanel.setBackground(Color.BLUE);
+		topTenListPanel.setForeground(Color.WHITE);
 		mainPanel.add(topTenListPanel, BorderLayout.CENTER);
 
 		add(mainPanel);

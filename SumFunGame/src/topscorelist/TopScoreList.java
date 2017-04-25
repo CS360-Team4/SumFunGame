@@ -74,6 +74,12 @@ public class TopScoreList extends JFrame implements Observer {
 		JLabel playerTitle = new JLabel("Player");
 		JLabel scoreTitle = new JLabel("Score");
 		JLabel dateTitle = new JLabel("Date");
+		playerTitle.setForeground(Color.WHITE);
+		scoreTitle.setForeground(Color.WHITE);
+		dateTitle.setForeground(Color.WHITE);
+		playerTitle.setFont(new Font("Arial", Font.BOLD, 20));
+		scoreTitle.setFont(new Font("Arial", Font.BOLD, 20));
+		dateTitle.setFont(new Font("Arial", Font.BOLD, 20));
 		playerTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		scoreTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		dateTitle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -92,6 +98,13 @@ public class TopScoreList extends JFrame implements Observer {
 			
 			playerDates[i] = new JLabel(formatter.format(tempDates[i]) + " ");
 			
+			playerNames[i].setForeground(Color.WHITE);
+			playerScores[i].setForeground(Color.WHITE);
+			playerDates[i].setForeground(Color.WHITE);
+			playerNames[i].setFont(new Font("Arial", Font.BOLD, 16));
+			playerScores[i].setFont(new Font("Arial", Font.BOLD, 16));
+			playerDates[i].setFont(new Font("Arial", Font.BOLD, 16));
+			
 			//System.out.println(temp[i][0]);
 			topTenListPanel.add(playerNames[i]);
 			topTenListPanel.add(playerScores[i]);
@@ -109,6 +122,7 @@ public class TopScoreList extends JFrame implements Observer {
 			
 		}
 
+		topTenListPanel.setBackground(Color.RED);
 		mainPanel.add(topTenListPanel, BorderLayout.CENTER);
 
 		add(mainPanel);
