@@ -315,7 +315,7 @@ public class GameBoard extends JFrame {
 				JFrame frame = new JFrame();
 				String message = "Please enter the number to be removed.";
 				String number = JOptionPane.showInputDialog(frame, message);
-				if (number != null) {
+				if (number != null) { // if number is null, user entered no number or hit "cancel"
 					for (int i = 0; i < tiles.length; i++) {
 						for (int j = 0; j < tiles[i].length; j++) {
 							if (tiles[i][j].getNumber() == Integer.parseInt(number)) {
@@ -324,20 +324,22 @@ public class GameBoard extends JFrame {
 							}
 						}
 					}
+
+					numRemovals--;
+					// plays sound
+					AudioInputStream audioInputStream;
+					Clip clip;
+					try {
+						audioInputStream = AudioSystem
+								.getAudioInputStream(new File("NumRemoval.wav").getAbsoluteFile());
+						clip = AudioSystem.getClip();
+						clip.open(audioInputStream);
+						clip.start();
+					} catch (UnsupportedAudioFileException | LineUnavailableException | IOException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					} // end sound
 				}
-				numRemovals--;
-				//plays sound
-				AudioInputStream audioInputStream;
-				Clip clip;
-				try {
-					audioInputStream = AudioSystem.getAudioInputStream(new File("NumRemoval.wav").getAbsoluteFile());
-					clip = AudioSystem.getClip();
-					clip.open(audioInputStream);
-					clip.start();
-				} catch ( UnsupportedAudioFileException | LineUnavailableException | IOException e2 ) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
-				}//end sound
 			}
 		}
 	}

@@ -195,22 +195,24 @@ public class TopScoreList extends JFrame implements Observer {
 		else{
 			model = new TopScoreModel();
 		}*/
-		if(new File("TopScore.txt").exists())	{
+		if (new File("TopScore.txt").exists()) {
 			String[][] temp = new String[10][2];
 			Date[] tempDates = new Date[10];
 			File input = new File("TopScore.txt");
 			Scanner scanFile = new Scanner(input);
-			for(int i = 0; i < temp.length; i++){
+
+			for (int i = 0; i < temp.length; i++) {
 				temp[i][0] = scanFile.next();
 				temp[i][1] = Integer.toString(scanFile.nextInt());
 				tempDates[i] = formatter.parse(scanFile.next());
 			}
-				model = new TopScoreModel(temp, tempDates);
-				scanFile.close();
-		} else{
+
+			model = new TopScoreModel(temp, tempDates);
+			scanFile.close();
+		} else {
 			model = new TopScoreModel();
 		}
-		
+
 		model.sort();
 
 		/*String[][] tester = model.getTopScores();
