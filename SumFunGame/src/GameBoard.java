@@ -315,7 +315,13 @@ public class GameBoard extends JFrame {
 				JFrame frame = new JFrame();
 				String message = "Please enter the number to be removed.";
 				String number = JOptionPane.showInputDialog(frame, message);
-				if (number != null) { // if number is null, user entered no number or hit "cancel"
+				if (number != null) { //if number is null, user hit "cancel"
+
+					try{
+					// check now if number is valid
+					int removeNumber = Integer.parseInt(number);
+					if (removeNumber < 0 || removeNumber > 9) throw new Exception();
+					
 					for (int i = 0; i < tiles.length; i++) {
 						for (int j = 0; j < tiles[i].length; j++) {
 							if (tiles[i][j].getNumber() == Integer.parseInt(number)) {
@@ -339,6 +345,12 @@ public class GameBoard extends JFrame {
 						// TODO Auto-generated catch block
 						e2.printStackTrace();
 					} // end sound
+					}
+				
+					catch (Exception invalidNumber){
+						
+						JOptionPane.showMessageDialog(null,"Must enter a valid number from 0-9","Invalid Number Entry",JOptionPane.WARNING_MESSAGE);
+					}
 				}
 			}
 		}
