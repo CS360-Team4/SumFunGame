@@ -1,5 +1,3 @@
-import com.sun.glass.events.KeyEvent;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -8,13 +6,8 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.text.ParseException;
-import java.util.ArrayList;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -23,9 +16,6 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -33,7 +23,6 @@ import javax.swing.SwingConstants;
 import leasttimelist.LeastTimeList;
 
 import topscorelist.TopScoreList;
-import topscorelist.TopScoreModel;
 
 public class GameBoard extends JFrame {
 
@@ -211,7 +200,7 @@ public class GameBoard extends JFrame {
 		btnRemoveNumber = new JButton("Remove Number");
 		btnRemoveNumber.addActionListener(new RemoveNumberListener());
 		hintButton = new JButton("Hint");
-		hintButton.setMnemonic(KeyEvent.VK_Z);
+//		hintButton.setMnemonic(KeyEvent.VK_Z);
 		hintButton.addActionListener(new HintListener());
 		// addTopPlayer = new JMenuItem("Add Top 10 Player");
 		// addTopPlayer.addActionListener(new FakeTopTenMovesListener());
