@@ -203,7 +203,6 @@ public class TopScoreList extends JFrame implements Observer {
 
 			for (int i = 0; i < temp.length; i++) {
 				temp[i][0] = scanFile.next();
-//				temp[i][0] = temp[i][0].replaceAll("_", " "); //TODO
 				temp[i][1] = Integer.toString(scanFile.nextInt());
 				tempDates[i] = formatter.parse(scanFile.next());
 			}

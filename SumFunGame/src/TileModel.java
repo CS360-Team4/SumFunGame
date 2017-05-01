@@ -98,8 +98,7 @@ public class TileModel extends Observable {
 				|| (northeast != null) && !northeast.isBlank()
 				|| (northwest != null) && !northwest.isBlank()
 				|| (southeast != null) && !southeast.isBlank()
-				|| (southwest != null) && !southwest.isBlank())
-		{
+				|| (southwest != null) && !southwest.isBlank()) {
 			return false;
 		} else {
 			return true;

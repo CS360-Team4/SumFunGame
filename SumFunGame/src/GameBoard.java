@@ -1,3 +1,5 @@
+import com.sun.glass.events.KeyEvent;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -28,9 +30,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import com.sun.glass.events.KeyEvent;
-
 import leasttimelist.LeastTimeList;
+
 import topscorelist.TopScoreList;
 import topscorelist.TopScoreModel;
 
@@ -321,37 +322,35 @@ public class GameBoard extends JFrame {
 				if (number != null) { //if number is null, user hit "cancel"
 
 					try{
-					// check now if number is valid
-					int removeNumber = Integer.parseInt(number); // if not a number, will throw exception
-					if (removeNumber < 0 || removeNumber > 9) throw new Exception(); // force throw exception
-					
-					for (int i = 0; i < tiles.length; i++) {
-						for (int j = 0; j < tiles[i].length; j++) {
-							if (tiles[i][j].getNumber() == Integer.parseInt(number)) {
-								tiles[i][j].setBlank();
-								linkTiles();
+						// check now if number is valid
+						int removeNumber = Integer.parseInt(number); // if not a number, will throw exception
+						if (removeNumber < 0 || removeNumber > 9) {
+							throw new Exception(); // force throw exception
+						}
+						for (int i = 0; i < tiles.length; i++) {
+							for (int j = 0; j < tiles[i].length; j++) {
+								if (tiles[i][j].getNumber() == Integer.parseInt(number)) {
+									tiles[i][j].setBlank();
+									linkTiles();
+								}
 							}
 						}
-					}
 
-					numRemovals--;
-					// plays sound
-					AudioInputStream audioInputStream;
-					Clip clip;
-					try {
-						audioInputStream = AudioSystem
+						numRemovals--;
+						// plays sound
+						AudioInputStream audioInputStream;
+						Clip clip;
+						try {
+							audioInputStream = AudioSystem
 								.getAudioInputStream(new File("NumRemoval.wav").getAbsoluteFile());
-						clip = AudioSystem.getClip();
-						clip.open(audioInputStream);
-						clip.start();
-					} catch (UnsupportedAudioFileException | LineUnavailableException | IOException e2) {
-						// TODO Auto-generated catch block
-						e2.printStackTrace();
-					} // end sound
-					}
-				
-					catch (Exception invalidNumber){
-						
+							clip = AudioSystem.getClip();
+							clip.open(audioInputStream);
+							clip.start();
+						} catch (UnsupportedAudioFileException | LineUnavailableException | IOException e2) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						} // end sound
+					} catch (Exception invalidNumber){
 						JOptionPane.showMessageDialog(null,"Must enter a valid number from 0-9","Invalid Number Entry",JOptionPane.WARNING_MESSAGE);
 					}
 				}
