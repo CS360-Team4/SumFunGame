@@ -59,13 +59,13 @@ public class GameBoard extends JFrame {
 	protected JLabel lblTime;
 	protected int score;
 	protected String name;
-	private int resetQueueValue = 100;
+	private int resetQueueValue = 1;
 	protected int playerMoves = 0;
 	protected boolean gameIsWon = false;
 	protected TopScoreList topScore;
 	protected LeastTimeList leastTimes;
-	protected int numHints = 300;
-	protected int numRemovals = 100;
+	protected int numHints = 3;
+	protected int numRemovals = 1;
 	public GameBoard() throws IOException, ClassNotFoundException, ParseException {
 
 		// create mainpanel
