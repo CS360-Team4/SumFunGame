@@ -73,7 +73,7 @@ public class UntimedGame extends GameBoard {
 
 					// if the sum mod 10 of neighbors is equal to tile clicked,
 					// set tiles to false and make invisible
-					if (temp.getSumMod() == temp.getNumber()) {
+					if (temp.getSumMod() == temp.getNumber() && !temp.allNeighborsBlank()) {
 						
 						//plays sound
 						AudioInputStream audioInputStream;

@@ -62,7 +62,7 @@ public class GameBoard extends JFrame {
 	protected boolean gameIsWon = false;
 	protected TopScoreList topScore;
 	protected LeastTimeList leastTimes;
-	protected int numHints = 3;
+	protected int numHints = 30;
 	protected int numRemovals = 1;
 	public GameBoard() throws IOException, ClassNotFoundException, ParseException {
 
@@ -319,8 +319,8 @@ public class GameBoard extends JFrame {
 
 					try{
 					// check now if number is valid
-					int removeNumber = Integer.parseInt(number);
-					if (removeNumber < 0 || removeNumber > 9) throw new Exception();
+					int removeNumber = Integer.parseInt(number); // if not a number, will throw exception
+					if (removeNumber < 0 || removeNumber > 9) throw new Exception(); // force throw exception
 					
 					for (int i = 0; i < tiles.length; i++) {
 						for (int j = 0; j < tiles[i].length; j++) {

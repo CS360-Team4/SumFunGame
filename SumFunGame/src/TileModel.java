@@ -84,6 +84,28 @@ public class TileModel extends Observable {
 		return isBlank;
 	}
 	
+	/**
+	 * Returns true if all neighbors are blank, false if any neighbor is non-blank
+	 * @return
+	 */
+	public boolean allNeighborsBlank(){
+		
+		// north not blank when:
+		if ( (north != null) && !north.isBlank() 
+				|| (south != null) && !south.isBlank()
+				|| (east != null) && !east.isBlank()
+				|| (west != null) && !west.isBlank()
+				|| (northeast != null) && !northeast.isBlank()
+				|| (northwest != null) && !northwest.isBlank()
+				|| (southeast != null) && !southeast.isBlank()
+				|| (southwest != null) && !southwest.isBlank())
+		{
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
 	//returns arrayList of all non-null, non-blank neighbors
 	public ArrayList<TileModel> getNeighbors(){
 		ArrayList<TileModel> temp = new ArrayList<TileModel>();
