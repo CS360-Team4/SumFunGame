@@ -28,6 +28,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import com.sun.glass.events.KeyEvent;
+
 import leasttimelist.LeastTimeList;
 import topscorelist.TopScoreList;
 import topscorelist.TopScoreModel;
@@ -57,13 +59,13 @@ public class GameBoard extends JFrame {
 	protected JLabel lblTime;
 	protected int score;
 	protected String name;
-	private int resetQueueValue = 1;
+	private int resetQueueValue = 100;
 	protected int playerMoves = 0;
 	protected boolean gameIsWon = false;
 	protected TopScoreList topScore;
 	protected LeastTimeList leastTimes;
-	protected int numHints = 30;
-	protected int numRemovals = 1;
+	protected int numHints = 300;
+	protected int numRemovals = 100;
 	public GameBoard() throws IOException, ClassNotFoundException, ParseException {
 
 		// create mainpanel
@@ -208,6 +210,7 @@ public class GameBoard extends JFrame {
 		btnRemoveNumber = new JButton("Remove Number");
 		btnRemoveNumber.addActionListener(new RemoveNumberListener());
 		hintButton = new JButton("Hint");
+		hintButton.setMnemonic(KeyEvent.VK_Z);
 		hintButton.addActionListener(new HintListener());
 		// addTopPlayer = new JMenuItem("Add Top 10 Player");
 		// addTopPlayer.addActionListener(new FakeTopTenMovesListener());
@@ -389,20 +392,6 @@ public class GameBoard extends JFrame {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-		}
-	}
-
-	private class FakeTopTenMovesListener implements ActionListener {
-
-		public void actionPerformed(ActionEvent e) {
-
-			/*
-			 * TopScoreModel.checkScore("TestPerson", 5);
-			 * TopScoreModel.checkScore("TestPerson2", 15);
-			 * TopScoreModel.checkScore("TestPerson3", 52);
-			 * TopScoreModel.checkScore("TestPerson4", 45);
-			 * TopScoreModel.checkScore("TestPerson5", 25);
-			 */
 		}
 	}
 

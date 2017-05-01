@@ -225,6 +225,7 @@ public class TimedGame extends GameBoard {
 				String message = "You won! Your score has made it in the Top Ten Most Points! Please enter your name.";
 				String text = JOptionPane.showInputDialog(frame, message);
 				if (text != null) {
+					text = text.replaceAll(" ", "_");
 					name = text;
 				}
 				topScore.checkScore(name, score, new Date());
