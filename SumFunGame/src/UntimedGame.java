@@ -13,12 +13,16 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 public class UntimedGame extends GameBoard {
-
+	
 	private boolean winFlag = false;
 
 	public UntimedGame() throws IOException, ClassNotFoundException, ParseException {
@@ -33,6 +37,8 @@ public class UntimedGame extends GameBoard {
 
 		super.lblTimeTitle.setVisible(false);
 		super.lblTime.setVisible(false);
+		btnShowcase.addActionListener(new showcaseListener());
+		btnShowcase2.addActionListener(new showcase2Listener());
 		
 		//plays sound
 		AudioInputStream audioInputStream;
@@ -46,6 +52,49 @@ public class UntimedGame extends GameBoard {
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}//end sound
+	}
+	
+private class showcaseListener implements ActionListener {
+		
+		public void actionPerformed(ActionEvent e) {
+			for(int i = 0; i < 9; i++){
+				for(int j = 0; j < 9; j++){
+					tiles[i][j].setBlank();
+					linkTiles();
+				}
+			}
+			
+			tiles[0][0].setNumber(3);
+			tiles[0][0].setBlank(false);
+			linkTiles();
+			tiles[0][1].setNumber(3);
+			tiles[0][1].setBlank(false);
+			linkTiles();
+			TileModel[] queueTiles = queue.getQueue();
+			queueTiles[0].setNumber(6);
+			score = 1000;
+		}
+	}
+	
+	private class showcase2Listener implements ActionListener {
+		
+		public void actionPerformed(ActionEvent e) {
+			for(int i = 0; i < 9; i++){
+				for(int j = 0; j < 9; j++){
+					tiles[i][j].setBlank();
+					linkTiles();
+				}
+			}
+			
+			tiles[0][0].setNumber(3);
+			tiles[0][0].setBlank(false);
+			linkTiles();
+			tiles[0][1].setNumber(3);
+			tiles[0][1].setBlank(false);
+			linkTiles();
+			TileModel[] queueTiles = queue.getQueue();
+			queueTiles[0].setNumber(6);
+		}
 	}
 
 	private class SwapListener implements ActionListener {

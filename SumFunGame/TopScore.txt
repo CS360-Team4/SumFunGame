@@ -1,3 +1,5 @@
+Mason 1000 05/02/2017
+Mason 1000 05/02/2017
 Marie_Langford 480 04/30/2017
 Mason 430 04/24/2017
 Marie 400 04/30/2017
@@ -6,5 +8,3 @@ MarieLangford 390 04/30/2017
 Marie_Langford 390 05/01/2017
 Marie 340 04/30/2017
 Mason 320 04/20/2017
-Marie 160 04/30/2017
-NO_PLAYER 0 04/20/2017

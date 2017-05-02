@@ -29,7 +29,7 @@ public class GameBoard extends JFrame {
 	protected TileModel[][] tiles;
 	protected Tile[][] tileButtons;
 	TileQueue queue;
-	private JPanel mainPanel;
+	protected JPanel mainPanel;
 	protected JPanel buttonPanel;
 	protected JPanel gridPanel;
 	private JPanel queuePanel;
@@ -42,6 +42,8 @@ public class GameBoard extends JFrame {
 	private JButton btnLeastTimes;
 	private JButton btnRemoveNumber;
 	protected JButton hintButton;
+	protected JButton btnShowcase;
+	protected JButton btnShowcase2;
 	protected JLabel lblMovesTitle;
 	protected JLabel lblMovesLeft;
 	protected JLabel lblScore;
@@ -185,8 +187,10 @@ public class GameBoard extends JFrame {
 
 		// button queue and buttons
 		buttonPanel = new JPanel();
-		GridLayout buttonLayout = new GridLayout(2, 4);
+		GridLayout buttonLayout = new GridLayout(2, 5);
 		buttonPanel.setLayout(buttonLayout);
+		btnShowcase = new JButton("Showcase Top Ten");
+		btnShowcase2 = new JButton("Showcase Win, No Top Ten");
 		btnNewTimedGame = new JButton("New Timed Game");
 		btnNewTimedGame.addActionListener(new NewTimedGameListener());
 		btnNewUntimedGame = new JButton("New Untimed Game");
@@ -211,6 +215,8 @@ public class GameBoard extends JFrame {
 		buttonPanel.add(btnResetQueue);
 		buttonPanel.add(btnRemoveNumber);
 		buttonPanel.add(hintButton);
+		buttonPanel.add(btnShowcase);
+		buttonPanel.add(btnShowcase2);
 		// topTenMenu.add(addTopPlayer);
 		buttonPanel.setVisible(true);
 		buttonPanel.setOpaque(true);

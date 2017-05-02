@@ -40,7 +40,9 @@ public class TimedGame extends GameBoard {
 		}
 		super.lblMovesLeft.setVisible(false);
 		super.lblMovesTitle.setVisible(false);
-		
+		btnShowcase.addActionListener(new showcaseListener());
+		btnShowcase2.addActionListener(new showcase2Listener());
+
 		//plays sound
 		AudioInputStream audioInputStream;
 		Clip clip;
@@ -64,6 +66,50 @@ public class TimedGame extends GameBoard {
 				timer.stop();
 				timerOn = false;
 			}
+		}
+	}
+	
+private class showcaseListener implements ActionListener {
+		
+		public void actionPerformed(ActionEvent e) {
+			for(int i = 0; i < 9; i++){
+				for(int j = 0; j < 9; j++){
+					tiles[i][j].setBlank();
+					linkTiles();
+				}
+			}
+			
+			tiles[0][0].setNumber(3);
+			tiles[0][0].setBlank(false);
+			linkTiles();
+			tiles[0][1].setNumber(3);
+			tiles[0][1].setBlank(false);
+			linkTiles();
+			TileModel[] queueTiles = queue.getQueue();
+			queueTiles[0].setNumber(6);
+			score = 1000;
+		}
+	}
+	
+	private class showcase2Listener implements ActionListener {
+		
+		public void actionPerformed(ActionEvent e) {
+			for(int i = 0; i < 9; i++){
+				for(int j = 0; j < 9; j++){
+					tiles[i][j].setBlank();
+					linkTiles();
+				}
+			}
+			
+			tiles[0][0].setNumber(3);
+			tiles[0][0].setBlank(false);
+			linkTiles();
+			tiles[0][1].setNumber(3);
+			tiles[0][1].setBlank(false);
+			linkTiles();
+			TileModel[] queueTiles = queue.getQueue();
+			queueTiles[0].setNumber(6);
+			timeLeft = (1000 * 30);
 		}
 	}
 
