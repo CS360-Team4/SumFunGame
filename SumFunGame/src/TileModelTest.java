@@ -79,6 +79,44 @@ public class TileModelTest {
 		// assert
 		assertEquals(8, neighbors.size());
 	}
+	
+	@Test
+	public void testGetNeighborsAllBlank() {
+		TileModel x = new TileModel();
+
+		TileModel north = new TileModel();
+		TileModel south = new TileModel();
+		TileModel east = new TileModel();
+		TileModel west = new TileModel();
+		TileModel northeast = new TileModel();
+		TileModel southwest = new TileModel();
+		TileModel northwest = new TileModel();
+		TileModel southeast = new TileModel();
+		
+		north.setBlank(true);
+		south.setBlank(true);
+		east.setBlank(true);
+		west.setBlank(true);
+		northeast.setBlank(true);
+		northwest.setBlank(true);
+		southeast.setBlank(true);
+		southwest.setBlank(true);
+
+		x.setNorth(north);
+		x.setSouth(south);
+		x.setEast(east);
+		x.setWest(west);
+		x.setNortheast(northeast);
+		x.setSouthwest(southwest);
+		x.setNorthwest(northwest);
+		x.setSoutheast(southeast);
+
+		// execute
+		ArrayList<TileModel> neighbors = x.getNeighbors();
+
+		// assert
+		assertEquals(0, neighbors.size());
+	}
 
 	/*
 	 * ******************************************************** Tests for
